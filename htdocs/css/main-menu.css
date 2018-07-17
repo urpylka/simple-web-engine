@@ -1,0 +1,92 @@
+/* Футер */
+#main-menu-id {
+	color:#4e4a43;
+	padding-top:20px;
+	padding-left:30px;
+	padding-right:30px;
+	height: 200px;
+	width: 930px;/*
+	background: url('../img/bg.jpg') repeat;
+	*/
+	
+	background-color: #fff;
+	/*
+	background-image: -moz-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image: -o-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image: -webkit-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image: linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	*/
+	}
+
+.colft {float:left;width:232px;}
+
+.name2 {font-size: 16px;
+	/*width:275px; вообще ширина блока везде разная */
+	margin:0 auto;margin-top:3px;
+	font-weight:600;
+	text-transform:uppercase;
+	padding: 5px 5px 5px 5px;
+	margin-right:1px;
+}
+.name2:hover{
+	background-color: #ccc;
+}
+.menuft2 li {padding:3px;padding-left:5px;
+list-style: none;}
+.menuft3 li {
+	font-size:13px;
+	color:#fff;
+	background-color: #59A161;
+	padding: 5px 5px 5px 5px;
+    font-weight:bold;
+	margin-top:3px;
+	text-transform:uppercase;
+	list-style:none;}
+.menuft3 li a{
+	color:#000;
+}.menuft3 li a:hover{
+	color:#fff;
+}
+
+
+/* Menu
+-----------------------------------------------------------------------------*/
+.menu ul {
+	display:table;
+ /* убираем отступы */
+    padding: 0;
+    margin: 0;
+ /* убираем точки */
+    list-style: none;
+ /* задаем ширину */
+    width: 280px;
+ /* присвоим относительное позиционирование*/
+    position:relative;
+ }
+ /* зададим стиль для элементов списка */
+ /* Чтобы меню корректно отображалось в IE */
+ .menu li {
+    float: left;
+    font-weight:bold;
+ }
+ /* зададим стиль для анкора в списке */
+ .menu li a, .menu li a:visited {
+ /* обязательно блочное отображение */
+    display: block;
+ /* ширина строки на 1 пиксель меньше */
+    width: 279px;
+ /* зададим высоту строки */
+    height:30px;
+    line-height:30px;
+ /* сделаем отступ в 5 пикселей */ 
+    text-indent:5px;
+ /* скрываем вложенные пункты меню */
+ .menu li ul {
+    left: 35px;
+    top: 0px;
+ }
+ 
+.menu-st ul{
+text-transform:uppercase;
+list-style:none;
+}

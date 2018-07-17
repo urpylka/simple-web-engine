@@ -1,0 +1,85 @@
+<?
+//http://telegra.ph/Napisanie-sobstvennoj-CMS-03-14
+session_start(); // стартуем сессию
+$_SESSION['group_id'] = isset($_SESSION['login'])?$_SESSION['group_id']:"1";
+error_reporting(E_ALL);
+header('Content-Type: text/html; charset=utf-8');
+ini_set('display_errors', 0);
+ini_set('display_startup_errors', 0);
+include("modules/config.php");
+/*
+$page_id = $_GET['id'];//принимаем переменную
+if($page_id!=NULL)
+{
+	//echo "page:".$page;
+	$page_sql=mysql_query("SELECT name,text,template FROM pages WHERE id='".$page_id."';");
+	$count=mysql_num_rows($page_sql);
+	switch($count){
+		case '0':
+			throw new Exception('По данному запросу не найдено страниц в базе данных.');
+		case '1':
+			$view_page_info = mysql_fetch_assoc($page_sql);
+			$name = $view_page_info['name'];
+			$text = $view_page_info['text'];
+			$template = $view_page_info['template'];
+			break;
+		default:
+			throw new Exception('По данному запросу возвращено $count страниц, а должна быть одна.');
+	}
+}
+*/
+$page_link=$_GET['link'];//принимаем переменную
+//echo $page_link;
+if($page_link!=NULL)
+{
+	$page_sql=mysql_query("SELECT name,text,template,access_id FROM pages WHERE link='".$page_link."';");
+	$count=mysql_num_rows($page_sql);
+	switch($count){
+		case '0':
+			throw new Exception('По данному запросу не найдено страниц в базе данных.');
+		case '1':
+			$view_page_info = mysql_fetch_assoc($page_sql);
+			$name = $view_page_info['name'];
+			$text = $view_page_info['text'];
+			$template = $view_page_info['template'];
+			$access_id = $view_page_info['access_id'];
+			break;
+		default:
+			throw new Exception('По данному запросу возвращено $count страниц, а должна быть одна.');
+	}
+}
+if($_SESSION['group_id']>=$access_id)//на самом деле не так потому что могут быть разные логины (отдельный запрос в бд)
+switch($template){
+	case 'main':
+		include_once("templates/template_main.php");
+		break;
+	case 'standart':
+		include_once("templates/template_standart.php");
+		break;
+	case 'contacts':
+		include_once("templates/template_contacts.php");
+		break;
+	case 'block':
+		include_once("templates/template_block.php");
+		break;
+	case 'blank':
+		include_once("templates/template_blank.php");
+		break;
+	case 'section2':
+		include_once("templates/template_section.php");
+		break;
+	default:
+	    $access_id = 1000;
+	    $name = "Ошибка!";
+		$text = "Шаблон для этой страницы отсутствует";
+		include_once("templates/template_standart.php");
+		//echo("Ошибка: Шаблон для этой страницы отсутствует");
+		break;
+}
+else
+	{
+		$name = "Ошибка 403";
+		$text = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
+		include_once("templates/template_standart.php");
+	}
+?>

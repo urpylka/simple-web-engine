@@ -1,0 +1,54 @@
+﻿/* SECTION TEXT-CONTNET */
+section a {
+	color:#679f33;
+	text-decoration: underline;
+    -moz-text-decoration-line: underline;
+}
+.headnews{
+	width: 320px;
+	font-size: 1.5em;
+	font-weight: bold;
+	padding: 8px 70px 9px 20px;
+	margin: -46px 100px 10px 0px !important;
+	color: #fff;
+	background-color: #0097D3;
+	text-shadow: 0px 1px 2px #000;
+	text-transform: uppercase;
+	-webkit-box-shadow: 0px 2px 4px #888;
+	-moz-box-shadow: 0px 2px 4px #888;
+	box-shadow: 0px 2px 4px #888;
+	}
+section.text-content{
+	display: table;
+}
+#fullpage{
+	display: block !important;
+}
+#fullpage h1{
+	width:940px !important;}
+section.text-content h1{
+	position: relative;
+	width: 520px;
+	font-size: 1.5em;
+	font-weight: bold;
+	padding: 6px 20px 6px 50px;
+	margin: 30px 10px 10px -41px;
+	color: #fff;
+	background-color: #0097D3;
+	text-shadow: 0px 1px 2px #000;
+	text-transform: uppercase;
+	margin-left: -50px;
+	-webkit-box-shadow: 0px 2px 4px #888;
+	-moz-box-shadow: 0px 2px 4px #888;
+	box-shadow: 0px 2px 4px #888;}
+section.text-content h1:after {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+	left: 0px;
+	top: 100%;
+	border-width: 5px 10px; /* Отступ ищи полоски */
+	border-style: solid;
+	border-color: #2c4e66 #254a66 transparent transparent;}
+}

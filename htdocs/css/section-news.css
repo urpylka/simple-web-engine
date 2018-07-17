@@ -1,0 +1,69 @@
+﻿/* Новость */
+.news {width: 930px;
+height: 218px;
+margin-top: 40px;}
+img.prewiw  {height: 240px;width:300px;float:left;padding-left: 30px;margin-top: -32px}
+.news p {width: 600px;float: left;height: 155px;display: block;margin-top: 15px}
+/*
+section.Allnews strong{
+	padding-left: 20px;
+	padding-right: 20px;
+	position: relative;
+	width: 500px;
+	font-size: 1.5em;
+	font-weight: bold;
+	padding: 6px 20px 6px 70px;
+	margin: 30px 10px 10px -41px;
+	color: #fff;
+	background-color: #0097D3;
+	text-shadow: 0px 1px 2px #000;
+	text-transform: uppercase;
+	margin-left: -60px;
+	-webkit-box-shadow: 0px 2px 4px #888;
+	-moz-box-shadow: 0px 2px 4px #888;
+	box-shadow: 0px 2px 4px #888;}
+section.Allnews strong:after {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+	left: 0px;
+	top: 100%;
+	border-width:  5px 10px; /* Отступ ищи полоски *//*
+	border-style: solid;
+	border-color: #2c4e66 #254a66 transparent transparent;}
+}
+*/
+.news strong {
+	position: relative;
+	width: 500px !important;
+	font-size: 1.5em;
+	font-weight: bold;
+	padding: 6px 20px 6px 70px;
+	margin: 30px 10px 10px -41px;
+color: #fff;
+background-color: #0097D3;
+text-shadow: 0px 1px 2px #000;
+	-webkit-box-shadow: 0px 2px 4px #888;
+	-moz-box-shadow: 0px 2px 4px #888;
+	box-shadow: 0px 2px 4px #888;}
+.news strong:after {
+	content: ' ';
+	position: absolute;
+	width: 0;
+	height: 0;
+	left: 0px;
+	top: 100%;
+	border-width:  5px 10px; /* Отступ ищи полоски */
+	border-style: solid;
+	border-color: #2c4e66 #254a66 transparent transparent;}
+	
+a.button {background-color: #0097D3;
+color: #FFF;
+font-weight: 400;
+margin-left: 502px;
+display: block;
+margin-top: 192px;
+padding: 12px;
+position: absolute;}
+a.button:hover {background-color: #21ABDC;color: #FFF;}

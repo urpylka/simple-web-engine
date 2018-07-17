@@ -1,0 +1,134 @@
+﻿/* Общий стиль */
+html{
+	height: 100%;
+	margin: 0 auto;
+	font-weight: 100;
+	background: url('../img/bg.jpg') repeat;
+	font-family: sans-serif, Arial, Helvetica;
+}
+body{
+	width: 990px;
+	background-color: #FFFFFF;
+	/*margin: 0 auto;*/
+	-moz-box-shadow: 0 5px 21px #000;
+	-webkit-box-shadow: 0 5px 21px #000;
+	box-shadow: 0 5px 21px #000;
+	margin-top:40px;
+	display: inline-block;
+	position: relative;
+	left: 50%;
+	margin-left: -495px;
+}
+/* основное меню и лого */
+nav{
+	height:80px;width:100%;text-transform:uppercase;
+	background-image:-moz-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image:-o-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image:-webkit-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image:linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+}
+nav ul{
+	float:right !important;
+	margin-right:30px !important;
+}
+.logo{
+	padding-top:7px;
+	margin-left:30px;
+	float:left;
+	width:300px;
+}
+
+nav li{
+	float:left;
+	font-size:17px;
+	margin-left:30px; /* было 35 */
+	margin-top:34px;
+}
+a{color:#000;text-decoration:none;}
+a:hover{color:#35a81a;}
+
+/* Контент */
+article {margin: 0px 30px 0px 30px;}
+h1 {font-size: 22px;font-weight: 400;padding: 14px 0px 2px 0px}
+h2 {font-size: 18px;font-weight: 400;padding: 14px 0px 2px 0px}
+h3 {font-size: 16px;font-weight: 400;padding: 14px 0px 2px 0px}
+/*article p {font-size: 14px;line-height: 19px;text-indent: 30px;}*/
+article p {font-size: 14px;line-height: 19px;text-indent: 0px;}
+article div {font-size: 14px;line-height: 19px;}
+article td{font-size:14px;line-height:19px;padding:4px;}
+article li{font-size:14px;line-height:19px;padding:0px;margin-left: 20px;}
+
+/* Невъебатый hr */
+.hr {text-align: center;font-weight: 400;
+display: block;
+width: 120px;
+background-color: #FFF;
+margin: 0 auto;
+font-size: 19px;
+margin-top: -29px;padding-bottom:13px}
+.hrs {text-align: center;font-weight: 400;
+display: block;
+width: 170px;
+background-color: #FFF;
+margin: 0 auto;
+font-size: 19px;
+margin-top: -29px;padding-bottom:13px}
+.hrb {text-align: center;font-weight: 400;
+display: block;
+width: 270px;
+background-color: #FFF;
+margin: 0 auto;
+font-size: 19px;
+margin-top: -29px;padding-bottom:13px}
+.hr, .hrs, .hrb {color:#707070;}
+
+/* Футер */
+footer {
+	color:#4e4a43;
+	margin-top:10px;
+	padding-top:20px;
+	padding-left:30px;
+	padding-right:30px;
+	height: 200px;
+	width: 930px;
+	background-image: -moz-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image: -o-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image: -webkit-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image: linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	}
+
+.colft1 {float:left;width:230px;}
+.colft1 span {margin-top:-32px;margin-left:60px;display:block;}
+.colft1 .name {margin-left:0px;}
+.colft1 img {height:45px;}
+.colft1 ul {margin-top:9px;}
+.colft1 li {padding-top:4px;width: 250px;list-style: none;height:45px;}
+
+
+.colft2 {float:left;width:200px;margin-right:0px;}
+
+.colftbig {width:330px; float:left;text-align: left;}
+.colftbig .name {margin-left: 0px;}
+.colftbig p{margin-top: 10px;}
+
+.colft4 {float:left;width:170px;margin-right:0px;}
+
+.name {font-size: 16px;/*width: 275px; вообще ширина блока везде разная */
+
+margin: 0 auto;font-weight: 400;text-transform: uppercase;}
+.menuft li {margin-top: 13px;list-style: none;}
+
+/* copyright */
+.copy{width:930px;
+	background-color:#f2f2f2;
+	height:28px;
+	padding-top: 14px;
+	padding-left:30px;
+	padding-right:30px;
+	color:#4e4a43;
+	font-size:13px;
+}
+.copy a {color:#4e4a43;text-decoration: underline;}
+.year {float:left;}
+.author {float:right;}
+@media screen and (max-width:990px) {body{margin:0;left:0;}}

@@ -1,0 +1,6 @@
+[submodule "htdocs/mooeditable"]
+	path = htdocs/mooeditable
+	url = https://github.com/urpylka/mooeditable.git
+[submodule "htdocs/phpqrcode"]
+	path = htdocs/phpqrcode
+	url = https://github.com/urpylka/phpqrcode.git
