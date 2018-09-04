@@ -5,9 +5,11 @@ DefaultLanguage ru
 php_value default_charset "utf-8"
 php_value short_open_tag 1
 
-RewriteEngine on
-RewriteBase /
-RewriteRule ^/?$ page.php?link=/
-RewriteRule ^([A-Za-z0-9,_,-]+)$ page.php?link=$1 [QSA]
-#[QSA] - флаг для передачи гет приходящих на ориг адрес
-#для отладки адреса print_r($_GET);
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^/?$ page.php?link=/
+  RewriteRule ^([A-Za-z0-9,_,-]+)$ page.php?link=$1 [QSA]
+  #[QSA] - флаг для передачи гет приходящих на ориг адрес
+  #для отладки адреса print_r($_GET);
+</IfModule>
