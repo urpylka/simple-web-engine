@@ -1,14 +1,13 @@
 <style>
 	#scrollup
 	{
-		position: fixed; /* фиксированная позиция */
-		opacity: 0.8; /* прозрачность */
-		padding: 10px; /* отступы */
-		right: 10px; /* отступ слева */
-		bottom: 10px; /* отступ снизу */
-		display: none; /* спрятать блок */
+		position: fixed;
+		opacity: 0.8;
+		padding: 10px;
+		right: 10px;
+		bottom: 10px;
+		display: none;
 		cursor: pointer;
-		
 		background-color: #0097D3;
 		color: #FFF;
 	}

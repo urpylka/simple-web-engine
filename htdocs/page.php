@@ -6,15 +6,15 @@ error_reporting(E_ALL);
 header('Content-Type: text/html; charset=utf-8');
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
-include("modules/config.php");
+include("config.php");
 
 $db = @mysql_connect("$host", "$login_mysql", "$password_mysql"); 
 if (!$db) exit("<center><p class=\"error\">К сожалению, не доступен сервер MySQL</p></center>"); 
-if (!@mysql_select_db($database,$db)) exit("<center><p class=\"error\">К сожалению, не доступна база данных</p></center>");
-mysql_set_charset('utf8',$db);
+if (!@mysql_select_db($database, $db)) exit("<center><p class=\"error\">К сожалению, не доступна база данных</p></center>");
+mysql_set_charset('utf8', $db);
 
 /*
-$page_id = $_GET['id'];//принимаем переменную
+$page_id = $_GET['id'];
 if($page_id!=NULL)
 {
 	//echo "page:".$page;
@@ -34,7 +34,7 @@ if($page_id!=NULL)
 	}
 }
 */
-$page_link=$_GET['link'];//принимаем переменную
+$page_link=$_GET['link'];
 //echo $page_link;
 if($page_link!=NULL)
 {
@@ -57,28 +57,28 @@ if($page_link!=NULL)
 if($_SESSION['group_id']>=$access_id)//на самом деле не так потому что могут быть разные логины (отдельный запрос в бд)
 switch($template){
 	case 'main':
-		include_once("templates/template_main.php");
+		include_once("modules/template_main.php");
 		break;
 	case 'standart':
-		include_once("templates/template_standart.php");
+		include_once("modules/template_standart.php");
 		break;
 	case 'contacts':
-		include_once("templates/template_contacts.php");
+		include_once("modules/template_contacts.php");
 		break;
 	case 'block':
-		include_once("templates/template_block.php");
+		include_once("modules/template_block.php");
 		break;
 	case 'blank':
-		include_once("templates/template_blank.php");
+		include_once("modules/template_blank.php");
 		break;
 	case 'section2':
-		include_once("templates/template_section.php");
+		include_once("modules/template_section.php");
 		break;
 	default:
 	    $access_id = 1000;
 	    $name = "Ошибка!";
 		$text = "Шаблон для этой страницы отсутствует";
-		include_once("templates/template_standart.php");
+		include_once("modules/template_standart.php");
 		//echo("Ошибка: Шаблон для этой страницы отсутствует");
 		break;
 }
@@ -86,6 +86,6 @@ else
 	{
 		$name = "Ошибка 403";
 		$text = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
-		include_once("templates/template_standart.php");
+		include_once("modules/template_standart.php");
 	}
 ?>

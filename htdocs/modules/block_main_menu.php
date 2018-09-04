@@ -43,7 +43,6 @@
 	content:'↓';
 	position:absolute;
 	right:15px;
-	
 }
 </style>
 <br/>
@@ -65,7 +64,6 @@ while($list_menu = mysql_fetch_array($menu))
 	if($parent == $list_menu['id']){echo "<li class=\"select\"><a href=\"".$list_menu['link']."\">".$list_menu['name']."</a></li>";}
 	else
 	{
-		
 		$menu2 = mysql_query("SELECT * FROM pages WHERE parent=\"".$list_menu['id']."\" ORDER BY id ASC");
 		$count=mysql_num_rows($menu2);
 		if($count==0)
