@@ -11,7 +11,7 @@
 
 	if ( isset($_POST['moo_link']) && isset($_POST['moo_text']) )
 	{
-		$page_by_link = $db->prepare("SELECT id FROM pages WHERE link = :moo_link");
+		$page_by_link = $db->prepare("SELECT id FROM pages WHERE link = :moo_link;");
 		$page_by_link->bindValue(':moo_link', $_POST['moo_link'], PDO::PARAM_STR);
 		$page_by_link->execute();
 		$count_pages = $page_by_link->rowCount();
@@ -19,12 +19,12 @@
 		switch($count_pages) {
 			case '0': echo("ERROR: No pages were found in the database for this query.");
 			case '1':
-				echo "id: ".$page_by_link->FETCH(PDO::FETCH_ASSOC)['id'];
-				//$id = $view_page_info['id'];
-				//$page_sql = mysql_query("UPDATE `pages` SET `text` = '".$_POST['moo_text']."' WHERE `id` = ".$id.";");
-				echo "<p style='margin-left:30px;'>The page was saved!</p>";
+				$update_page = $db->prepare("UPDATE `pages` SET `text` = '".$_POST['moo_text']."' WHERE `id` = :id;");
+				$update_page->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
+				if ($page_by_link->execute()) echo "<p style='margin-left:30px;'>The page was saved!</p>";
+				else echo("ERROR: Could not save the page!");
 				break;
-			default: echo("ERROR: $count_pages pages have been returned for this request, but there must be one.");
+			default: echo("ERROR: $count_pages pages have been returned for this request, but there must be one!");
 		}
 	}
 	else echo("ERROR: The post request is not correct!");
