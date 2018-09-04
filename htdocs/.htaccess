@@ -1,8 +1,8 @@
-# в принципе, хватает строки ниже:
+# Set default charset
 AddDefaultCharset UTF-8
-# но иногда, могут потребоваться дополнительные установки:
 DefaultLanguage ru
 php_value default_charset "utf-8"
+
 php_value short_open_tag 1
 
 <IfModule mod_rewrite.c>
@@ -10,6 +10,6 @@ php_value short_open_tag 1
   RewriteBase /
   RewriteRule ^/?$ page.php?link=/
   RewriteRule ^([A-Za-z0-9,_,-]+)$ page.php?link=$1 [QSA]
-  #[QSA] - флаг для передачи гет приходящих на ориг адрес
-  #для отладки адреса print_r($_GET);
+  # [QSA] - flag for transmission GET params to orig address
+  # For debug use: print_r($_GET);
 </IfModule>
