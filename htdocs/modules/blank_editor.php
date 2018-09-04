@@ -1,5 +1,10 @@
 <?
 	// Сначала проверяем может ли данный пользователь по cookie выполнять данный запрос
+	if ( isset($_SESSION['PHPSESSID']) )
+	{
+		echo $_SESSION['PHPSESSID'];
+	}
+
 
 	if ( isset($_POST['moo_link']) && isset($_POST['moo_text']) )
 	{
