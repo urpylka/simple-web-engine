@@ -1,6 +1,6 @@
 <?
 //http://telegra.ph/Napisanie-sobstvennoj-CMS-03-14
-session_start(); // стартуем сессию
+session_start();
 $_SESSION['group_id'] = isset($_SESSION['login'])?$_SESSION['group_id']:"1";
 error_reporting(E_ALL);
 header('Content-Type: text/html; charset=utf-8');
@@ -13,6 +13,9 @@ $db = @mysql_connect("$host:$port", "$login_mysql", "$password_mysql");
 if (!$db) exit("<center><p class=\"error\">К сожалению, не доступен сервер MySQL</p></center>"); 
 if (!@mysql_select_db($dbname, $db)) exit("<center><p class=\"error\">К сожалению, не доступна база данных</p></center>");
 mysql_set_charset('utf8', $db);
+
+// Сначала ищем страницу по id или link
+// Затем проверяем права на ее просмотр или редактирование
 
 /*
 $page_id = $_GET['id'];
@@ -42,8 +45,7 @@ if($page_link!=NULL)
 	$page_sql=mysql_query("SELECT name,text,template,access_id FROM pages WHERE link='".$page_link."';");
 	$count=mysql_num_rows($page_sql);
 	switch($count){
-		case '0':
-			throw new Exception('No pages were found in the database for this query.');
+		case '0': throw new Exception('No pages were found in the database for this query.');
 		case '1':
 			$view_page_info = mysql_fetch_assoc($page_sql);
 			$name = $view_page_info['name'];
@@ -51,30 +53,17 @@ if($page_link!=NULL)
 			$template = $view_page_info['template'];
 			$access_id = $view_page_info['access_id'];
 			break;
-		default:
-			throw new Exception('$count pages have been returned for this request, but there must be one.');
+		default: throw new Exception('$count pages have been returned for this request, but there must be one.');
 	}
 }
 if($_SESSION['group_id']>=$access_id)//на самом деле не так потому что могут быть разные логины (отдельный запрос в бд)
 switch($template){
-	case 'main':
-		include_once("modules/template_main.php");
-		break;
-	case 'standart':
-		include_once("modules/template_standart.php");
-		break;
-	case 'contacts':
-		include_once("modules/template_contacts.php");
-		break;
-	case 'block':
-		include_once("modules/template_block.php");
-		break;
-	case 'blank':
-		include_once("modules/template_blank.php");
-		break;
-	case 'section2':
-		include_once("modules/template_section.php");
-		break;
+	case 'main': include_once("modules/template_main.php"); break;
+	case 'standart': include_once("modules/template_standart.php"); break;
+	case 'contacts': include_once("modules/template_contacts.php"); break;
+	case 'block': include_once("modules/template_block.php"); break;
+	case 'blank': include_once("modules/template_blank.php"); break;
+	case 'section2': include_once("modules/template_section.php"); break;
 	default:
 	    $access_id = 1000;
 	    $name = "Ошибка!";
