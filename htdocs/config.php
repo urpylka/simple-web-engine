@@ -1,11 +1,11 @@
 ﻿<?
     // Site settings
-    $site_url = "http://war.ssau.ru";
-    $site_name = "Военная кафедра";
+    $site_url = "http://robotic.lol";
+    $site_name = "ROBOTIC";
 
     // Database settings
     $host = "localhost";
-    $login_mysql = "root";
-    $password_mysql = "PASSWD";
-    $database = "my_war";
+    $login_mysql = "test";
+    $password_mysql = "test";
+    $dbname = "database";
 ?>
