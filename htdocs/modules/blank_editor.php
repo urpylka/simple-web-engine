@@ -19,7 +19,8 @@
 		switch($count_pages) {
 			case '0': echo("ERROR: No pages were found in the database for this query.");
 			case '1':
-				$update_page = $db->prepare("UPDATE `pages` SET `text` = '".$_POST['moo_text']."' WHERE `id` = :id;");
+				$update_page = $db->prepare("UPDATE `pages` SET `text` = :moo_text WHERE `id` = :id;");
+				$update_page->bindValue(':moo_text', $_POST['moo_text'], PDO::PARAM_STR);
 				$update_page->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
 				if ($page_by_link->execute()) echo "<p style='margin-left:30px;'>The page was saved!</p>";
 				else echo("ERROR: Could not save the page!");
