@@ -33,6 +33,7 @@
 
 		if ($DEBUG)
 		{
+			eval($page_by_link);
 	    	echo "rowCount: ".$page_by_link->rowCount();
 			echo "id: ".$page_by_link['id'];
 		}
