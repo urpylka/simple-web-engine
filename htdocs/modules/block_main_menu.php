@@ -79,11 +79,10 @@ while($list_menu = mysql_fetch_array($menu))
 			echo "<ul>";
 			while($list_menu2 = mysql_fetch_array($menu2))
 			{
-				if($parent == $list_menu2['id']){echo "<li class=\"select\"><a href=\"".$list_menu2['link']."\">".$list_menu2['name']."</a></li>";}
+				if($parent == $list_menu2['id'])
+				{ echo "<li class=\"select\"><a href=\"".$list_menu2['link']."\">".$list_menu2['name']."</a></li>"; }
 				else
-				{
-					echo "<li><a href=\"".$list_menu2['link']."\">".$list_menu2['name']."</a></li>";
-				}
+				{ echo "<li><a href=\"".$list_menu2['link']."\">".$list_menu2['name']."</a></li>"; }
 			}
 			echo "</ul>";
 			echo "</li>";
