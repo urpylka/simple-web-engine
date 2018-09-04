@@ -29,12 +29,12 @@
 		$page_by_link = $db->prepare("SELECT id FROM pages WHERE link = :moo_link");
 		$page_by_link->bindValue(':moo_link', $moo_link, PDO::PARAM_STR);
 		$page_by_link->execute();
-		$page_by_link = $page_by_link->FETCH(PDO::FETCH_NUM);
+		$page_by_link = $page_by_link->FETCH(PDO::FETCH_ASSOC);
 
 		if ($DEBUG)
 		{
-	    	echo $page_by_link->rowCount();
-			echo $page_by_link[0];
+	    	echo "rowCount: ".$page_by_link->rowCount();
+			echo "id: ".$page_by_link[0]['id'];
 		}
 
 		$page_sql = mysql_query("SELECT id FROM pages WHERE link = '".$moo_link."';");
