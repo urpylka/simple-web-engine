@@ -1,5 +1,7 @@
 # simple-web-engine
 
+Мои сохраненные ссылки: http://telegra.ph/Napisanie-sobstvennoj-CMS-03-14
+
 ## Алгоритм
 
 1. Пользователь совершает GET запрос на адрес веб-сервера

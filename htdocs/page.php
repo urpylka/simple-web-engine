@@ -1,5 +1,4 @@
 <?
-//http://telegra.ph/Napisanie-sobstvennoj-CMS-03-14
 session_start();
 
 echo '<p>'.session_name().' = '.session_id().'</p>';
