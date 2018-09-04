@@ -4,7 +4,8 @@
     $site_name = "ROBOTIC";
 
     // Database settings
-    $host = "localhost";
+    $host = "robotic.lol";
+    $port = "3306";
     $login_mysql = "test";
     $password_mysql = "test";
     $dbname = "database";

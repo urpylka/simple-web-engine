@@ -1,6 +1,6 @@
 <? include("/config.php");
 
-	try { $db = new PDO("mysql:host=$host;dbname=$dbname",  $login_mysql,  $password_mysql); }
+	try { $db = new PDO("mysql:host=$host;port=$port;dbname=$dbname",  $login_mysql,  $password_mysql); }
 	catch(PDOException $e)
 	{
 		echo "You have an error: ".$e->getMessage()."<br>";
