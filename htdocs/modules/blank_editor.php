@@ -1,5 +1,6 @@
 <?
 	// Сначала проверяем может ли данный пользователь по cookie выполнять данный запрос
+	var_dump($_SESSION);
 	if ( isset($_SESSION['PHPSESSID']) )
 	{
 		echo "<p>".$_SESSION['PHPSESSID']."</p>";
