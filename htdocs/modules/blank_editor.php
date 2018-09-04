@@ -4,6 +4,9 @@
 	{
 		echo $_SESSION['PHPSESSID'];
 	}
+	{
+		echo "PHPSESSID does not exist";
+	}
 
 
 	if ( isset($_POST['moo_link']) && isset($_POST['moo_text']) )
