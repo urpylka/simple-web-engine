@@ -15,7 +15,7 @@
 				$update_page->bindValue(':moo_text', $_POST['moo_text'], PDO::PARAM_STR);
 				$update_page->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
 				if ($update_page->execute()) echo "<p style='margin-left:30px;'>The page was saved!</p>";
-				else echo("ERROR: Could not save the page!");
+				else echo("ERROR: Could not update the page!");
 				break;
 			default: echo("ERROR: $count_pages pages have been returned for this request, but there must be one!");
 		}
