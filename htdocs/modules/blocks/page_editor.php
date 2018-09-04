@@ -1,4 +1,4 @@
-<?php
+<?
 	$page_link=$_POST['moo_link'];//принимаем переменную
 	//echo $page_link;
 	//echo $_POST['moo_text'];

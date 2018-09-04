@@ -4,7 +4,7 @@ if(!isset($_GET['op'])) { ?>
   <div id="workzone">
     <div class="corner tl"></div>
     <div class="corner tr"></div>
-    <p class="addform"><img src="http://<? echo $_SERVER['HTTP_HOST']; ?>/img/add.png" width="32px" height="32px" /><a href="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/menu/addform/">Добавить страницу</a></p>
+    <p class="addform"><img src="http://<?=$_SERVER['HTTP_HOST']?>/img/add.png" width="32px" height="32px" /><a href="http://<?=$_SERVER['HTTP_HOST']?>/admin/menu/addform/">Добавить страницу</a></p>
     <table cellspacing="1" cellpadding="0" id="listpages">
 <?
     #выводим страницы каталога
@@ -56,7 +56,7 @@ elseif($_GET['op'] == 'addform') { ?>
     <div class="corner tr"></div>
     <div id="form">
       <h1>Добавить новую страницу</h1>
-      <form method="post" action="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/menu/addpage/">
+      <form method="post" action="http://<?=$_SERVER['HTTP_HOST']?>/admin/menu/addpage/">
         <div class="field"><input type="text" name="name" id="title" />&larr; Название страницы</div>
         <div class="field"><input type="text" name="entitle" id="en-title" />&larr; URL страницы</div>
         <div class="lineForm">
@@ -114,7 +114,7 @@ $edit_page_data = mysql_fetch_array($edit_page);
     <div class="corner tr"></div>
     <div id="form">
       <h1>Редактирование страницы</h1>
-      <form method="post" action="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/menu/editpage/<? echo $_GET['id']; ?>">
+      <form method="post" action="http://<?=$_SERVER['HTTP_HOST']?>/admin/menu/editpage/<? echo $_GET['id']; ?>">
         <div class="field"><input type="text" name="name" id="title" value="<? echo $edit_page_data['name']; ?>" />&larr; Название страницы</div>
         <div class="field"><input type="text" name="entitle" id="en-title" value="<? echo $edit_page_data['link']; ?>" />&larr; URL страницы</div>
         <div class="lineForm">

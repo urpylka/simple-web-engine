@@ -3,7 +3,7 @@ if(!isset($_GET['op'])) { ?>
   <div id="workzone">
     <div class="corner tl"></div>
     <div class="corner tr"></div>
-    <p class="addform"><img src="http://<? echo $_SERVER['HTTP_HOST']; ?>/img/add.png" width="32px" height="32px" /><a href="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/news/addform/">Добавить новость</a></p>
+    <p class="addform"><img src="http://<?=$_SERVER['HTTP_HOST']?>/img/add.png" width="32px" height="32px" /><a href="http://<?=$_SERVER['HTTP_HOST']?>/admin/news/addform/">Добавить новость</a></p>
     <table cellspacing="1" cellpadding="0" id="listpages">
 <?
     function substring($str,$count=60){
@@ -39,7 +39,7 @@ elseif($_GET['op'] == 'addform') { ?>
     <div class="corner tr"></div>
     <div id="form">
       <h1>Добавить новость</h1>
-      <form method="post" action="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/news/addpage/">
+      <form method="post" action="http://<?=$_SERVER['HTTP_HOST']?>/admin/news/addpage/">
         <div class="field"><input type="text" name="date" id="date" value="<? echo date('d.m.Y'); ?>" />&larr; Дата</div><br />
         <div class="text">
           <textarea class="ckeditor" cols="80" id="editor1" name="text" rows="10"></textarea>
@@ -104,7 +104,7 @@ $list_news = mysql_fetch_assoc($news); ?>
     <div class="corner tr"></div>
     <div id="form">
       <h1>Редактировать новость</h1>
-      <form method="post" action="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/news/editpage/<? echo $_GET['id']; ?>">
+      <form method="post" action="http://<?=$_SERVER['HTTP_HOST']?>/admin/news/editpage/<? echo $_GET['id']; ?>">
         <div class="field"><input type="text" name="date" id="date" value="<? echo $list_news['date'] ?>" />&larr; Дата</div><br />
         <div class="text">
           <textarea class="ckeditor" cols="80" id="editor1" name="text" rows="10"><? echo $list_news['text']; ?></textarea>

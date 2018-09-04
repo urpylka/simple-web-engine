@@ -30,7 +30,7 @@
 				<img height="170px" src="img/yo.png">
 			</div>
 		</footer>
-		<?php //для удобства http://www.utilities-online.info/urlencode/ ?>
+		<? // для удобства http://www.utilities-online.info/urlencode/ ?>
 		<script type="text/javascript">
 		document.write(unescape('%3Cdiv%20class%3D%22copy%22%3E%0A%3Cdiv%20class%3D%22year%22%3E%A9%202001-2017%20%u0412%u043E%u0435%u043D%u043D%u0430%u044F%20%u043A%u0430%u0444%u0435%u0434%u0440%u0430%3C/div%3E%0A%3Cdiv%20class%3D%22author%22%3E%u0410%u0432%u0442%u043E%u0440%3A%20%3Ca%20href%3D%22http%3A//vk.com/smirart%22%20target%3D%22_blank%22%3E%u0410%u0440%u0442%u0435%u043C%20%u0421%u043C%u0438%u0440%u043D%u043E%u0432%3C/a%3E%3C/div%3E%0A%3C/div%3E%0A'));
 		</script>

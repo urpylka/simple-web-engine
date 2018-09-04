@@ -1,14 +1,14 @@
 <article>
 	<section class="text-content" id="fullpage">
-		<h1><? echo $name; ?></h1>
+		<h1><?=$name?></h1>
 		<?
-		///////////////////////////ВЫХОД
+		// ВЫХОД
 		if($_GET['action'] == "logout" && isset($_SESSION['login']))
 		{
 			session_unset();
-			session_destroy(); // убиваем сессию
+			session_destroy();
 		}
-		///////////////////////////АВТОРИЗАЦИЯ
+		// АВТОРИЗАЦИЯ
 		if(isset($_POST['login']) && isset($_POST['password']) && !isset($_SESSION['login']))
 		{
 			$users = mysql_query("
@@ -39,8 +39,8 @@
 				?>
 				<div>Вы ввели неправильный логин или пароль!</div>
 				<form method="post" action="login">
-					<input type="text" name="login" value="<?//urpylka?>" onclick="if(this.value=='<?//urpylka?>')this.value='';" onblur="if(this.value=='')this.value='<?//urpylka?>';" />
-					<input type="password" name="password" value="<?//urpylka?>" onclick="if(this.value=='<?//urpylka?>')this.value='';" onblur="if(this.value=='')this.value='<?//urpylka?>';" />
+					<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+					<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
 					<input type="submit" value="Войти" />
 				</form>
 				<?
@@ -52,8 +52,8 @@
 			?>
 			<div>Введите учетные данные</div>
 			<form method="post" action="login<?echo(isset($_GET['refer'])?"?refer=".$_GET['refer']:"");?>">
-				<input type="text" name="login" value="<?//urpylka?>" onclick="if(this.value=='<?//urpylka?>')this.value='';" onblur="if(this.value=='')this.value='<?//urpylka?>';" />
-				<input type="password" name="password" value="<?//urpylka?>" onclick="if(this.value=='<?//urpylka?>')this.value='';" onblur="if(this.value=='')this.value='<?//urpylka?>';" />
+				<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+				<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
 				<input type="submit" value="Войти" />
 			</form>
 		<?}

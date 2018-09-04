@@ -3,7 +3,7 @@ if(!isset($_GET['op'])) { ?>
   <div id="workzone">
     <div class="corner tl"></div>
     <div class="corner tr"></div>
-    <form method="post" action="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/change_pass/new/">
+    <form method="post" action="http://<?=$_SERVER['HTTP_HOST']?>/admin/change_pass/new/">
         <div class="field"><input type="text" name="login" />&larr; Логин</div>
         <div class="field"><input type="text" name="old_pass" />&larr; Старый пароль</div>
         <div class="field"><input type="text" name="new_pass" />&larr; Новый пароль</div>

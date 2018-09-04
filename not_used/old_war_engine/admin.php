@@ -6,12 +6,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
   <head>
     <title>Панель администрирования</title>
-    <link rel="stylesheet"  type="text/css" href="http://<? echo $_SERVER['HTTP_HOST']; ?>/css/admin.css" media="screen" />
-    <link rel="stylesheet"  type="text/css" href="http://<? echo $_SERVER['HTTP_HOST']; ?>/css/selects.css" media="screen" />
-    <script type="text/javascript" src="http://<? echo $_SERVER['HTTP_HOST']; ?>/js/jquery.js"></script>
-    <script type="text/javascript" src="http://<? echo $_SERVER['HTTP_HOST']; ?>/js/ckeditor/ckeditor.js"></script>
-    <script type="text/javascript" src="http://<? echo $_SERVER['HTTP_HOST']; ?>/js/jquery.selects.js"></script>
-    <script type="text/javascript" src="http://<? echo $_SERVER['HTTP_HOST']; ?>/js/jsScroll.js"></script>
+    <link rel="stylesheet"  type="text/css" href="http://<?=$_SERVER['HTTP_HOST']?>/css/admin.css" media="screen" />
+    <link rel="stylesheet"  type="text/css" href="http://<?=$_SERVER['HTTP_HOST']?>/css/selects.css" media="screen" />
+    <script type="text/javascript" src="http://<?=$_SERVER['HTTP_HOST']?>/js/jquery.js"></script>
+    <script type="text/javascript" src="http://<?=$_SERVER['HTTP_HOST']?>/js/ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="http://<?=$_SERVER['HTTP_HOST']?>/js/jquery.selects.js"></script>
+    <script type="text/javascript" src="http://<?=$_SERVER['HTTP_HOST']?>/js/jsScroll.js"></script>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   </head>
   <body>
@@ -65,7 +65,7 @@
         <div id="wrap">
               <div id="menu">
                   <ul>
-                      <li><a href="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/menu/">Меню</a></li><li><a href="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/news/">Новости</a></li><li><a href="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/change_pass/">Сменить пароль</a></li><li><a href="http://<? echo $_SERVER['HTTP_HOST']; ?>/upldr/index.php" target="blank">Загрузчик</a></li><li><a href="http://<? echo $_SERVER['HTTP_HOST']; ?>/admin/logout/">Выйти</a></li><li><a>Техподдержка: cap.ssau@gmail.com</a></li>
+                      <li><a href="http://<?=$_SERVER['HTTP_HOST']?>/admin/menu/">Меню</a></li><li><a href="http://<?=$_SERVER['HTTP_HOST']?>/admin/news/">Новости</a></li><li><a href="http://<?=$_SERVER['HTTP_HOST']?>/admin/change_pass/">Сменить пароль</a></li><li><a href="http://<?=$_SERVER['HTTP_HOST']?>/upldr/index.php" target="blank">Загрузчик</a></li><li><a href="http://<?=$_SERVER['HTTP_HOST']?>/admin/logout/">Выйти</a></li><li><a>Техподдержка: cap.ssau@gmail.com</a></li>
                   </ul>
                   <div class="corner bl"></div>
                   <div class="corner br"></div>

@@ -1,1 +1,1 @@
-<?php include_once $text;?>
+<? include_once $text; ?>
