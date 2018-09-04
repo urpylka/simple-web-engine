@@ -1,14 +1,5 @@
 <?
 	// Сначала проверяем может ли данный пользователь по cookie выполнять данный запрос
-	var_dump($_SESSION);
-	if ( isset($_SESSION['PHPSESSID']) )
-	{
-		echo "<p>".$_SESSION['PHPSESSID']."</p>";
-	}
-	{
-		echo "<p>PHPSESSID does not exist.</p>";
-	}
-
 
 	if ( isset($_POST['moo_link']) && isset($_POST['moo_text']) )
 	{

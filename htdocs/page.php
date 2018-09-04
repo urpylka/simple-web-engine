@@ -1,6 +1,11 @@
 <?
 //http://telegra.ph/Napisanie-sobstvennoj-CMS-03-14
 session_start();
+
+var_dump($_SESSION);
+if ( isset($_SESSION['PHPSESSID']) ) echo "<p>".$_SESSION['PHPSESSID']."</p>";
+else echo "<p>PHPSESSID does not exist.</p>";
+
 $_SESSION['group_id'] = isset($_SESSION['login'])?$_SESSION['group_id']:"1";
 
 error_reporting(E_ALL);
