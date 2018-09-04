@@ -6,6 +6,8 @@ $_SESSION['group_id'] = isset($_SESSION['login'])?$_SESSION['group_id']:"1";
 error_reporting(E_ALL);
 header('Content-Type: text/html; charset=utf-8');
 
+include("config.php");
+
 if (DEBUG)
 {
 	ini_set('display_errors', 1);
@@ -16,8 +18,6 @@ else
 	ini_set('display_errors', 0);
 	ini_set('display_startup_errors', 0);
 }
-
-include("config.php");
 
 $db = @mysql_connect("$host:$port", "$login_mysql", "$password_mysql"); 
 if (!$db) exit("<center><p class=\"error\">К сожалению, не доступен сервер MySQL</p></center>"); 
