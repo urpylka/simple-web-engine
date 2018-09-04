@@ -1,11 +1,6 @@
 <?
 session_start();
 
-echo '<p>'.session_name().' = '.session_id().'</p>';
-
-if ( isset($_SESSION['PHPSESSID']) ) echo "<p>".$_SESSION['PHPSESSID']."</p>";
-else echo "<p>PHPSESSID does not exist.</p>";
-
 $_SESSION['group_id'] = isset($_SESSION['login'])?$_SESSION['group_id']:"1";
 
 error_reporting(E_ALL);
