@@ -6,6 +6,7 @@ error_reporting(E_ALL);
 header('Content-Type: text/html; charset=utf-8');
 ini_set('display_errors', 0);
 ini_set('display_startup_errors', 0);
+
 include("config.php");
 
 $db = @mysql_connect("$host", "$login_mysql", "$password_mysql"); 
