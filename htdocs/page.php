@@ -19,6 +19,13 @@ else
 	ini_set('display_startup_errors', 0);
 }
 
+try { $db = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8",  $login_mysql,  $password_mysql); }
+catch(PDOException $e)
+{
+	echo "You have an error: ".$e->getMessage()."<br>";
+	echo "On line: ".$e->getLine();
+}
+
 $db = @mysql_connect("$host:$port", "$login_mysql", "$password_mysql"); 
 if (!$db) exit("<center><p class=\"error\">К сожалению, не доступен сервер MySQL</p></center>"); 
 if (!@mysql_select_db($dbname, $db)) exit("<center><p class=\"error\">К сожалению, не доступна база данных</p></center>");

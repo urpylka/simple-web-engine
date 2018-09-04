@@ -1,12 +1,4 @@
-<? include("config.php");
-
-	try { $db = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8",  $login_mysql,  $password_mysql); }
-	catch(PDOException $e)
-	{
-		echo "You have an error: ".$e->getMessage()."<br>";
-		echo "On line: ".$e->getLine();
-	}
-
+<?
 	// Сначала проверяем может ли данный пользователь по cookie выполнять данный запрос
 
 	if ( isset($_POST['moo_link']) && isset($_POST['moo_text']) )
