@@ -79,7 +79,7 @@ switch($template){
 	case 'standart': include_once("modules/template_standart.php"); break;
 	case 'contacts': include_once("modules/template_contacts.php"); break;
 	case 'block': include_once("modules/template_block.php"); break;
-	case 'blank': include_once("modules/template_blank.php"); break;
+	case 'blank': include_once($text); break;
 	case 'section2': include_once("modules/template_section.php"); break;
 	default:
 	    $access_id = 1000;
