@@ -38,29 +38,26 @@ function getCustomerInfo() {
 	//request.setRequestHeader('Content-type: text/html; charset=utf-8');
 	request.onreadystatechange = updatePage;
 	request.send(data);
-   }
+}
 
-      function updatePage() {
-     if (request.readyState == 4) {
-       if (request.status == 200) {
-	       
-         var response = request.responseText;
-         document.getElementById("status_urpylka").innerHTML = response;
-	     //  alert(response);
-         //var response = request.responseText.split("|");
-         //document.getElementById("order").value = response[0];
-         //document.getElementById("address").innerHTML = response[1].replace(/\n/g, "<br />");
-       } else if (request.status == 404) {
-         alert ("Requested URL is not found.");
-       } else if (request.status == 403) {
-         alert("Access denied.");
-       } else
-         alert("status is " + request.status);
-     }
-   }
+function updatePage() {
+	if (request.readyState == 4) {
+		if (request.status == 200) {
+			var response = request.responseText;
+			document.getElementById("status_urpylka").innerHTML = response;
+		  //alert(response);
+			//var response = request.responseText.split("|");
+			//document.getElementById("order").value = response[0];
+			//document.getElementById("address").innerHTML = response[1].replace(/\n/g, "<br />");
+		} else if (request.status == 404) {
+			alert ("Requested URL is not found.");
+		} else if (request.status == 403) {
+			alert("Access denied.");
+		} else
+			alert("Server return status: " + request.status);
+	}
+}
 </script>
-
-
 
 <style type="text/css">
 	body{
@@ -94,7 +91,6 @@ function getCustomerInfo() {
 <script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.js"></script>
 <script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.UI.MenuList.js"></script>
 <script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.Extras.js"></script>
-
 
 <script type="text/javascript">
 	window.addEvent('domready', function(){
@@ -142,6 +138,7 @@ function getCustomerInfo() {
 			return false;});});
 			*/
 </script>
+
 <form id="theForm" method="post" action="editor" style="padding: 0; width: 990px !important; margin: 0px;">
 	<textarea id="textarea-1" name="editable1">
 	<?=$moo_text;?>
