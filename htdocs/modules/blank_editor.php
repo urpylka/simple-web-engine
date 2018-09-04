@@ -13,8 +13,8 @@
 
 	if ($DEBUG)
 	{
-	    echo $page_link;
-		echo $_POST['moo_text'];
+	    echo "page_link: ".$page_link;
+		echo "moo_text: ".$_POST['moo_text'];
 	}
 
 	if($page_link != NULL)
@@ -23,19 +23,19 @@
 		//$page_by_link = $db->getRow("SELECT id FROM pages WHERE link = s:", $page_link);
 		//return $page_by_link;
 
+		//$login  = $db->quote($_POST["login"]);
+		//$result = $db->query("SELECT * FROM users WHERE login = $login");
+
 		$page_by_link = $db->prepare("SELECT id FROM pages WHERE link = :page_link");
 		$page_by_link->bindValue(':page_link', $page_link, PDO::PARAM_STR);
 		$page_by_link->execute();
+		$page_by_link = $page_by_link->FETCH(PDO::FETCH_NUM);
 
 		if ($DEBUG)
 		{
 	    	echo $page_by_link->rowCount();
-			echo $page_by_link;
+			echo $page_by_link[0];
 		}
-		
-
-
-
 
 		$page_sql = mysql_query("SELECT id FROM pages WHERE link = '".$page_link."';");
 
