@@ -3,7 +3,7 @@
 		<h1><?=$name?></h1>
 		<?
 		// ВЫХОД
-		if($_GET['action'] == "logout" && isset($_SESSION['login']))
+		if ( ( isset($_GET['action']) && $_GET['action'] == "logout" ) && isset($_SESSION['login']) )
 		{
 			session_unset();
 			session_destroy();
