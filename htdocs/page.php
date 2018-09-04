@@ -19,7 +19,7 @@ else
 	ini_set('display_startup_errors', 0);
 }
 
-try { $db = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8",  $login_mysql,  $password_mysql); }
+try { $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8",  $login_mysql,  $password_mysql); }
 catch(PDOException $e)
 {
 	echo "You have an error: ".$e->getMessage()."<br>";
