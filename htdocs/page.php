@@ -43,7 +43,7 @@ if($page_link!=NULL)
 	$count=mysql_num_rows($page_sql);
 	switch($count){
 		case '0':
-			throw new Exception('По данному запросу не найдено страниц в базе данных.');
+			throw new Exception('No pages were found in the database for this query.');
 		case '1':
 			$view_page_info = mysql_fetch_assoc($page_sql);
 			$name = $view_page_info['name'];
@@ -52,7 +52,7 @@ if($page_link!=NULL)
 			$access_id = $view_page_info['access_id'];
 			break;
 		default:
-			throw new Exception('По данному запросу возвращено $count страниц, а должна быть одна.');
+			throw new Exception('$count pages have been returned for this request, but there must be one.');
 	}
 }
 if($_SESSION['group_id']>=$access_id)//на самом деле не так потому что могут быть разные логины (отдельный запрос в бд)
