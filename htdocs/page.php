@@ -36,7 +36,7 @@ if($page_id!=NULL)
 }
 */
 $page_link=$_GET['link'];
-//echo $page_link;
+if ($DEBUG) { echo $page_link; }
 if($page_link!=NULL)
 {
 	$page_sql=mysql_query("SELECT name,text,template,access_id FROM pages WHERE link='".$page_link."';");
@@ -80,7 +80,7 @@ switch($template){
 	    $name = "Ошибка!";
 		$text = "Шаблон для этой страницы отсутствует";
 		include_once("modules/template_standart.php");
-		//echo("Ошибка: Шаблон для этой страницы отсутствует");
+		if ($DEBUG) { echo("Ошибка: Шаблон для этой страницы отсутствует"); }
 		break;
 }
 else
