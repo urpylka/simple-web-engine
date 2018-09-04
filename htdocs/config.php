@@ -9,4 +9,7 @@
     $login_mysql = "test";
     $password_mysql = "test";
     $dbname = "database";
+
+    //Developer settings
+    $DEBUG = TRUE
 ?>
