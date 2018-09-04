@@ -49,7 +49,7 @@ if($page_id!=NULL)
 }
 */
 $page_link=$_GET['link'];
-if ($DEBUG) { echo $page_link; }
+if ($DEBUG) { echo "page_link: ".$page_link; }
 if($page_link!=NULL)
 {
 	$page_sql=mysql_query("SELECT name,text,template,access_id FROM pages WHERE link='".$page_link."';");
