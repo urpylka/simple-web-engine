@@ -34,7 +34,7 @@
 		if ($DEBUG)
 		{
 	    	echo "rowCount: ".$page_by_link->rowCount();
-			echo "id: ".$page_by_link[0]['id'];
+			echo "id: ".$page_by_link['id'];
 		}
 
 		$page_sql = mysql_query("SELECT id FROM pages WHERE link = '".$moo_link."';");
