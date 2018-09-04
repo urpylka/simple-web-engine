@@ -10,6 +10,6 @@
 		</article>
 	</main>
 	<hr/>
-	<? include_once 'modules/block_main-menu.php'; ?>
+	<? include_once 'modules/block_main_menu.php'; ?>
 	<hr/>
 <? include_once 'modules/site_footer.php'; ?>
