@@ -29,14 +29,14 @@
 		$page_by_link = $db->prepare("SELECT id FROM pages WHERE link = :moo_link");
 		$page_by_link->bindValue(':moo_link', $moo_link, PDO::PARAM_STR);
 		$page_by_link->execute();
-
+		$count_pages = $page_by_link->rowCount();
 		if ($DEBUG)
 		{
 			var_dump($page_by_link);
-	    	echo "rowCount: ".$page_by_link->rowCount();
+	    	echo "count_pages: ".$count_pages;
 		}
 
-		switch($page_by_link->rowCount()){
+		switch(count_pages){
 			case '0': throw new Exception('No pages were found in the database for this query.');
 			case '1':
 				echo $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'];
