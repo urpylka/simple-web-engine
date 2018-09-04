@@ -3,7 +3,6 @@ session_start();
 
 echo '<p>'.session_name().' = '.session_id().'</p>';
 
-var_dump($_SESSION);
 if ( isset($_SESSION['PHPSESSID']) ) echo "<p>".$_SESSION['PHPSESSID']."</p>";
 else echo "<p>PHPSESSID does not exist.</p>";
 
