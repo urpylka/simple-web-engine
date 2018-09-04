@@ -2,10 +2,10 @@
 	// Сначала проверяем может ли данный пользователь по cookie выполнять данный запрос
 	if ( isset($_SESSION['PHPSESSID']) )
 	{
-		echo $_SESSION['PHPSESSID'];
+		echo "<p>".$_SESSION['PHPSESSID']."</p>";
 	}
 	{
-		echo "PHPSESSID does not exist";
+		echo "<p>PHPSESSID does not exist.</p>";
 	}
 
 
@@ -17,16 +17,16 @@
 		$count_pages = $page_by_link->rowCount();
 
 		switch($count_pages) {
-			case '0': echo("ERROR: No pages were found in the database for this query.");
+			case '0': echo("<p>ERROR: No pages were found in the database for this query.</p>");
 			case '1':
 				$update_page = $pdo->prepare("UPDATE `pages` SET `text` = :moo_text WHERE `id` = :id;");
 				$update_page->bindValue(':moo_text', $_POST['moo_text'], PDO::PARAM_STR);
 				$update_page->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
 				if ($update_page->execute()) echo "<p style='margin-left:30px;'>The page was saved!</p>";
-				else echo("ERROR: Could not update the page!");
+				else echo("<p>ERROR: Could not update the page!</p>");
 				break;
-			default: echo("ERROR: $count_pages pages have been returned for this request, but there must be one!");
+			default: echo("<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>");
 		}
 	}
-	else echo("ERROR: The post request is not correct!");
+	else echo("<p>ERROR: The post request is not correct!</p>");
 ?>
