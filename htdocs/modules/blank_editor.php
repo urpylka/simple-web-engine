@@ -10,16 +10,32 @@
 	// Сначала проверяем может ли данный пользователь по cookie выполнять данный запрос
 
 	$page_link = $_POST['moo_link'];
+
 	if ($DEBUG)
 	{
 	    echo $page_link;
 		echo $_POST['moo_text'];
 	}
+
 	if($page_link != NULL)
 	{
 
-		$page_by_link = $db->getRow("SELECT id FROM pages WHERE link = s:", $page_link);
-		return $page_by_link;
+		//$page_by_link = $db->getRow("SELECT id FROM pages WHERE link = s:", $page_link);
+		//return $page_by_link;
+
+		$page_by_link = $db->prepare("SELECT id FROM pages WHERE link = :page_link");
+		$page_by_link->bindValue(':page_link', $page_link, PDO::PARAM_STR);
+		$page_by_link->execute();
+
+		if ($DEBUG)
+		{
+	    	echo $page_by_link->rowCount();
+			echo $page_by_link;
+		}
+		
+
+
+
 
 		$page_sql = mysql_query("SELECT id FROM pages WHERE link = '".$page_link."';");
 
