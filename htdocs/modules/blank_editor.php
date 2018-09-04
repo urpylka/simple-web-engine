@@ -29,7 +29,7 @@
 		$page_by_link = $db->prepare("SELECT id FROM pages WHERE link = :moo_link");
 		$page_by_link->bindValue(':moo_link', $moo_link, PDO::PARAM_STR);
 		$page_by_link->execute();
-		$page_by_link = $page_by_link->FETCH(PDO::FETCH_ASSOC);
+		//$page_by_link = $page_by_link->FETCH(PDO::FETCH_ASSOC);
 
 		if ($DEBUG)
 		{
