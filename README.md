@@ -48,3 +48,31 @@
 * Апач смотрит конфиги от рута
 * Добавить соль в md5
 * Добавить защиту от mysql инъекций
+
+# Docker LAMP
+Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
+
+## Instructions
+
+Enter the following command to start your containers:
+
+```bash
+sudo docker-compose up -d
+```
+
+To stop them, use this:
+
+```bash
+sudo docker-compose stop
+```
+
+To view logs^ use them:
+
+```bash
+sudo docker-compose logs -f -t
+```
+
+Feel free to make pull requests and help to improve this.
+
+If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
+

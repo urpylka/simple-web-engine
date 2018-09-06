@@ -6,7 +6,7 @@
     // Database settings
     $host = "robotic.lol";
     $port = "3306";
-    $login_mysql = "test";
+    $login_mysql = "admin";
     $password_mysql = "test";
     $dbname = "database";
 
