@@ -1,8 +1,4 @@
 <?
-session_start();
-
-$_SESSION['group_id'] = isset($_SESSION['login'])?$_SESSION['group_id']:"1";
-
 error_reporting(E_ALL);
 header('Content-Type: text/html; charset=utf-8');
 
@@ -25,6 +21,33 @@ catch(PDOException $e)
 	echo "You have an error: ".$e->getMessage()."<br>";
 	echo "On line: ".$e->getLine();
 }
+
+session_start();
+$user_by_phpsessid = $pdo->prepare("SELECT `user_id` FROM `sessions` WHERE phpsessid = :phpsessid;");
+$user_by_phpsessid->bindValue(':phpsessid', session_id(), PDO::PARAM_STR);
+$user_by_phpsessid->execute();
+$count_users = $user_by_phpsessid->rowCount();
+
+switch($count_users) {
+	case '0':
+		echo("<p>ERROR: No users were found in the database for this query.</p>");
+		break;
+	case '1':
+		$update_page = $pdo->prepare("UPDATE `pages` SET `text` = :moo_text WHERE `id` = :id;");
+		$update_page->bindValue(':moo_text', $_POST['moo_text'], PDO::PARAM_STR);
+		$update_page->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
+		if ($update_page->execute()) echo "<p style='margin-left:30px;'>The page was saved!</p>";
+		else echo("<p>ERROR: Could not update the page!</p>");
+		break;
+	default:
+		echo("<p>ERROR: $count_users pages have been returned for this request, but there must be one!</p>");
+		break;
+}
+
+
+$_SESSION['group_id'] = isset($_SESSION['login'])?$_SESSION['group_id']:"1";
+
+
 
 $db = @mysql_connect("$host:$port", "$login_mysql", "$password_mysql"); 
 if (!$db) exit("<center><p class=\"error\">К сожалению, не доступен сервер MySQL</p></center>"); 
