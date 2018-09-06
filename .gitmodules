@@ -1,6 +1,8 @@
 [submodule "htdocs/mooeditable"]
 	path = htdocs/mooeditable
 	url = https://github.com/urpylka/mooeditable.git
+	ignore = dirty
 [submodule "htdocs/phpqrcode"]
 	path = htdocs/phpqrcode
 	url = https://github.com/urpylka/phpqrcode.git
+	ignore = dirty
