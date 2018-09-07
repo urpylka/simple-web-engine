@@ -62,8 +62,9 @@ $root_list_menu->bindValue(':root_id', 0, PDO::PARAM_INT);
 $root_list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 $root_list_menu->execute();
 
-$root_list_menu = $root_list_menu->FETCH(PDO::FETCH_ASSOC);
+$root_list_menu = $root_list_menu->FETCH(PDO::FETCH_NUM);
 foreach ( $root_list_menu as $root_item ) {
+	$root_item = $root_item->FETCH(PDO::FETCH_ASSOC);
 
 	$inner_list_menu = $pdo->prepare($get_pages);
 	$inner_list_menu->bindValue(':root_id', $root_item['id'], PDO::PARAM_INT);
@@ -77,6 +78,7 @@ foreach ( $root_list_menu as $root_item ) {
 		$root_item['id'] = ( $root_item['id'] == 1 ) ? '0' : $root_item['id'];
 		echo "<ul>";
 
+		$inner_list_menu = $inner_list_menu->FETCH(PDO::FETCH_NUM);
 		foreach ( $inner_list_menu as $inner_item ) {
 			$inner_item = $inner_item->FETCH(PDO::FETCH_ASSOC);
 			echo "<li><a href=\"".$inner_item['link']."\">".$inner_item['name']."</a></li>";
