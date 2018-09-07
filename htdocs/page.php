@@ -17,6 +17,7 @@ try { $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8", 
 catch(PDOException $e) {
 	echo "You have an error: ".$e->getMessage()."<br>";
 	echo "On line: ".$e->getLine();
+	exit(1);
 }
 
 $login = NULL;
