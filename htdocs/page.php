@@ -50,8 +50,7 @@ $page_by_link->bindValue(':page_link', $page_link, PDO::PARAM_STR);
 $page_by_link->bindValue(':admin_flag', $admin_flag, PDO::PARAM_STR);
 $page_by_link->execute();
 $count_pages = $page_by_link->rowCount();
-
-var_dump($page_by_link->FETCH(PDO::FETCH_ASSOC));
+$page_by_link = $page_by_link->FETCH(PDO::FETCH_ASSOC);
 
 switch($count_pages) {
 	case '0':
@@ -62,9 +61,9 @@ switch($count_pages) {
 		break;
 	case '1':
 		$error_output = 0;
-		$page_title = $page_by_link->FETCH(PDO::FETCH_ASSOC)['name'];
-		$page_content = $page_by_link->FETCH(PDO::FETCH_ASSOC)['text'];
-		$page_template = $page_by_link->FETCH(PDO::FETCH_ASSOC)['template'];
+		$page_title = $page_by_link['name'];
+		$page_content = $page_by_link['text'];
+		$page_template = $page_by_link['template'];
 		break;
 	default:
 		$error_output = 1;
