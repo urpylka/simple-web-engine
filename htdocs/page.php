@@ -89,7 +89,7 @@ switch($page_template){
 	default:
 		$error_output = 1;
 	    $page_title = "Ошибка!";
-		$page_content = "Шаблон \"".$page_template."\" для страницы \"".$page_title."\"отсутствует";
+		$page_content = "Шаблон \"<b>".$page_template."</b>\" для страницы <b>".$page_link."</b> отсутствует";
 		include_once("modules/template_standart.php");
 		break;
 }
