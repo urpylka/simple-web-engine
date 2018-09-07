@@ -42,8 +42,10 @@ switch($count_users) {
 		exit(1);
 }
 
+$page_link = $_GET['link']
+
 $page_by_link = $pdo->prepare("SELECT `pages`.`name`,`pages`.`text`,`pages`.`template` FROM `pages` WHERE (`pages`.`link` = :page_link AND `pages`.`public_flag` = 1) OR (`pages`.`link` = :page_link AND :admin_flag);");
-$page_by_link->bindValue(':page_link', $_GET['link'], PDO::PARAM_STR);
+$page_by_link->bindValue(':page_link', $page_link, PDO::PARAM_STR);
 $page_by_link->bindValue(':admin_flag', $admin_flag, PDO::PARAM_STR);
 $page_by_link->execute();
 $count_pages = $page_by_link->rowCount();
