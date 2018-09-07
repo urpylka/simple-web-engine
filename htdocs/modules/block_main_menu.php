@@ -61,7 +61,7 @@ $list_menu->bindValue(':root_id', 0, PDO::PARAM_INT);
 $list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 $list_menu->execute();
 
-foreach ($list_menu->FETCH(PDO::FETCH_NUM) as $as) var_dump($as);
+foreach ( $list_menu->FETCH(PDO::FETCH_ASSOC) as $as ) var_dump($as);
 exit(1);
 
 foreach ( $list_menu as $root_item ) {
