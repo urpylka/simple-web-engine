@@ -1,6 +1,6 @@
 <article>
 	<section class="text-content" id="fullpage">
-		<h1><?=$name?></h1>
+		<h1><?=$page_title?></h1>
 		<?
 		// ВЫХОД
 		if ( ( isset($_GET['action']) && $_GET['action'] == "logout" ) && isset($_SESSION['login']) )
