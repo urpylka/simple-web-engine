@@ -59,12 +59,16 @@ switch($count_pages) {
 		include_once("modules/template_standart.php");
 		exit(1);
 	case '1':
+		if ($DEBUG) { echo "<p>count_pages: ".$count_pages."</p>"; }
 		$page_title = $page_by_link->FETCH(PDO::FETCH_ASSOC)['name'];
 		$page_content = $page_by_link->FETCH(PDO::FETCH_ASSOC)['text'];
 		$page_template = $page_by_link->FETCH(PDO::FETCH_ASSOC)['template'];
 		break;
 	default:
-		echo("<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>");
+		$error_output = 1;
+		$page_title = "Ошибка!";
+		$page_content = "<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>";
+		include_once("modules/template_standart.php");
 		exit(1);
 }
 
