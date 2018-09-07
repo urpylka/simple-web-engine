@@ -31,7 +31,6 @@ $count_users = $user_by_phpsessid->rowCount();
 
 switch($count_users) {
 	case '0':
-		if ($DEBUG) { echo("<p>You is not login yet</p>"); }
 		break;
 	case '1':
 		$user_by_phpsessid = $user_by_phpsessid->FETCH(PDO::FETCH_ASSOC);
@@ -75,6 +74,8 @@ switch($count_pages) {
 }
 
 if ($DEBUG) {
+	echo "<p>login: ".$login."</p>";
+	echo "<p>admin_flag: ".$admin_flag."</p>";
 	echo "<p>count_pages: ".$count_pages."</p>";
 	echo "<p>page_link: ".$page_link."</p>";
 	echo "<p>page_title: ".$page_title."</p>";
