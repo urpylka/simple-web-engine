@@ -60,9 +60,8 @@ $list_menu = $pdo->prepare("SELECT `pages`.`id`,`pages`.`name`,`pages`.`link` FR
 $list_menu->bindValue(':root_id', 0, PDO::PARAM_INT);
 $list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 $list_menu->execute();
-$list_menu = $list_menu->FETCH(PDO::FETCH_NUM);
 
-var_dump($list_menu);
+foreach ($list_menu->FETCH(PDO::FETCH_NUM) as $as) var_dump($as);
 exit(1);
 
 foreach ( $list_menu as $root_item ) {
