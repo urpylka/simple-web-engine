@@ -69,9 +69,9 @@ switch($count_pages) {
 }
 
 if ($DEBUG) {
-	echo "page_link: ".$page_link."/n";
-	echo "page_title: ".$page_title."/n";
-	echo "page_template: ".$page_template."/n";
+	echo "<p>page_link: ".$page_link."</p>";
+	echo "<p>page_title: ".$page_title."</p>";
+	echo "<p>page_template: ".$page_template."</p>";
 }
 
 switch($page_template){
