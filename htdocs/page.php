@@ -31,7 +31,7 @@ $count_users = $user_by_phpsessid->rowCount();
 
 switch($count_users) {
 	case '0':
-		echo("<p>You is not login yet</p>");
+		if ($DEBUG) { echo("<p>You is not login yet</p>"); }
 		break;
 	case '1':
 		$login = $user_by_phpsessid->FETCH(PDO::FETCH_ASSOC)['login'];
