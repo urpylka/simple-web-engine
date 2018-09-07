@@ -61,12 +61,7 @@ $list_menu->bindValue(':root_id', 0, PDO::PARAM_INT);
 $list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 $list_menu->execute();
 
-while ( $as = $list_menu->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) ) var_dump($as);
-exit(1);
-
-foreach ( $list_menu as $root_item ) {
-	$root_item = $root_item->FETCH(PDO::FETCH_ASSOC);
-
+while ( $root_item = $list_menu->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) ) {
 	$list_menu->bindValue(':root_id', $root_item['id'], PDO::PARAM_INT);
 	$list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 	$list_menu->execute();
@@ -78,9 +73,7 @@ foreach ( $list_menu as $root_item ) {
 		$root_item['id'] = ( $root_item['id'] == 1 ) ? '0' : $root_item['id'];
 		echo "<ul>";
 
-		$list_menu = $list_menu->FETCH(PDO::FETCH_NUM);
-		foreach ( $list_menu as $inner_item ) {
-			$inner_item = $inner_item->FETCH(PDO::FETCH_ASSOC);
+		while ( $inner_item = $list_menu->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) ) {
 			echo "<li><a href=\"".$inner_item['link']."\">".$inner_item['name']."</a></li>";
 		}
 		echo "</ul>";
