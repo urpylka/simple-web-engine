@@ -53,7 +53,7 @@ $count_pages = $page_by_link->rowCount();
 
 switch($count_pages) {
 	case '0':
-		//echo("<p>ERROR: 403 Access denied</p>");
+		$error_output = 1;
 		$name = "Ошибка 403";
 		$text = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
 		include_once("modules/template_standart.php");
@@ -82,6 +82,7 @@ switch($page_template){
 	case 'blank': include_once($page_content); break;
 	case 'section2': include_once("modules/template_section.php"); break;
 	default:
+		$error_output = 1;
 	    $page_title = "Ошибка!";
 		$page_content = "Шаблон для этой страницы отсутствует";
 		include_once("modules/template_standart.php");

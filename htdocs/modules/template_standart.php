@@ -13,7 +13,7 @@
 			</section>
 		</article>
 		<?
-			if ($admin_flag)
+			if ($admin_flag && ! $error_output)
 			{
 				$moo_text = $page_content;
 				$moo_link = $page_link;
