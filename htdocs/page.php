@@ -54,8 +54,8 @@ $count_pages = $page_by_link->rowCount();
 switch($count_pages) {
 	case '0':
 		$error_output = 1;
-		$name = "Ошибка 403";
-		$text = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
+		$page_title = "Ошибка 403";
+		$page_content = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
 		include_once("modules/template_standart.php");
 		exit(1);
 	case '1':
