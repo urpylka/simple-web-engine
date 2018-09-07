@@ -50,7 +50,7 @@
 				</div>
 				<div style="float:left;width:360px;">
 					<div class="headnews">Новости</div>
-					<div style="margin-left: 20px;"</div>
+					<div style="margin-left: 20px;"></div>
 					<h2>Добро-пожаловать на новый сайт</h2>
 					<p align="justify">В рамках курсовой работы разработан сайт для военной кафедры Самарского университета. Сайт выполнен в статичном виде. Применено 5 javascript`ов. Автор сайта Смирнов Артем.</p>
 					<!--a href="/" class="button">Подробнее</a-->
