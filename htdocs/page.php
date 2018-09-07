@@ -56,8 +56,10 @@ switch($count_pages) {
 		$error_output = 1;
 		$page_title = "Ошибка 403";
 		$page_content = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
+		$page_template = "standart";
 		break;
 	case '1':
+		$error_output = 0;
 		$page_title = $page_by_link->FETCH(PDO::FETCH_ASSOC)['name'];
 		$page_content = $page_by_link->FETCH(PDO::FETCH_ASSOC)['text'];
 		$page_template = $page_by_link->FETCH(PDO::FETCH_ASSOC)['template'];
@@ -66,6 +68,7 @@ switch($count_pages) {
 		$error_output = 1;
 		$page_title = "Ошибка!";
 		$page_content = "<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>";
+		$page_template = "standart";
 		break;
 }
 
