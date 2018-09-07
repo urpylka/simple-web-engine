@@ -55,38 +55,33 @@ $('.toggle').children('a').click(function () {
 </script>
 <ul id="main-menu">
 <?
-$parent=0;
-$current=1;
-$menu = mysql_query("SELECT * FROM pages WHERE parent=\"0\" ORDER BY id ASC");
-$list_nemu = null;
-while($list_menu = mysql_fetch_array($menu))
-{
-	if($parent == $list_menu['id']){echo "<li class=\"select\"><a href=\"".$list_menu['link']."\">".$list_menu['name']."</a></li>";}
-	else
-	{
-		$menu2 = mysql_query("SELECT * FROM pages WHERE parent=\"".$list_menu['id']."\" ORDER BY id ASC");
-		$count=mysql_num_rows($menu2);
-		if($count==0)
-		{
-			echo "<li>";
-			echo "<a href=\"".$list_menu['link']."\">".$list_menu['name']."</a>";
-			echo "</li>";
+$get_pages="SELECT `pages`.`id`,`pages`.`name`,`pages`.`link` FROM `pages` WHERE `pages`.`parent` = :root_id AND ( `pages`.`public_flag` = 1 OR :admin_flag ) ORDER BY `pages`.`id` ASC;";
+
+$root_list_menu = $pdo->prepare($get_pages);
+$root_list_menu->bindValue(':parent_id', 0, PDO::PARAM_INT);
+$root_list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
+$root_list_menu->execute();
+
+$root_list_menu = $root_list_menu->FETCH(PDO::FETCH_ASSOC);
+foreach ( $root_list_menu as $root_item ) {
+	$inner_list_menu = $pdo->prepare($get_pages);
+	$inner_list_menu->bindValue(':parent_id', $root_item['id'], PDO::PARAM_INT);
+	$root_list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
+	$inner_list_menu->execute();
+
+	if ( $inner_list_menu->rowCount() == 0 ) { echo "<li><a href=\"".$root_item['link']."\">".$root_item['name']."</a></li>"; }
+	else {
+		echo "<li class='toggle'>";
+		echo "<a href=\"".$root_item['link']."\">".$root_item['name']."</a>";
+		$root_item['id'] = ( $root_item['id'] == 1 ) ? '0' : $root_item['id'];
+		echo "<ul>";
+
+		$inner_list_menu = $inner_list_menu->FETCH(PDO::FETCH_ASSOC);
+		foreach ( $inner_list_menu as $inner_item ) {
+			echo "<li><a href=\"".$inner_item['link']."\">".$inner_item['name']."</a></li>";
 		}
-		else{
-			echo "<li class='toggle'>";
-			echo "<a href=\"".$list_menu['link']."\">".$list_menu['name']."</a>";
-			$list_nemu['id']=($list_nemu['id']==1)?'0':$list_nemu['id'];
-			echo "<ul>";
-			while($list_menu2 = mysql_fetch_array($menu2))
-			{
-				if($parent == $list_menu2['id'])
-				{ echo "<li class=\"select\"><a href=\"".$list_menu2['link']."\">".$list_menu2['name']."</a></li>"; }
-				else
-				{ echo "<li><a href=\"".$list_menu2['link']."\">".$list_menu2['name']."</a></li>"; }
-			}
-			echo "</ul>";
-			echo "</li>";
-		}
+		echo "</ul>";
+		echo "</li>";
 	}
 }
 ?>
