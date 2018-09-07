@@ -68,7 +68,11 @@ switch($count_pages) {
 		exit(1);
 }
 
-if ($DEBUG) { echo "page_link: ".$page_link; }
+if ($DEBUG) {
+	echo "page_link: ".$page_link;
+	echo "page_title: ".$page_title;
+	echo "page_template: ".$page_template;
+}
 
 switch($template){
 	case 'main': include_once("modules/template_main.php"); break;
@@ -78,11 +82,9 @@ switch($template){
 	case 'blank': include_once($text); break;
 	case 'section2': include_once("modules/template_section.php"); break;
 	default:
-	    $access_id = 1000;
 	    $name = "Ошибка!";
 		$text = "Шаблон для этой страницы отсутствует";
 		include_once("modules/template_standart.php");
-		if ($DEBUG) { echo("Ошибка: Шаблон для этой страницы отсутствует"); }
 		break;
 }
 ?>
