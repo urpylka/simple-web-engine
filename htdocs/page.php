@@ -59,9 +59,9 @@ switch($count_pages) {
 		include_once("modules/template_standart.php");
 		exit(1);
 	case '1':
-		$name = $page_title = $page_by_link->FETCH(PDO::FETCH_ASSOC)['name'];
-		$text = $page_content = $page_by_link->FETCH(PDO::FETCH_ASSOC)['text'];
-		$template = $page_template = $page_by_link->FETCH(PDO::FETCH_ASSOC)['template'];
+		$page_title = $page_by_link->FETCH(PDO::FETCH_ASSOC)['name'];
+		$page_content = $page_by_link->FETCH(PDO::FETCH_ASSOC)['text'];
+		$page_template = $page_by_link->FETCH(PDO::FETCH_ASSOC)['template'];
 		break;
 	default:
 		echo("<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>");
@@ -74,16 +74,16 @@ if ($DEBUG) {
 	echo "page_template: ".$page_template."/n";
 }
 
-switch($template){
+switch($page_template){
 	case 'main': include_once("modules/template_main.php"); break;
 	case 'standart': include_once("modules/template_standart.php"); break;
 	case 'contacts': include_once("modules/template_contacts.php"); break;
 	case 'block': include_once("modules/template_block.php"); break;
-	case 'blank': include_once($text); break;
+	case 'blank': include_once($page_content); break;
 	case 'section2': include_once("modules/template_section.php"); break;
 	default:
-	    $name = "Ошибка!";
-		$text = "Шаблон для этой страницы отсутствует";
+	    $page_title = "Ошибка!";
+		$page_content = "Шаблон для этой страницы отсутствует";
 		include_once("modules/template_standart.php");
 		break;
 }

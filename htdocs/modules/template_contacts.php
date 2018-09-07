@@ -6,7 +6,7 @@
 	<main>
 		<article>
 			<section class="text-content" id="fullpage" style="display: table !important;">
-			<?=$text?>
+			<?=$page_content?>
 			</section>
 		</article>
 	</main>

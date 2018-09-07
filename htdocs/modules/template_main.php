@@ -6,7 +6,7 @@
 	</header>
 	<main>
 		<article>
-			<? include_once $text; ?>
+			<? include_once $page_content; ?>
 		</article>
 	</main>
 	<hr/>

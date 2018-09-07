@@ -6,17 +6,16 @@
 	<main>
 		<article>
 			<section class="text-content" id="fullpage">
-				<h1><?=$name?></h1>
+				<h1><?=$page_title?></h1>
 				<div id="main_cont">
-					<?=$text?>
+					<?=$page_content?>
 				</div>
 			</section>
 		</article>
-	<? if($_SESSION['group_id']>$access_id)
-	{
-		$moo_text = $text;
-		$moo_link = $page_link;
-		include_once 'modules/module_redactor.php';
-	} ?>
+		<?
+			$moo_text = $page_content;
+			$moo_link = $page_link;
+			include_once 'modules/module_redactor.php';
+		?>
 	</main>
 <? include_once 'modules/site_footer.php'; ?>
