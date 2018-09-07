@@ -58,8 +58,7 @@ $('.toggle').children('a').click(function () {
 $get_pages="SELECT `pages`.`id`,`pages`.`name`,`pages`.`link` FROM `pages` WHERE `pages`.`parent` = :root_id AND ( `pages`.`public_flag` = 1 OR :admin_flag ) ORDER BY `pages`.`id` ASC;";
 
 $root_list_menu = $pdo->prepare($get_pages);
-var_dump($admin_flag);
-$root_list_menu->bindValue(':parent_id', 0, PDO::PARAM_INT);
+$root_list_menu->bindValue(':parent_id', "0", PDO::PARAM_INT);
 $root_list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 $root_list_menu->execute();
 
