@@ -38,7 +38,7 @@ switch($count_users) {
 		$admin_flag = $user_by_phpsessid->FETCH(PDO::FETCH_ASSOC)['admin_flag'];
 		break;
 	default:
-		echo("<p>ERROR: $count_users users have been returned for this request, but there must be one!</p>");
+		echo "<p>ERROR: $count_users users have been returned for this request, but there must be one!</p>";
 		// нужно прервать завершить сессию и сообщить о проблеме
 		exit(1);
 }
@@ -56,10 +56,7 @@ switch($count_pages) {
 		$error_output = 1;
 		$page_title = "Ошибка 403";
 		$page_content = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
-		include_once("modules/template_standart.php");
-		exit(1);
 	case '1':
-		if ($DEBUG) { echo "<p>count_pages: ".$count_pages."</p>"; }
 		$page_title = $page_by_link->FETCH(PDO::FETCH_ASSOC)['name'];
 		$page_content = $page_by_link->FETCH(PDO::FETCH_ASSOC)['text'];
 		$page_template = $page_by_link->FETCH(PDO::FETCH_ASSOC)['template'];
@@ -68,15 +65,16 @@ switch($count_pages) {
 		$error_output = 1;
 		$page_title = "Ошибка!";
 		$page_content = "<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>";
-		include_once("modules/template_standart.php");
-		exit(1);
 }
 
 if ($DEBUG) {
+	echo "<p>count_pages: ".$count_pages."</p>";
 	echo "<p>page_link: ".$page_link."</p>";
 	echo "<p>page_title: ".$page_title."</p>";
 	echo "<p>page_template: ".$page_template."</p>";
 }
+
+if ($error_page) exit(1);
 
 switch($page_template){
 	case 'main': include_once("modules/template_main.php"); break;
@@ -88,8 +86,8 @@ switch($page_template){
 	default:
 		$error_output = 1;
 	    $page_title = "Ошибка!";
-		$page_content = "Шаблон для этой страницы отсутствует";
+		$page_content = "Шаблон \"".$page_template."\" для страницы \"".$page_title."\"отсутствует";
 		include_once("modules/template_standart.php");
-		break;
+		exit(1);
 }
 ?>
