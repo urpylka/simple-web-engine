@@ -62,8 +62,9 @@ $root_list_menu->bindValue(':root_id', 0, PDO::PARAM_INT);
 $root_list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 $root_list_menu->execute();
 
+$root_list_menu = $root_list_menu->FETCH(PDO::FETCH_ASSOC);
 foreach ( $root_list_menu as $root_item ) {
-	$root_item = $root_item->FETCH(PDO::FETCH_ASSOC);
+
 	$inner_list_menu = $pdo->prepare($get_pages);
 	$inner_list_menu->bindValue(':root_id', $root_item['id'], PDO::PARAM_INT);
 	$root_list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
