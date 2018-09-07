@@ -34,8 +34,9 @@ switch($count_users) {
 		if ($DEBUG) { echo("<p>You is not login yet</p>"); }
 		break;
 	case '1':
-		$login = $user_by_phpsessid->FETCH(PDO::FETCH_ASSOC)['login'];
-		$admin_flag = $user_by_phpsessid->FETCH(PDO::FETCH_ASSOC)['admin_flag'];
+		$user_by_phpsessid = $user_by_phpsessid->FETCH(PDO::FETCH_ASSOC);
+		$login = $user_by_phpsessid['login'];
+		$admin_flag = $user_by_phpsessid['admin_flag'];
 		break;
 	default:
 		echo "<p>ERROR: $count_users users have been returned for this request, but there must be one!</p>";
@@ -50,7 +51,6 @@ $page_by_link->bindValue(':page_link', $page_link, PDO::PARAM_STR);
 $page_by_link->bindValue(':admin_flag', $admin_flag, PDO::PARAM_STR);
 $page_by_link->execute();
 $count_pages = $page_by_link->rowCount();
-$page_by_link = $page_by_link->FETCH(PDO::FETCH_ASSOC);
 
 switch($count_pages) {
 	case '0':
@@ -61,6 +61,7 @@ switch($count_pages) {
 		break;
 	case '1':
 		$error_output = 0;
+		$page_by_link = $page_by_link->FETCH(PDO::FETCH_ASSOC);
 		$page_title = $page_by_link['name'];
 		$page_content = $page_by_link['text'];
 		$page_template = $page_by_link['template'];
