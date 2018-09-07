@@ -51,6 +51,8 @@ $page_by_link->bindValue(':admin_flag', $admin_flag, PDO::PARAM_STR);
 $page_by_link->execute();
 $count_pages = $page_by_link->rowCount();
 
+var_dump($page_by_link);
+
 switch($count_pages) {
 	case '0':
 		$error_output = 1;
