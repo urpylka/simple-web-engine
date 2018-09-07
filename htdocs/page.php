@@ -4,99 +4,69 @@ header('Content-Type: text/html; charset=utf-8');
 
 include("config.php");
 
-if (DEBUG)
-{
+if (DEBUG) {
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 }
-else
-{
+else {
 	ini_set('display_errors', 0);
 	ini_set('display_startup_errors', 0);
 }
 
 try { $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8",  $login_mysql,  $password_mysql); }
-catch(PDOException $e)
-{
+catch(PDOException $e) {
 	echo "You have an error: ".$e->getMessage()."<br>";
 	echo "On line: ".$e->getLine();
 }
 
+$login = NULL;
+$admin_flag = 0;
+
 session_start();
-$user_by_phpsessid = $pdo->prepare("SELECT `user_id` FROM `sessions` WHERE phpsessid = :phpsessid;");
+$user_by_phpsessid = $pdo->prepare("SELECT `users`.`login`,`users`.`admin_flag` FROM `sessions` INNER JOIN `users` ON `sessions`.`user_id`=`users`.`id` WHERE `sessions`.`phpsessid` = :phpsessid;");
 $user_by_phpsessid->bindValue(':phpsessid', session_id(), PDO::PARAM_STR);
 $user_by_phpsessid->execute();
 $count_users = $user_by_phpsessid->rowCount();
 
 switch($count_users) {
 	case '0':
-		echo("<p>ERROR: No users were found in the database for this query.</p>");
+		echo("<p>You is not login yet</p>");
 		break;
 	case '1':
-		$update_page = $pdo->prepare("UPDATE `pages` SET `text` = :moo_text WHERE `id` = :id;");
-		$update_page->bindValue(':moo_text', $_POST['moo_text'], PDO::PARAM_STR);
-		$update_page->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
-		if ($update_page->execute()) echo "<p style='margin-left:30px;'>The page was saved!</p>";
-		else echo("<p>ERROR: Could not update the page!</p>");
+		$login = $user_by_phpsessid->FETCH(PDO::FETCH_ASSOC)['login'];
+		$admin_flag = $user_by_phpsessid->FETCH(PDO::FETCH_ASSOC)['admin_flag'];
 		break;
 	default:
-		echo("<p>ERROR: $count_users pages have been returned for this request, but there must be one!</p>");
+		echo("<p>ERROR: $count_users users have been returned for this request, but there must be one!</p>");
+		// нужно прервать завершить сессию и сообщить о проблеме
+		exit(1);
+}
+
+$page_by_link = $pdo->prepare("SELECT `pages`.`name`,`pages`.`text`,`pages`.`template` FROM `pages` WHERE (`pages`.`link` = :page_link AND `pages`.`public_flag` = 1) OR (`pages`.`link` = :page_link AND :admin_flag);");
+$page_by_link->bindValue(':page_link', $_GET['link'], PDO::PARAM_STR);
+$page_by_link->bindValue(':admin_flag', $admin_flag, PDO::PARAM_STR);
+$page_by_link->execute();
+$count_pages = $page_by_link->rowCount();
+
+switch($count_pages) {
+	case '0':
+		//echo("<p>ERROR: 403 Access denied</p>");
+		$name = "Ошибка 403";
+		$text = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
+		include_once("modules/template_standart.php");
+		exit(1);
+	case '1':
+		$name = $page_title = $page_by_link->FETCH(PDO::FETCH_ASSOC)['name'];
+		$text = $page_content = $page_by_link->FETCH(PDO::FETCH_ASSOC)['text'];
+		$template = $page_template = $page_by_link->FETCH(PDO::FETCH_ASSOC)['template'];
 		break;
+	default:
+		echo("<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>");
+		exit(1);
 }
 
-
-$_SESSION['group_id'] = isset($_SESSION['login'])?$_SESSION['group_id']:"1";
-
-
-
-$db = @mysql_connect("$host:$port", "$login_mysql", "$password_mysql"); 
-if (!$db) exit("<center><p class=\"error\">К сожалению, не доступен сервер MySQL</p></center>"); 
-if (!@mysql_select_db($dbname, $db)) exit("<center><p class=\"error\">К сожалению, не доступна база данных</p></center>");
-mysql_set_charset('utf8', $db);
-
-// Сначала ищем страницу по id или link
-// Затем проверяем права на ее просмотр или редактирование
-
-/*
-$page_id = $_GET['id'];
-if($page_id!=NULL)
-{
-	//echo "page:".$page;
-	$page_sql=mysql_query("SELECT name,text,template FROM pages WHERE id='".$page_id."';");
-	$count=mysql_num_rows($page_sql);
-	switch($count){
-		case '0':
-			throw new Exception('По данному запросу не найдено страниц в базе данных.');
-		case '1':
-			$view_page_info = mysql_fetch_assoc($page_sql);
-			$name = $view_page_info['name'];
-			$text = $view_page_info['text'];
-			$template = $view_page_info['template'];
-			break;
-		default:
-			throw new Exception('По данному запросу возвращено $count страниц, а должна быть одна.');
-	}
-}
-*/
-$page_link=$_GET['link'];
 if ($DEBUG) { echo "page_link: ".$page_link; }
-if($page_link!=NULL)
-{
-	$page_sql=mysql_query("SELECT name,text,template,access_id FROM pages WHERE link='".$page_link."';");
-	$count=mysql_num_rows($page_sql);
-	switch($count){
-		case '0': throw new Exception('No pages were found in the database for this query.');
-		case '1':
-			$view_page_info = mysql_fetch_assoc($page_sql);
-			$name = $view_page_info['name'];
-			$text = $view_page_info['text'];
-			$template = $view_page_info['template'];
-			$access_id = $view_page_info['access_id'];
-			break;
-		default: throw new Exception('$count pages have been returned for this request, but there must be one.');
-	}
-}
-if($_SESSION['group_id']>=$access_id)//на самом деле не так потому что могут быть разные логины (отдельный запрос в бд)
+
 switch($template){
 	case 'main': include_once("modules/template_main.php"); break;
 	case 'standart': include_once("modules/template_standart.php"); break;
@@ -112,10 +82,4 @@ switch($template){
 		if ($DEBUG) { echo("Ошибка: Шаблон для этой страницы отсутствует"); }
 		break;
 }
-else
-	{
-		$name = "Ошибка 403";
-		$text = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
-		include_once("modules/template_standart.php");
-	}
 ?>
