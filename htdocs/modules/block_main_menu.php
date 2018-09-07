@@ -55,14 +55,14 @@ $('.toggle').children('a').click(function () {
 </script>
 <ul id="main-menu">
 <?
-
-$list_menu = $pdo->prepare("SELECT `pages`.`id`,`pages`.`name`,`pages`.`link` FROM `pages` WHERE `pages`.`parent` = :root_id AND ( `pages`.`public_flag` = 1 OR :admin_flag ) ORDER BY `pages`.`id` ASC;");
+$get_list = "SELECT `pages`.`id`,`pages`.`name`,`pages`.`link` FROM `pages` WHERE `pages`.`parent` = :root_id AND ( `pages`.`public_flag` = 1 OR :admin_flag ) ORDER BY `pages`.`id` ASC;";
+$list_menu = $pdo->prepare($get_list);
 $list_menu->bindValue(':root_id', 0, PDO::PARAM_INT);
 $list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 $list_menu->execute();
 
 while ( $root_item = $list_menu->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) ) {
-	$inner_list_menu = $list_menu;
+	$inner_list_menu = $pdo->prepare($get_list);
 	$inner_list_menu->bindValue(':root_id', $root_item['id'], PDO::PARAM_INT);
 	$inner_list_menu->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 	$inner_list_menu->execute();
