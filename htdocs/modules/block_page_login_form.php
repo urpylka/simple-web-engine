@@ -41,6 +41,7 @@
 				if ( isset($_POST['login']) && isset($_POST['password']) ) {
 					if ( isset($login) ) {
 						echo "<p>Ошибка! Вы не можете залогиниться, тк уже авторизованы под логином: ".$login."</p>";
+						view_login();
 					}
 					else {
 						// получить (по логину) pbkdf2 правило для проверки пароля по хешу
