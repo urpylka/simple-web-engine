@@ -2,25 +2,6 @@
 	<section class="text-content" id="fullpage">
 		<h1><?=$page_title?></h1>
 		<?
-		function RandomToken($length = 32){
-			if(!isset($length) || intval($length) <= 8 ){
-			  $length = 32;
-			}
-			if (function_exists('random_bytes')) {
-				return bin2hex(random_bytes($length));
-			}
-			if (function_exists('mcrypt_create_iv')) {
-				return bin2hex(mcrypt_create_iv($length, MCRYPT_DEV_URANDOM));
-			} 
-			if (function_exists('openssl_random_pseudo_bytes')) {
-				return bin2hex(openssl_random_pseudo_bytes($length));
-			}
-		}
-		
-		function Salt(){
-			return substr(hex2bin(RandomToken(32)), 0, 44);
-		}
-
 		if ( isset($_GET['act']) ) {
 			switch ($_GET['act']) {
 				case "logout":
@@ -114,7 +95,7 @@
 
 							// Generate a random IV using openssl_random_pseudo_bytes()
 							// random_bytes() or another suitable source of randomness
-							$salt = bin2hex(openssl_random_pseudo_bytes(16));
+							$salt = bin2hex(openssl_random_pseudo_bytes(8));
 							var_dump($salt);
 							$password = $_POST['password'];
 							$iterations = 1000;
