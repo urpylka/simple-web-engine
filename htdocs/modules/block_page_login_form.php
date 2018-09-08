@@ -18,7 +18,7 @@
 		}
 		
 		function Salt(){
-			return substr(strtr(base64_encode(hex2bin(RandomToken(32))), '+', '.'), 0, 44);
+			return substr(hex2bin(RandomToken(32)), 0, 44);
 		}
 
 		if ( isset($_GET['act']) ) {
