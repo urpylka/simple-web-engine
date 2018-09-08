@@ -107,6 +107,7 @@
 							$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 							$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
 							try {
+								var_dump($user_add);
 								if ( $user_add->execute() ) { echo "<p>Пользователь ".$_POST['login']." успешно добавлен.</p>"; }
 								else  { echo "<p>Ошибка при добавлении пользователя ".$_POST['login'].".</p>"; }
 							}
