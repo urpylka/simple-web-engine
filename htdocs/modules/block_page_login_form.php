@@ -2,26 +2,30 @@
 	<section class="text-content" id="fullpage">
 		<h1><?=$page_title?></h1>
 		<?
+
+		function login() {
+			?>
+			<div>Введите учетные данные</div>
+			<form method="post" action="login?act=login<?echo(isset($_GET['refer'])?"&refer=".$_GET['refer']:"");?>">
+				<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+				<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+				<input type="submit" value="Войти" />
+			</form>
+			<?
+		}
+
 		if ( isset($_GET['act']) ) {
 			switch ($_GET['act']) {
 				case "logout":
-				if ( ! isset($login) ) { echo "<p>Ошибка! Вы не можете выйти тк не еще залогинены.</p>"; }
+				if ( ! isset($login) ) { echo "<p>Ошибка! Вы не можете выйти тк не еще залогинены.</p>"; login(); }
 				else {
-					echo "<p>Рушу сессию.</p>";
 					$drop_session = $pdo->prepare("DELETE FROM `sessions` WHERE `sessions`.`phpsessid` = :phpsessid;");
 					$drop_session->bindValue(':phpsessid', session_id(), PDO::PARAM_STR);
 					if ( $drop_session->execute() )
 					{
 						session_unset();
 						session_destroy();
-						?>
-						<div>Введите учетные данные</div>
-						<form method="post" action="login?act=login<?echo(isset($_GET['refer'])?"&refer=".$_GET['refer']:"");?>">
-							<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-							<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-							<input type="submit" value="Войти" />
-						</form>
-						<?
+						login();
 					}
 					else { echo "<p>Ошибка! Не удалось завершить сессию.</p>"; }
 				}
