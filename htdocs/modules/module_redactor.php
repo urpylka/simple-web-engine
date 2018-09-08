@@ -32,7 +32,7 @@ function getCustomerInfo() {
 	
 	//var phone = document.getElementById("phone").value;
 	var url = "editor";
-	var data = "moo_link=<?=$moo_link?>&moo_text="+encodeURIComponent($('textarea-1').value);
+	var data = "moo_link=<?=$moo_link?>&moo_text="+encodeURIComponent(document.getElementById('textarea-1').value);
 	request.open('POST', url, true);
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
 	//request.setRequestHeader('Content-type: text/html; charset=utf-8');
