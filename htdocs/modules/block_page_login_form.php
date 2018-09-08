@@ -103,7 +103,7 @@
 							// <algorithm>$<iterations>$<salt>$<hash>
 							$pbkdf2 = "sha256$".$iterations.'$'.$salt.'$'.$hash;
 
-							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES(':login',':pbkdf2');");
+							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES(:login, :pbkdf2);");
 							$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 							$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
 							if ( $user_add->execute() )
