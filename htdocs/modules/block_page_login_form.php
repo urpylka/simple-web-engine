@@ -13,9 +13,10 @@
 			</form>
 			<?
 		}
+
 		function view_login() {
 			?>
-			<div>Вы успешно авторизованы! <?=$login?></div>
+			<div>Вы успешно авторизованы! Под логином: <?=$login?></div>
 			<?=isset($_GET['refer'])?"<div>Нажмите <a href='".$_GET['refer']."'>сюда</a>, чтобы вернуться на предущую страницу.</div>":""?>
 			<div><a href="login?act=logout">Выйти</div>
 			<?
