@@ -115,6 +115,7 @@
 							// Generate a random IV using openssl_random_pseudo_bytes()
 							// random_bytes() or another suitable source of randomness
 							$salt = Salt();
+							var_dump($salt);
 							$password = $_POST['password'];
 							$iterations = 1000;
 							$hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
