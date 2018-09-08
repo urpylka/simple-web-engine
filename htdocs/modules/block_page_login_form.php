@@ -100,6 +100,7 @@
 							$iterations = 1000;
 							$hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
 							
+							var_dump($salt);
 							// <algorithm>$<iterations>$<salt>$<hash>
 							$pbkdf2 = "sha256$".$iterations.'$'.$salt.'$'.$hash;
 							var_dump($pbkdf2);
