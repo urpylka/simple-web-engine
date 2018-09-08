@@ -24,7 +24,7 @@ $login = NULL;
 $admin_flag = 0;
 
 session_start();
-$user_by_phpsessid = $pdo->prepare("SELECT `users`.`login`,`users`.`admin_flag` FROM `sessions` INNER JOIN `users` ON `sessions`.`user_id`=`users`.`id` WHERE `sessions`.`phpsessid` = :phpsessid;");
+$user_by_phpsessid = $pdo->prepare("SELECT `users`.`login`,`users`.`admin_flag` FROM `users` INNER JOIN `sessions` ON `sessions`.`user_id`=`users`.`id` WHERE `sessions`.`phpsessid` = :phpsessid;");
 $user_by_phpsessid->bindValue(':phpsessid', session_id(), PDO::PARAM_STR);
 $user_by_phpsessid->execute();
 $count_users = $user_by_phpsessid->rowCount();
