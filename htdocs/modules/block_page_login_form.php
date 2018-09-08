@@ -101,9 +101,11 @@
 							$hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
 							// <algorithm>$<iterations>$<salt>$<hash>
 							$pbkdf2 = "sha256$".$iterations.'$'.$salt.'$'.$hash;
-							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES (:login, :pbkdf2);");
-							$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
-							$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
+							
+							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES (".$_POST['login'].", ".$pbkdf2.");");
+							//$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES (:login, :pbkdf2);");
+							//$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
+							//$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
 
 							try {
 								var_dump($user_add->execute());
