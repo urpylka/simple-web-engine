@@ -7,6 +7,7 @@
 				case "logout":
 				if ( ! isset($login) ) { echo "<p>Ошибка! Вы не можете выйти тк не еще залогинены.</p>"; }
 				else {
+					echo "<p>Рушу сессию.</p>";
 					session_unset();
 					session_destroy();
 					// по идеи надо сделать удаление из БД
