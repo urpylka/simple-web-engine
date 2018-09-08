@@ -120,15 +120,15 @@ body{
 		
 	});
 	
-	function knop(){
+	function knop() {
 		if(document.getElementById("main_cont").getAttribute("style")!="display:none;")
 		{
-		document.getElementById("main_cont").setAttribute("style", "display:none;");
-		document.getElementById("theForm").setAttribute("style", "display:visible;");
+			document.getElementById("main_cont").setAttribute("style", "display:none;");
+			document.getElementById("theForm").setAttribute("style", "display:visible;");
 		}
-		else{
-		document.getElementById("main_cont").setAttribute("style", "display:visible;");
-		document.getElementById("theForm").setAttribute("style", "display:none;");
+		else {
+			document.getElementById("main_cont").setAttribute("style", "display:visible;");
+			document.getElementById("theForm").setAttribute("style", "display:none;");
 		}
 	}
 		/*
