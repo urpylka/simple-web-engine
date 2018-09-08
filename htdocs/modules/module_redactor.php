@@ -94,7 +94,7 @@ body{
 
 <script type="text/javascript">
 	window.addEvent('domready', function(){
-		$('textarea-1').mooEditable({
+		document.getElementById('textarea-1').mooEditable({
 			actions: 'bold italic underline strikethrough | formatBlock justifyleft justifycenter justifyright justifyfull | insertunorderedlist insertorderedlist indent outdent | undo redo removeformat | createlink unlink | urlimage | toggleview'
 		});
 
