@@ -104,9 +104,9 @@
 							$pbkdf2 = "sha256$".$iterations.'$'.$salt.'$'.$hash;
 
 							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES(':login',':pbkdf2');");
-							$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
-							$pbkdf2_by_login->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
-							if ( $pbkdf2_by_login->execute() )
+							$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
+							$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
+							if ( $user_add->execute() )
 							{ echo "<p>Пользователь ".$_POST['login']." успешно добавлен.</p>"; }
 							else  { echo "<p>Ошибка при добавлении пользователя ".$_POST['login'].".</p>"; }
 						}
