@@ -3,22 +3,17 @@
 var request;
 
 function createRequest() {
-  try {
-    request = new XMLHttpRequest();
-  } catch (trymicrosoft) {
-    try {
-      request = new ActiveXObject("Msxml2.XMLHTTP");
-    } catch (othermicrosoft) {
-      try {
-        request = new ActiveXObject("Microsoft.XMLHTTP");
-      } catch (failed) {
-        request = false;
-      }
+	try { request = new XMLHttpRequest(); }
+	catch (trymicrosoft)
+	{
+		try { request = new ActiveXObject("Msxml2.XMLHTTP"); }
+		catch (othermicrosoft)
+		{
+			try { request = new ActiveXObject("Microsoft.XMLHTTP"); }
+			catch (failed) { request = false; }
     }
   }
-
-  if (!request)
-    alert("Error initializing XMLHttpRequest!");
+  if (!request) alert("Error initializing XMLHttpRequest!");
 }
 
 function getCustomerInfo() {
@@ -100,7 +95,7 @@ body{
 
 		document.getElementById("theForm").setAttribute("style", "display:none;");
 		// Post submit
-		$('theForm').addEvent('submit', function(event){
+		document.getElementById("theForm").addEvent('submit', function(event){
 			/*
             // Предотвращаем обычную отправку формы
             //event.preventDefault();
@@ -110,9 +105,10 @@ body{
 	alert(data);
 	});
 	*/
-			//alert($('textarea-1').value);
+			//alert(document.getElementById('textarea-1').value);
+			//alert(encodeURIComponent(document.getElementById('textarea-1').value));
 			getCustomerInfo();
-			document.getElementById("main_cont").innerHTML = $('textarea-1').value;
+			document.getElementById("main_cont").innerHTML = document.getElementById('textarea-1').value;
 			document.getElementById("theForm").setAttribute("style", "display:none;");
 			document.getElementById("main_cont").setAttribute("style", "display:visible;");
 			return false;

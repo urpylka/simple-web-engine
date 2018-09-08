@@ -1,6 +1,5 @@
 <?
 	// Сначала проверяем может ли данный пользователь по cookie выполнять данный запрос
-	var_dump($_POST);
 	if ( isset($_POST['moo_link']) && isset($_POST['moo_text']) )
 	{
 		$page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :moo_link;");
