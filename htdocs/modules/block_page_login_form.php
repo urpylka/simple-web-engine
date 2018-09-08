@@ -41,7 +41,7 @@
 							case '1':
 								// <algorithm>$<iterations>$<salt>$<hash>
 								$pbkdf2 = explode('$', $pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC)['pbkdf2']);
-								if ( ! isset($pbkdf2['3']) ) { echo "<p>Системная ошибка! Неккоретный pbkdf2 в бд.</p>"; }
+								if ( ! isset($pbkdf2['3']) ) { echo "<p>Системная ошибка! Неккоретный pbkdf2 в БД.</p>"; }
 								else {
 									// проверить пароль
 									if ( $pbkdf2['3'] != hash_pbkdf2($pbkdf2['0'], $_POST['password'], $pbkdf2['2'], $pbkdf2['1'], 20) ) {
