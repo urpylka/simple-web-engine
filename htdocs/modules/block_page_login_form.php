@@ -2,7 +2,8 @@
 	<section class="text-content" id="fullpage">
 		<h1><?=$page_title?></h1>
 		<?
-
+		echo $login;
+		?><?=$login?><?
 		function view_login_form() {
 			?>
 			<div>Введите учетные данные</div>
