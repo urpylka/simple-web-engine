@@ -41,7 +41,6 @@
 							case '1':
 								// <algorithm>$<iterations>$<salt>$<hash>
 								$pbkdf2 = explode('$', $pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC)['pbkdf2']);
-								var_dump($pbkdf2);
 								if ( ! isset($pbkdf2['3']) ) { echo "<p>Системная ошибка! Неккоретный pbkdf2 в бд.</p>"; }
 								else {
 									// проверить пароль
@@ -59,7 +58,8 @@
 										// в случае успеха присвоить сессии user_id
 										$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` (`login`,`phpsessid`) VALUES (:login, :session_id);");
 										$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
-										$pbkdf2_by_login->bindValue(':session_id', session_id(), PDO::PARAM_STR);
+										$pbkdf2_by_login->bindValue(':session_id', "session_id", PDO::PARAM_STR);
+										var_dump(session_id());
 										if ( $pbkdf2_by_login->execute() )
 										{
 											echo("<div>Вы успешно авторизованы! ".$_POST['login']."</div>");
