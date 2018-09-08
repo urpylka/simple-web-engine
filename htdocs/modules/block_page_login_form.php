@@ -3,7 +3,7 @@
 		<h1><?=$page_title?></h1>
 		<?
 
-		function login() {
+		function view_login_form() {
 			?>
 			<div>Введите учетные данные</div>
 			<form method="post" action="login?act=login<?echo(isset($_GET['refer'])?"&refer=".$_GET['refer']:"");?>">
@@ -13,11 +13,18 @@
 			</form>
 			<?
 		}
+		function view_login() {
+			?>
+			<div>Вы успешно авторизованы! <?=$login?></div>
+			<?=isset($_GET['refer'])?"<div>Нажмите <a href='".$_GET['refer']."'>сюда</a>, чтобы вернуться на предущую страницу.</div>":""?>
+			<div><a href="login?act=logout">Выйти</div>
+			<?
+		}
 
 		if ( isset($_GET['act']) ) {
 			switch ($_GET['act']) {
 				case "logout":
-				if ( ! isset($login) ) { echo "<p>Ошибка! Вы не можете выйти тк не еще залогинены.</p>"; login(); }
+				if ( ! isset($login) ) { echo "<p>Ошибка! Вы не можете выйти тк не еще залогинены.</p>"; view_login_form(); }
 				else {
 					$drop_session = $pdo->prepare("DELETE FROM `sessions` WHERE `sessions`.`phpsessid` = :phpsessid;");
 					$drop_session->bindValue(':phpsessid', session_id(), PDO::PARAM_STR);
@@ -25,7 +32,7 @@
 					{
 						session_unset();
 						session_destroy();
-						login();
+						view_login_form();
 					}
 					else { echo "<p>Ошибка! Не удалось завершить сессию.</p>"; }
 				}
@@ -47,58 +54,40 @@
 	
 						switch($count_pbkdf2) {
 							case '0':
-								?>
-								<div>Вы ввели неправильный логин или пароль!</div>
-								<form method="post" action="login?act=login">
-									<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-									<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-									<input type="submit" value="Войти" />
-								</form>
-								<?
-								break;
+							echo "<div>Вы ввели неправильный логин или пароль!</div>";
+							view_login_form();
+							break;
 							case '1':
-								// <algorithm>$<iterations>$<salt>$<hash>
-								$pbkdf2 = explode('$', $pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC)['pbkdf2']);
-								if ( ! isset($pbkdf2['3']) ) { echo "<p>Системная ошибка! Неккоретный pbkdf2 в БД.</p>"; }
-								else {
-									// проверить пароль
-									if ( $pbkdf2['3'] != hash_pbkdf2($pbkdf2['0'], $_POST['password'], $pbkdf2['2'], $pbkdf2['1'], 20) ) {
-										?>
-										<div>Вы ввели неправильный логин или пароль!</div>
-										<form method="post" action="login?act=login">
-											<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-											<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-											<input type="submit" value="Войти" />
-										</form>
-										<?
-									}
-									else {
-										// в случае успеха присвоить сессии user_id
-										$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` (`login`,`phpsessid`) VALUES (:login, :session_id);");
-										$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
-										$pbkdf2_by_login->bindValue(':session_id', session_id(), PDO::PARAM_STR);
-										if ( $pbkdf2_by_login->execute() )
-										{
-											echo("<div>Вы успешно авторизованы! ".$_POST['login']."</div>");
-											echo(isset($_GET['refer'])?"<div>Нажмите <a href='".$_GET['refer']."'>сюда</a>, чтобы вернуться на предущую страницу.</div>":"");
-											?>
-											<div><a href="login?act=logout">Выйти</div>
-											<?
-										}
-										else { echo "<p>Ошибка! Не удалось привязать сессию к пользователю.</p>"; }
-									}
+							// <algorithm>$<iterations>$<salt>$<hash>
+							$pbkdf2 = explode('$', $pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC)['pbkdf2']);
+							if ( ! isset($pbkdf2['3']) ) { echo "<p>Системная ошибка! Неккоретный pbkdf2 в БД.</p>"; }
+							else {
+								// проверить пароль
+								if ( $pbkdf2['3'] != hash_pbkdf2($pbkdf2['0'], $_POST['password'], $pbkdf2['2'], $pbkdf2['1'], 20) ) {
+									echo "<div>Вы ввели неправильный логин или пароль!</div>";
+									view_login_form();
 								}
-								break;
+								else {
+									// в случае успеха присвоить сессии user_id
+									$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` (`login`,`phpsessid`) VALUES (:login, :session_id);");
+									$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
+									$pbkdf2_by_login->bindValue(':session_id', session_id(), PDO::PARAM_STR);
+									if ( $pbkdf2_by_login->execute() ) { view_login(); }
+									else { echo "<p>Ошибка! Не удалось привязать сессию к пользователю.</p>"; view_login_form(); }
+								}
+							}
+							break;
 							default:
-								echo "<p>ERROR: Системная ошибка. По запросу логина найдено ".$count_pbkdf2." записей!</p>";
-								break;
+							echo "<p>ERROR: Системная ошибка. По запросу логина найдено ".$count_pbkdf2." записей!</p>";
+							view_login_form();
+							break;
 						}
 					}
 				}
 				// else echo "Вы не ввели логин или пароль"
 				break;
-				case "registr":
-				if ( isset($login) ) { echo "<p>Ошибка! Вы не можете зарегистрироваться тк уже авторизованы под логином: ".$login.".</p>"; }
+				case "register":
+				if ( isset($login) ) { echo "<p>Ошибка! Вы не можете зарегистрироваться тк уже авторизованы под логином: ".$login.".</p>"; view_login(); }
 				else {
 					if ( isset($_POST['login']) && isset($_POST['password']) ) {
 
@@ -138,22 +127,8 @@
 			
 		}
 		else {
-			if ( isset($login) ) {
-				echo("<div>Вы успешно авторизованы! ".$login."</div>");
-				?>
-					<div><a href="login?act=logout">Выйти</a></div>
-				<?
-			}
-			else {
-				?>
-				<div>Введите учетные данные</div>
-				<form method="post" action="login?act=login<?echo(isset($_GET['refer'])?"&refer=".$_GET['refer']:"");?>">
-					<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-					<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-					<input type="submit" value="Войти" />
-				</form>
-				<?
-			}
+			if ( isset($login) ) { view_login(); }
+			else { view_login_form(); }
 		}
 		?>
 	</section>
