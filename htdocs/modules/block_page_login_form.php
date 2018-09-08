@@ -56,8 +56,8 @@
 									}
 									else {
 										// в случае успеха присвоить сессии user_id
-										$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` (`login`,`phpsessid`) VALUES (:sessid_login, :session_id);");
-										$pbkdf2_by_login->bindValue(':sessid_login', $_POST['login'], PDO::PARAM_STR);
+										$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` (`login`,`phpsessid`) VALUES (:login, :session_id);");
+										$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 										$pbkdf2_by_login->bindValue(':session_id', session_id(), PDO::PARAM_STR);
 										if ( $pbkdf2_by_login->execute() )
 										{
@@ -102,7 +102,7 @@
 							
 							// <algorithm>$<iterations>$<salt>$<hash>
 							$pbkdf2 = "sha256$".$iterations.'$'.$salt.'$'.$hash;
-
+							var_dump($pbkdf2);
 							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES (:login, :pbkdf2);");
 							$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 							$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
