@@ -55,7 +55,8 @@ switch($count_pages) {
 	case '0':
 		$error_output = 1;
 		$page_title = "Ошибка 403";
-		$page_content = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
+		if ( isset($login) ) $page_content = "<p>У вас нет прав, для просмотра этой страницы.</p>";
+		else $page_content = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
 		$page_template = "standart";
 		break;
 	case '1':
