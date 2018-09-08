@@ -56,7 +56,7 @@
 									}
 									else {
 										// в случае успеха присвоить сессии user_id
-										$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` (`login`,`phpsessid`) VALUES (:login, :session_id);");
+										$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` (`login`,`phpsessid`) VALUES (':login', ':session_id');");
 										$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 										$pbkdf2_by_login->bindValue(':session_id', session_id(), PDO::PARAM_STR);
 										if ( $pbkdf2_by_login->execute() )
@@ -96,13 +96,14 @@
 							// Generate a random IV using openssl_random_pseudo_bytes()
 							// random_bytes() or another suitable source of randomness
 							$salt = openssl_random_pseudo_bytes(16);
+							$salt = "sgagagahrhah";
 							$password = $_POST['password'];
 							$iterations = 1000;
 							$hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
 							// <algorithm>$<iterations>$<salt>$<hash>
 							$pbkdf2 = "sha256\$".$iterations."\$".$salt."\$".$hash;
 							
-							$sql = "INSERT INTO `users` (`login`,`pbkdf2`) VALUES ('".$_POST['login']."', 'sha256\$fergergveqwd\$gergwh\$brthret');";
+							$sql = "INSERT INTO `users` (`login`,`pbkdf2`) VALUES ('".$_POST['login']."', '".$pbkdf2."');";
 							$user_add = $pdo->prepare($sql);
 							var_dump($user_add->execute());
 
