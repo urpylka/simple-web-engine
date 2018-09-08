@@ -45,7 +45,7 @@
 								if ( ! isset($pbkdf2['3']) ) { echo "<p>Системная ошибка! Неккоретный pbkdf2 в бд.</p>"; }
 								else {
 									// проверить пароль
-									if ( $pbkdf2['4'] != hash_pbkdf2($pbkdf2['1'], $_POST['password'], $pbkdf2['3'], $pbkdf2['2'], 20) ) {
+									if ( $pbkdf2['3'] != hash_pbkdf2($pbkdf2['0'], $_POST['password'], $pbkdf2['2'], $pbkdf2['1'], 20) ) {
 										?>
 										<div>Вы ввели неправильный логин или пароль!</div>
 										<form method="post" action="login?act=login">
