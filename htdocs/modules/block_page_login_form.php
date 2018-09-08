@@ -41,7 +41,7 @@
 							case '1':
 								// <algorithm>$<iterations>$<salt>$<hash>
 								$pbkdf2 = explode('$', $pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC)['pbkdf2']);
-	
+								var_dump($pbkdf2);
 								// проверить пароль
 								if ( $pbkdf2['4'] != hash_pbkdf2($pbkdf2['1'], $_POST['password'], $pbkdf2['3'], $pbkdf2['2'], 20) ) {
 									?>
