@@ -60,7 +60,7 @@ function updatePage() {
 </script>
 
 <style type="text/css">
-	body{
+body{
 		font-family: sans-serif;
 		font-size: .9em;
 	}
