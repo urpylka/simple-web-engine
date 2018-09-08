@@ -122,7 +122,7 @@
 		}
 		else {
 			if ( isset($login) ) {
-				echo("<div>Вы успешно авторизованы! ".$_SESSION['login']."</div>");
+				echo("<div>Вы успешно авторизованы! ".$login."</div>");
 				?>
 					<div><a href="login?act=logout">Выйти</a></div>
 				<?
