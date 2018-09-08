@@ -40,6 +40,7 @@
 								break;
 							case '1':
 								// <algorithm>$<iterations>$<salt>$<hash>
+								var_dump($pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC));
 								$pbkdf2 = explode('$', $pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC)['pbkdf2']);
 								var_dump($pbkdf2);
 								// проверить пароль
