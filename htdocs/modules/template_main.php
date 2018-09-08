@@ -4,7 +4,6 @@
 		<? include_once 'modules/block_promo.php'; ?>
 		<? include_once 'modules/block_quick-menu.php'; ?>
 		<? include_once 'modules/block_main_menu.php'; ?>
-		<hr/>
 	</header>
 	<main>
 		<article>

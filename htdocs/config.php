@@ -11,5 +11,5 @@
     $dbname = "database";
 
     //Developer settings
-    $DEBUG = TRUE
+    $DEBUG = FALSE
 ?>

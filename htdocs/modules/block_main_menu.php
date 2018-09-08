@@ -1,4 +1,10 @@
 <style>
+div#block_menu {
+	height:374px !important;
+	border-bottom: 1px solid #ccc;
+	overflow: hidden;
+	/* мб добавить прокрутку */
+}
 #main-menu{
 	margin-left:30px;
 	margin-right:30px;
@@ -17,14 +23,18 @@
 	padding:7px;
 	font-weight:400;
 	padding-left:10px;
-	display:block;
+	display:inline-block;
 	width:200px;
 	color:#000;
 	line-height:20px;
 }
 #main-menu>li>ul{
 	padding-left:10px;
-	display:none;
+	/*
+		// hidden by default
+		display:none;
+	*/
+    display:block;
 }
 #main-menu>li>ul>li{
 	list-style:none;
@@ -39,20 +49,23 @@
 }
 .toggle:before
 {
-	top:4px;
+	top:8px;
 	content:'↓';
 	position:absolute;
 	right:15px;
 }
 </style>
-<br/>
 <script src="https://yastatic.net/jquery/1.7.0/jquery.min.js"></script>
 <script>
+/*
 $(document).ready(function(){
 $('.toggle').children('a').click(function () {
 	$(this).next('ul').toggle();
 	return false;});});
+*/
 </script>
+<div id="block_menu">
+<br/>
 <ul id="main-menu">
 <?
 $get_list = "SELECT `pages`.`id`,`pages`.`name`,`pages`.`link` FROM `pages` WHERE `pages`.`parent` = :root_id AND ( `pages`.`public_flag` = 1 OR :admin_flag ) ORDER BY `pages`.`id` ASC;";
@@ -73,13 +86,13 @@ while ( $root_item = $list_menu->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) ) 
 		echo "<a href=\"".$root_item['link']."\">".$root_item['name']."</a>";
 		$root_item['id'] = ( $root_item['id'] == 1 ) ? '0' : $root_item['id'];
 		echo "<ul>";
-
-		while ( $inner_item = $inner_list_menu->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) ) {
-			echo "<li><a href=\"".$inner_item['link']."\">".$inner_item['name']."</a></li>";
-		}
+		while ( $inner_item = $inner_list_menu->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) )
+		{ echo "<li><a href=\"".$inner_item['link']."\">".$inner_item['name']."</a></li>"; }
 		echo "</ul>";
 		echo "</li>";
 	}
 }
 ?>
 </ul>
+<!--hr-->
+</div>

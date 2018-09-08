@@ -2,6 +2,7 @@
 	<header>
 		<? include_once 'modules/module_navbar.php'; ?>
 		<? include_once 'modules/site_gototop.php'; ?>
+		<? include_once 'modules/block_main_menu.php'; ?>
 	</header>
 	<main>
 		<article>
