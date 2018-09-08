@@ -82,25 +82,18 @@ if ($DEBUG) {
 	echo "<p>page_title: ".$page_title."</p>";
 	echo "<p>page_template: ".$page_template."</p>";
 }
-try {
-	switch($page_template){
-		case 'main':include_once("modules/template_main.php"); break;
-		case 'standart': include_once("modules/template_standart.php"); break;
-		case 'contacts': include_once("modules/template_contacts.php"); break;
-		case 'block': include_once("modules/template_block.php"); break;
-		case 'blank': include_once($page_content); break;
-		case 'section2': include_once("modules/template_section.php"); break;
-		default:
-		$error_output = 1;
-		$page_title = "Ошибка!";
-		$page_content = "Шаблон \"<b>".$page_template."</b>\" для страницы <b>".$page_link."</b> отсутствует";
-		include_once("modules/template_standart.php");
-		break;
-	}
-} catch (Exception $e) {
+switch($page_template){
+	case 'main':include_once("modules/template_main.php"); break;
+	case 'standart': include_once("modules/template_standart.php"); break;
+	case 'contacts': include_once("modules/template_contacts.php"); break;
+	case 'block': include_once("modules/template_block.php"); break;
+	case 'blank': include_once($page_content); break;
+	case 'section2': include_once("modules/template_section.php"); break;
+	default:
 	$error_output = 1;
 	$page_title = "Ошибка!";
-	$page_content = "Caught exception: ".$e->getMessage()."\n";
+	$page_content = "Шаблон \"<b>".$page_template."</b>\" для страницы <b>".$page_link."</b> отсутствует";
 	include_once("modules/template_standart.php");
+	break;
 }
 ?>
