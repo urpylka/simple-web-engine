@@ -103,12 +103,16 @@
 							// <algorithm>$<iterations>$<salt>$<hash>
 							$pbkdf2 = "sha256$".$iterations.'$'.$salt.'$'.$hash;
 
-							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES (:new_login, :new_pbkdf2);");
-							$user_add->bindValue(':new_login', $_POST['login'], PDO::PARAM_STR);
-							$user_add->bindValue(':new_pbkdf2', $pbkdf2, PDO::PARAM_STR);
-							if ( $user_add->execute() )
-							{ echo "<p>Пользователь ".$_POST['login']." успешно добавлен.</p>"; }
-							else  { echo "<p>Ошибка при добавлении пользователя ".$_POST['login'].".</p>"; }
+							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES (:login, :pbkdf2);");
+							$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
+							$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
+							try {
+								if ( $user_add->execute() ) { echo "<p>Пользователь ".$_POST['login']." успешно добавлен.</p>"; }
+								else  { echo "<p>Ошибка при добавлении пользователя ".$_POST['login'].".</p>"; }
+							}
+							catch (PDOException $e) {
+								echo 'ERROR: ' . $e->getMessage();
+							}
 						}
 					}
 					// else echo "Вы не ввели логин или пароль"
