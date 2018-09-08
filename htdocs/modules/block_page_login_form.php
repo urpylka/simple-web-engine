@@ -40,34 +40,35 @@
 								break;
 							case '1':
 								// <algorithm>$<iterations>$<salt>$<hash>
-								var_dump($pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC));
 								$pbkdf2 = explode('$', $pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC)['pbkdf2']);
-								var_dump($pbkdf2);
-								// проверить пароль
-								if ( $pbkdf2['4'] != hash_pbkdf2($pbkdf2['1'], $_POST['password'], $pbkdf2['3'], $pbkdf2['2'], 20) ) {
-									?>
-									<div>Вы ввели неправильный логин или пароль!</div>
-									<form method="post" action="login?act=login">
-										<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-										<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
-										<input type="submit" value="Войти" />
-									</form>
-									<?
-								}
+								if ( ($pbkdf2 == NULL) OR ($pbkdf2.count != 4) ) { echo "<p>Системная ошибка! Неккоретный pbkdf2 в бд.</p>"; }
 								else {
-									// в случае успеха присвоить сессии user_id
-									$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` VALUES(':session_id',':login');");
-									$pbkdf2_by_login->bindValue(':session_id', session_id(), PDO::PARAM_STR);
-									$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
-									if ( $pbkdf2_by_login->execute() )
-									{
-										echo("<div>Вы успешно авторизованы! ".$_POST['login']."</div>");
-										echo(isset($_GET['refer'])?"<div>Нажмите <a href='".$_GET['refer']."'>сюда</a>, чтобы вернуться на предущую страницу.</div>":"");
+									// проверить пароль
+									if ( $pbkdf2['4'] != hash_pbkdf2($pbkdf2['1'], $_POST['password'], $pbkdf2['3'], $pbkdf2['2'], 20) ) {
 										?>
-										<div><a href="login?act=logout">Выйти</div>
+										<div>Вы ввели неправильный логин или пароль!</div>
+										<form method="post" action="login?act=login">
+											<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+											<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+											<input type="submit" value="Войти" />
+										</form>
 										<?
 									}
-									else { echo "<p>Ошибка! Не удалось привязать сессию к пользователю.</p>"; }
+									else {
+										// в случае успеха присвоить сессии user_id
+										$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` VALUES(':session_id',':login');");
+										$pbkdf2_by_login->bindValue(':session_id', session_id(), PDO::PARAM_STR);
+										$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
+										if ( $pbkdf2_by_login->execute() )
+										{
+											echo("<div>Вы успешно авторизованы! ".$_POST['login']."</div>");
+											echo(isset($_GET['refer'])?"<div>Нажмите <a href='".$_GET['refer']."'>сюда</a>, чтобы вернуться на предущую страницу.</div>":"");
+											?>
+											<div><a href="login?act=logout">Выйти</div>
+											<?
+										}
+										else { echo "<p>Ошибка! Не удалось привязать сессию к пользователю.</p>"; }
+									}
 								}
 								break;
 							default:
