@@ -8,9 +8,22 @@
 				if ( ! isset($login) ) { echo "<p>Ошибка! Вы не можете выйти тк не еще залогинены.</p>"; }
 				else {
 					echo "<p>Рушу сессию.</p>";
-					session_unset();
-					session_destroy();
-					// по идеи надо сделать удаление из БД
+					$drop_session = $pdo->prepare("DELETE FROM `sessions` WHERE `sessions`.`phpsessid` = :phpsessid;");
+					$drop_session->bindValue(':phpsessid', session_id(), PDO::PARAM_STR);
+					if ( $drop_session->execute() )
+					{
+						session_unset();
+						session_destroy();
+						?>
+						<div>Введите учетные данные</div>
+						<form method="post" action="login?act=login<?echo(isset($_GET['refer'])?"&refer=".$_GET['refer']:"");?>">
+							<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+							<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+							<input type="submit" value="Войти" />
+						</form>
+						<?
+					}
+					else { echo "<p>Ошибка! Не удалось завершить сессию.</p>"; }
 				}
 				break;
 				case "login":
@@ -57,7 +70,6 @@
 									}
 									else {
 										// в случае успеха присвоить сессии user_id
-										$session_id = session_id();
 										$pbkdf2_by_login = $pdo->prepare("INSERT INTO `sessions` (`login`,`phpsessid`) VALUES (:login, :session_id);");
 										$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 										$pbkdf2_by_login->bindValue(':session_id', session_id(), PDO::PARAM_STR);
