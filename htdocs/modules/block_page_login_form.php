@@ -101,12 +101,12 @@
 							$hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
 							// <algorithm>$<iterations>$<salt>$<hash>
 							$pbkdf2 = "sha256$".$iterations.'$'.$salt.'$'.$hash;
-							var_dump($pbkdf2);
 							$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES (:login, :pbkdf2);");
 							$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 							$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
+
 							try {
-								var_dump($user_add);
+								$user_add->execute();
 								if ( $user_add->execute() ) { echo "<p>Пользователь ".$_POST['login']." успешно добавлен.</p>"; }
 								else  { echo "<p>Ошибка при добавлении пользователя ".$_POST['login'].".</p>"; }
 							}
