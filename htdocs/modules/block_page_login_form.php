@@ -41,6 +41,7 @@
 							case '1':
 								// <algorithm>$<iterations>$<salt>$<hash>
 								$pbkdf2 = explode('$', $pbkdf2_by_login->FETCH(PDO::FETCH_ASSOC)['pbkdf2']);
+								var_dump($pbkdf2);
 								if ( ! isset($pbkdf2['3']) ) { echo "<p>Системная ошибка! Неккоретный pbkdf2 в бд.</p>"; }
 								else {
 									// проверить пароль
@@ -96,7 +97,6 @@
 							// Generate a random IV using openssl_random_pseudo_bytes()
 							// random_bytes() or another suitable source of randomness
 							$salt = bin2hex(openssl_random_pseudo_bytes(8));
-							var_dump($salt);
 							$password = $_POST['password'];
 							$iterations = 1000;
 							$hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
