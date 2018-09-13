@@ -1,5 +1,6 @@
 web:
    image: tutum/apache-php
+   restart: always
    environment:
      - ALLOW_OVERRIDE=true
    ports:
