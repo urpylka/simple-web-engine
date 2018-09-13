@@ -16,8 +16,8 @@
 		<?
 			if ($admin_flag && ! $error_output)
 			{
-				$moo_text = $page_content;
 				$moo_link = $page_link;
+				$moo_text = $page_content;
 				include_once 'modules/module_redactor.php';
 			}
 		?>
