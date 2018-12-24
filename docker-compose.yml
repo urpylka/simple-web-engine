@@ -9,6 +9,11 @@ services:
     volumes:
       - ./htdocs:/app
       - ./logs-apache:/var/log/apache2
+    restart: always
+
+    # не понимаю зачем    
+    #links:
+    #  - db
 
   db:
     image: mariadb
@@ -20,5 +25,8 @@ services:
       MYSQL_USER: admin
       MYSQL_PASSWORD: test
       MYSQL_DATABASE: database
-    ports:
-      - "3306:3306"
+
+    # тк идет внутреннее обращение по домену "db"
+    # нужно лишь для внешного подключения к субд
+    #ports:
+    #  - "3306:3306"
