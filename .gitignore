@@ -1,3 +1,5 @@
 /htdocs/config.php
-/docker-composer.yml
+/docker-compose.yml
 /mysql
+.DS_Store
+/logs-apache

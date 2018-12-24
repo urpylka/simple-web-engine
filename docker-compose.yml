@@ -1,23 +1,24 @@
-web:
-   image: tutum/apache-php
-   environment:
-     - ALLOW_OVERRIDE=true
-   ports:
-     - "80:80"
-   links:
-     - db
-   volumes:
-     - ./htdocs:/app
+version: '3'
+services:
+  web:
+    image: tutum/apache-php
+    environment:
+      - ALLOW_OVERRIDE=true
+    ports:
+      - "80:80"
+    volumes:
+      - ./htdocs:/app
+      - ./logs-apache:/var/log/apache2
 
-db:
-  image: mariadb
-  restart: always
-  volumes:
-    - ./mysql:/var/lib/mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: root
-    MYSQL_USER: admin
-    MYSQL_PASSWORD: test
-    MYSQL_DATABASE: database
-  ports:
-    - "3306:3306"
+  db:
+    image: mariadb
+    restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: database
+    ports:
+      - "3306:3306"
