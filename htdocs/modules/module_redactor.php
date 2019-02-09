@@ -26,7 +26,7 @@ function getCustomerInfo() {
 	//request.send(null);
 	
 	//var phone = document.getElementById("phone").value;
-	var url = "editor";
+	var url = "redactor?act=update";
 	var data = "moo_link=<?=$moo_link?>&moo_text="+encodeURIComponent(document.getElementById('textarea-1').value);
 	request.open('POST', url, true);
 	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
@@ -99,7 +99,7 @@ body{
 			/*
             // Предотвращаем обычную отправку формы
             //event.preventDefault();
-			$.post('/editor', {'moo_link':'rules','moo_text':'2222'},
+			$.post('/redactor?act=update', {'moo_link':'rules','moo_text':'2222'},
         	function(data) {
 	//$('#fullpage').html(data);
 	alert(data);
@@ -135,7 +135,7 @@ body{
 			*/
 </script>
 
-<form id="theForm" method="post" action="editor" style="padding: 0; width: 990px !important; margin: 0px;">
+<form id="theForm" method="post" action="redactor?act=update" style="padding: 0; width: 990px !important; margin: 0px;">
 	<textarea id="textarea-1" name="editable1">
 	<?=$moo_text;?>
 	</textarea>
