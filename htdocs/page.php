@@ -53,25 +53,25 @@ $count_pages = $page_by_link->rowCount();
 
 switch($count_pages) {
 	case '0':
-	$error_output = 1;
-	$page_title = "Ошибка 403";
-	if ( isset($login) ) $page_content = "<p>У вас нет прав, для просмотра этой страницы.</p>";
-	else $page_content = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
-	$page_template = "standart";
-	break;
+		$error_output = 1;
+		$page_title = "Ошибка 403";
+		if ( isset($login) ) $page_content = "<p>У вас нет прав, для просмотра этой страницы.</p>";
+		else $page_content = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
+		$page_template = "standart";
+		break;
 	case '1':
-	$error_output = 0;
-	$page_by_link = $page_by_link->FETCH(PDO::FETCH_ASSOC);
-	$page_title = $page_by_link['name'];
-	$page_content = $page_by_link['text'];
-	$page_template = $page_by_link['template'];
-	break;
+		$error_output = 0;
+		$page_by_link = $page_by_link->FETCH(PDO::FETCH_ASSOC);
+		$page_title = $page_by_link['name'];
+		$page_content = $page_by_link['text'];
+		$page_template = $page_by_link['template'];
+		break;
 	default:
-	$error_output = 1;
-	$page_title = "Ошибка!";
-	$page_content = "<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>";
-	$page_template = "standart";
-	break;
+		$error_output = 1;
+		$page_title = "Ошибка!";
+		$page_content = "<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>";
+		$page_template = "standart";
+		break;
 }
 
 if ($DEBUG) {
@@ -83,7 +83,7 @@ if ($DEBUG) {
 	echo "<p>page_template: ".$page_template."</p>";
 }
 switch($page_template){
-	case 'main':include_once("modules/template_main.php"); break;
+	case 'main': include_once("modules/template_main.php"); break;
 	case 'standart': include_once("modules/template_standart.php"); break;
 	case 'contacts': include_once("modules/template_contacts.php"); break;
 	case 'block': include_once("modules/template_block.php"); break;
