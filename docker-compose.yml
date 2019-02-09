@@ -30,3 +30,14 @@ services:
     # нужно лишь для внешного подключения к субд
     #ports:
     #  - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - 8800:80
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: database
