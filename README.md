@@ -27,7 +27,6 @@
 * Хранить права на использование шаблона и страницы отдельно?
 * Qr код внизу справа
 * Шаблоны перевести на функции
-* Закрыть modules
 * Codeinteger
   * https://ru.wikipedia.org/wiki/CodeIgniter
   * https://ru.wikipedia.org/wiki/Model-View-Controller
