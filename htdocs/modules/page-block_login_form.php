@@ -11,6 +11,13 @@
 				<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
 				<input type="submit" value="Войти" />
 			</form>
+			
+			<div>Регистрация</div>
+			<form method="post" action="login?act=register">
+				<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+				<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
+				<input type="submit" value="Зарегестрироваться" />
+			</form>
 			<?
 		}
 
@@ -99,7 +106,7 @@
 						$user_exist->execute();
 
 						if ( $user_exist->FETCH(PDO::FETCH_NUM)['0'] != 0 )
-						{ echo "<p>Ошибка! Имя пользователя занято</p>"; }
+						{ echo "<p>Ошибка! Имя пользователя <b>".$_POST['login']."</b> занято</p>"; }
 						else {
 
 							// Generate a random IV using openssl_random_pseudo_bytes()
@@ -115,11 +122,13 @@
 							$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 							$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
 
-							if ( $user_add->execute() ) { echo "<p>Пользователь ".$_POST['login']." успешно добавлен.</p>"; }
-							else  { echo "<p>Ошибка при добавлении пользователя ".$_POST['login'].".</p>"; }
+							if ( $user_add->execute() ) { echo "<p>Пользователь <b>".$_POST['login']."</b> успешно добавлен.</p>"; }
+							else  { echo "<p>Ошибка при добавлении пользователя <b>".$_POST['login']."</b>.</p>"; }
 						}
 					}
-					// else echo "Вы не ввели логин или пароль"
+					else {
+						echo "<p>Вы не ввели логин или пароль. Запрос некорректен!</p>";
+					}
 				}
 				break;
 				default:
