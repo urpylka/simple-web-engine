@@ -67,7 +67,7 @@ $(document).ready(function() {
 		<?
 			$list_menu = $pdo->query("SELECT `pages`.`name`,`pages`.`link` FROM `pages`,`top_menu` WHERE `pages`.`id` = `top_menu`.`page_id` ORDER BY `top_menu`.`queue` ASC;");
 			foreach ($list_menu as $option) echo "<li><a href=\"".$option['link']."\">".$option['name']."</a></li>";
-			?><li class="toggle2"><a href="#">MAP</a></li><?
+			/* ?><li class="toggle2"><a href="#">MAP</a></li><? */
 		?>
 	</ul>
 </nav>
