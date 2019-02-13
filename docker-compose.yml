@@ -26,10 +26,9 @@ services:
       MYSQL_PASSWORD: test
       MYSQL_DATABASE: database
 
-    # тк идет внутреннее обращение по домену "db"
-    # нужно лишь для внешного подключения к субд
-    #ports:
-    #  - "3306:3306"
+    # порт по внешку нужен лишь для отладки
+    ports:
+     - "3306:3306"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
