@@ -10,23 +10,125 @@
 			<?
 		}
 
-		function view_add_new_page() {
-			?>
-			<div><b>Функционал не введен в эксплуатацию!</b></div>
-			<div><b>Создание новой страницы</b></div>
-			<form method="post" action="redactor?act=new">
-				<p>Введите адрес страницы <input type="text" name="link" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" /></p>
-				<p>Введите название страницы <input type="text" name="name" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" /></p>
-				<p>Страница доступна только зарегистрированным пользователям <input name="private" type="checkbox"/></p>
-				<input type="submit" value="Создать" />
-			</form>
+		function view_pages($list, $level) {
 
-			<li class="toggle2"><a href="#">Показать карту сайта</a></li>
+			// level2 = "&nbsp;&nbsp;&rarr;&nbsp;";
+			// level3 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;&nbsp;";
+			// level4 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;&nbsp;";
+
+			?>
+			<script>$("td.name").dblclick(function() {alert("fadasf")});</script>
+			<tr>
+				<td class="select">
+					<input type="checkbox"/>
+				</td>
+				<td class="id">
+					<?echo $list['id'];?>
+				</td>
+				<td class="name">
+					<?echo $level;?>
+					<?echo $list['name'];?>
+				</td>
+				<td class="link">
+					<p>
+						<a href="http://<?echo $_SERVER['HTTP_HOST'];?>/<?echo $list['link'];?>">
+							<?echo $list['link'];?>
+						</a>
+					</p>
+				</td>
+				<td class="template">
+					<?echo $list['template'];?>
+				</td>
+				<td class="public">
+					<?echo $list['public_flag'];?>
+					<input name="private" type="checkbox"/>
+				</td>
+				<td class="remove">
+					<p>
+						<input type="submit" value="D" />
+					</p>
+				</td>
+			</tr>
 			<?
 		}
 
 		if ( ! isset($_GET['act']) ) {
-			if ( $admin_flag ) { view_add_new_page(); }
+			if ( $admin_flag ) {
+			
+				?>
+				<li class="toggle2"><a href="#">Показать карту сайта</a></li>
+				<br>
+				<div><b>Функционал не введен в эксплуатацию!</b></div>
+				<br>
+				<style>
+				table {
+					border-collapse: collapse;
+				}
+				th, td {
+					border: 1px solid orange;
+					padding: 10px;
+					text-align: left;
+				}
+				</style>
+				<table width=100%>
+					<tr>
+						<td></td>
+						<td>ID</td>
+						<td>Название</td>
+						<td>Адрес</td>
+						<td>Шаблон</td>
+						<td>Приватная</td>
+						<td></td>
+					</tr>
+					<form method="post" action="redactor?act=new">
+						<tr>
+							<td></td>
+							<td></td>
+							<td><input type="text" name="name" value="Новая страница" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" /></td>
+							<td><input type="text" name="link" value="Введите адрес" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" /></td>
+							<td>Шаблон</td>
+							<td><input name="private" type="checkbox"/></td>
+							<td><input type="submit" value="C" /></td>
+						</tr>
+					</form>
+
+				<?
+				#выводим страницы каталога
+				
+				// $first = $pdo->prepare("SELECT * FROM `pages` WHERE `template`='section' ORDER BY id ASC");
+				$first = $pdo->prepare("SELECT * FROM `pages` WHERE `pages`.`parent` = 0 ORDER BY id ASC");
+				$first->execute();
+				while($list_first = $first->FETCH(PDO::FETCH_ASSOC)) {
+					view_pages($list_first, "");
+
+					$second = $pdo->prepare("SELECT * FROM `pages` WHERE `pages`.`parent` = :list_first_link ORDER BY id ASC");
+					$second->bindValue(':list_first_link', $list_first['id'], PDO::PARAM_STR);
+					$second->execute();
+					while($list_second = $second->fetch(PDO::FETCH_ASSOC)) {
+						view_pages($list_second, "&nbsp;&nbsp;&rarr;&nbsp;");
+
+						$third = $pdo->prepare("SELECT * FROM `pages` WHERE `pages`.`parent` = :list_second_link ORDER BY id ASC");
+						$third->bindValue(':list_second_link', $list_second['id'], PDO::PARAM_STR);
+						$third->execute();
+						while($list_third = $third->fetch(PDO::FETCH_ASSOC)) {
+							view_pages($list_third, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;&nbsp;");
+
+							$fourth = $pdo->prepare("SELECT * FROM `pages` WHERE `pages`.`parent` = :list_third_link ORDER BY id ASC");
+							$fourth->bindValue(':list_third_link', $list_third['id'], PDO::PARAM_STR);
+							$fourth->execute();
+							while($list_fourth = $fourth->fetch(PDO::FETCH_ASSOC)) {
+								view_pages($list_third, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;&nbsp;");
+							}
+						}
+					}
+
+				}
+				?>
+				</table>
+				<?
+			
+			
+			}
 			else {
 				// такая ситуация мб, если страница будет публичной, но ты не админ
 				echo "<p>У вас нет прав для просмотра этой страницы.</p>"; }
