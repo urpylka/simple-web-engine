@@ -82,18 +82,41 @@ if ($DEBUG) {
 	echo "<p>page_title: ".$page_title."</p>";
 	echo "<p>page_template: ".$page_template."</p>";
 }
-switch($page_template){
-	case 'main': include_once("modules/template_main.php"); break;
-	case 'standart': include_once("modules/template_standart.php"); break;
-	case 'contacts': include_once("modules/template_contacts.php"); break;
-	case 'block': include_once("modules/template_block.php"); break;
-	case 'blank': include_once($page_content); break;
-	case 'section2': include_once("modules/template_section.php"); break;
+
+$template = $pdo->prepare("SELECT `templates`.`path`,`templates`.`name` FROM `templates` WHERE `templates`.`id` = :tmpl_id;");
+$template->bindValue(':tmpl_id', $page_template, PDO::PARAM_INT);
+$template->execute();
+$count_templates = $template->rowCount();
+
+switch($count_templates) {
+	case '0':
+		$error_output = 1;
+		$page_title = "Ошибка 500";
+		$page_content = "Не найден шаблон под id=\"<b>".$page_template."</b>\" для страницы <b>".$page_link."</b> отсутствует.";
+		include_once("modules/template_standart.php");
+		break;
+	case '1':
+		$error_output = 0;
+		$page_title = $page_by_link['name'];
+		$page_content = $page_by_link['text'];
+
+		$tmpl = $template->FETCH(PDO::FETCH_ASSOC);
+		$filename = $tmpl['path'];
+		$tmpl_name = $tmpl['name'];
+
+		if (file_exists($filename)) include_once($filename);
+		else {
+			$error_output = 1;
+			$page_title = "Ошибка 500";
+			$page_content = "Шаблон \"<b>".$tmpl_name."</b>\" для страницы <b>".$page_link."</b> отсутствует.";
+			include_once("modules/template_standart.php");
+		}
+		break;
 	default:
-	$error_output = 1;
-	$page_title = "Ошибка!";
-	$page_content = "Шаблон \"<b>".$page_template."</b>\" для страницы <b>".$page_link."</b> отсутствует";
-	include_once("modules/template_standart.php");
-	break;
+		$error_output = 1;
+		$page_title = "Ошибка 500";
+		$page_content = "<p>ERROR: Системная ошибка при попытке получить шаблон страницы.</p>";
+		include_once("modules/template_standart.php");
+		break;
 }
 ?>
