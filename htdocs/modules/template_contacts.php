@@ -2,7 +2,7 @@
 	<header>
 		<? include_once 'modules/block_yandex_map.php'; ?>
 		<? include_once 'modules/module_navbar.php'; ?>
-		<? include_once 'modules/block_main_menu.php'; ?>
+		<? include_once 'modules/block_site_map.php'; ?>
 	</header>
 	<main>
 		<article>

@@ -3,7 +3,7 @@
 		<? include_once 'modules/module_navbar.php'; ?>
 		<? include_once 'modules/block_promo.php'; ?>
 		<? include_once 'modules/block_quick-menu.php'; ?>
-		<? include_once 'modules/block_main_menu.php'; ?>
+		<? include_once 'modules/block_site_map.php'; ?>
 	</header>
 	<main>
 		<article>
