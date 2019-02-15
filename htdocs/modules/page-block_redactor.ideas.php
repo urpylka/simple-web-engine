@@ -1,56 +1,6 @@
 ﻿<?
-#Главная страница раздела
-if(!isset($_GET['op'])) { ?>
-  <div id="workzone">
-    <div class="corner tl"></div>
-    <div class="corner tr"></div>
-    <p class="addform"><img src="http://<?=$_SERVER['HTTP_HOST']?>/img/add.png" width="32px" height="32px" /><a href="http://<?=$_SERVER['HTTP_HOST']?>/admin/menu/addform/">Добавить страницу</a></p>
-    <table cellspacing="1" cellpadding="0" id="listpages">
-<?
-    #выводим страницы каталога
-    $first = mysql_query("SELECT * FROM menu WHERE type = 'section' ORDER BY id ASC");
-    while($list_first = mysql_fetch_array($first))
-      {
-          echo "<tr>
-                  <td class=\"link\"><p><a href=\"http://".$_SERVER['HTTP_HOST']."/admin/".$_GET['action']."/editform/".$list_first['id']."/\">".$list_first['name']."</a></p></td>
-                  <td class=\"functions\"><p><a href=\"http://".$_SERVER['HTTP_HOST']."/admin/".$_GET['action']."/del/".$list_first['id']."/\"><img src=\"http://".$_SERVER['HTTP_HOST']."/img/delete.png\" width=\"24px\" height=\"24px\" /></a></p></td>
-                </tr>";
-          $second = mysql_query("SELECT * FROM menu WHERE parent = '".$list_first['link']."' ORDER BY id ASC");
-          while($list_second = mysql_fetch_array($second))
-            {
-                echo "<tr>
-                        <td class=\"link\"><p>&nbsp;&nbsp;&rarr;&nbsp;<a href=\"http://".$_SERVER['HTTP_HOST']."/admin/".$_GET['action']."/editform/".$list_second['id']."/\">".$list_second['name']."</a></p></td>
-                        <td class=\"functions\"><p><a href=\"http://".$_SERVER['HTTP_HOST']."/admin/".$_GET['action']."/del/".$list_second['id']."/\"><img src=\"http://".$_SERVER['HTTP_HOST']."/img/delete.png\" width=\"24px\" height=\"24px\" /></a></p></td>
-                      </tr>";
-                $third = mysql_query("SELECT * FROM menu WHERE parent = '".$list_second['link']."' ORDER BY id ASC");
-                while($list_third = mysql_fetch_array($third))
-                  {
-                      echo "<tr>
-                              <td class=\"link\"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;&nbsp;<a href=\"http://".$_SERVER['HTTP_HOST']."/admin/".$_GET['action']."/editform/".$list_third['id']."/\">".$list_third['name']."</a></p></td>
-                              <td class=\"functions\"><p><a href=\"http://".$_SERVER['HTTP_HOST']."/admin/".$_GET['action']."/del/".$list_third['id']."/\"><img src=\"http://".$_SERVER['HTTP_HOST']."/img/delete.png\" width=\"24px\" height=\"24px\" /></a></p></td>
-                            </tr>";
-                      $fourth = mysql_query("SELECT * FROM menu WHERE parent = '".$list_third['link']."' ORDER BY id ASC");
-                      while($list_fourth = mysql_fetch_array($fourth))
-                        {
-                            echo "<tr>
-                                    <td class=\"link\"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;&nbsp;<a href=\"http://".$_SERVER['HTTP_HOST']."/admin/".$_GET['action']."/editform/".$list_fourth['id']."/\">".$list_fourth['name']."</a></p></td>
-                                    <td class=\"functions\"><p><a href=\"http://".$_SERVER['HTTP_HOST']."/admin/".$_GET['action']."/del/".$list_fourth['id']."/\"><img src=\"http://".$_SERVER['HTTP_HOST']."/img/delete.png\" width=\"24px\" height=\"24px\" /></a></p></td>
-                                  </tr>";
-
-                        }
-                  }
-            }
-      }
-?>
-    </table>
-    <div class="corner bl"></div>
-    <div class="corner br"></div>
-  </div>
-<?
-}
-
-#форма добавления страницы
-elseif($_GET['op'] == 'addform') { ?>
+# форма добавления страниц
+if($_GET['op'] == 'addform') { ?>
   <div id="workzone">
     <div class="corner tl"></div>
     <div class="corner tr"></div>
@@ -104,7 +54,7 @@ elseif($_GET['op'] == 'addform') { ?>
 <?
 }
 
-#форма редактирования страницы
+# форма редактирования страницы
 elseif($_GET['op'] == 'editform') {
 $edit_page = mysql_query("SELECT * FROM menu WHERE id = '".$_GET['id']."' ORDER BY id ASC");
 $edit_page_data = mysql_fetch_array($edit_page);

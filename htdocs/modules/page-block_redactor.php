@@ -19,13 +19,16 @@
 			?>
 			<script>$("td.name").dblclick(function() {alert("fadasf")});</script>
 			<tr>
-				<td class="select">
+				<td class="slct">
 					<input type="checkbox"/>
 				</td>
 				<td class="id">
 					<?echo $list['id'];?>
 				</td>
-				<td class="name">
+				<td class="prnt">
+					<?echo $list['parent'];?>
+				</td>
+				<td class="name2">
 					<?echo $level;?>
 					<?echo $list['name'];?>
 				</td>
@@ -36,16 +39,16 @@
 						</a>
 					</p>
 				</td>
-				<td class="template">
+				<td class="tmpl">
 					<?echo $list['template'];?>
 				</td>
-				<td class="public">
+				<td class="publ">
 					<?echo $list['public_flag'];?>
 					<input name="private" type="checkbox"/>
 				</td>
-				<td class="remove">
+				<td class="butt">
 					<p>
-						<input type="submit" value="D" />
+						<input type="submit" value="D"/>
 					</p>
 				</td>
 			</tr>
@@ -61,34 +64,60 @@
 				<div><b>Функционал не введен в эксплуатацию!</b></div>
 				<br>
 				<style>
+				.slct, .publ, .butt, .id, .prnt {
+					text-align: center;
+				}
 				table {
 					border-collapse: collapse;
+					line-height: 1.1;
+
 				}
 				th, td {
 					border: 1px solid orange;
 					padding: 10px;
 					text-align: left;
+					font: 10px sans-serif;
+				}
+				th {
+					background: #ffe499;
+
 				}
 				</style>
+				<!-- <p align="right">Выбрано: 0 <input type="submit" value="D"/></p>
+				<br> -->
 				<table width=100%>
-					<tr>
-						<td></td>
-						<td>ID</td>
-						<td>Название</td>
-						<td>Адрес</td>
-						<td>Шаблон</td>
-						<td>Приватная</td>
-						<td></td>
-					</tr>
+					<thead>
+						<tr>
+							<th class="slct"></th>
+							<th class="id">ID</th>
+							<th class="prnt">P</th>
+							<th class="name2">Название</th>
+							<th class="link">Адрес</th>
+							<th class="tmpl">Шаблон</th>
+							<th class="publ">Pub</th>
+							<th class="butt"></th>
+						</tr>
+					</thead>
 					<form method="post" action="redactor?act=new">
 						<tr>
-							<td></td>
-							<td></td>
+							<td class="slct"></td>
+							<td class="id"></td>
+							<td class="prnt"></td>
 							<td><input type="text" name="name" value="Новая страница" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" /></td>
 							<td><input type="text" name="link" value="Введите адрес" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" /></td>
-							<td>Шаблон</td>
-							<td><input name="private" type="checkbox"/></td>
-							<td><input type="submit" value="C" /></td>
+							<td class="tmpl">
+								<select name="template">
+									<!-- <option disabled>Select template</option> -->
+									<option selected value="standart">standart</option>
+									<option value="block">block</option>
+									<option value="main">main</option>
+									<option value="contacts">contacts</option>
+									<option value="blank">blank</option>
+									<option value="section2">section2</option>
+								</select>
+							</td>
+							<td class="publ"><input name="public" type="checkbox"/></td>
+							<td class="butt"><input type="submit" value="C"/></td>
 						</tr>
 					</form>
 
@@ -145,10 +174,10 @@
 				case "update":
 					if ( ! $admin_flag ) { echo "<p>Ошибка! Только администраторы могут удалять страницы.</p>"; }
 					else {
-						if ( isset($_POST['moo_link']) && isset($_POST['moo_text']) )
+						if ( isset($_POST['link']) && count($_POST) > 1 )
 						{
-							$page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :moo_link;");
-							$page_by_link->bindValue(':moo_link', $_POST['moo_link'], PDO::PARAM_STR);
+							$page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :post_link;");
+							$page_by_link->bindValue(':post_link', $_POST['link'], PDO::PARAM_STR);
 							$page_by_link->execute();
 							$count_pages = $page_by_link->rowCount();
 
@@ -157,11 +186,61 @@
 									echo("<p>ERROR: No pages were found in the database for this query.</p>");
 									break;
 								case '1':
-									$update_page = $pdo->prepare("UPDATE `pages` SET `text` = :moo_text WHERE `id` = :id;");
-									$update_page->bindValue(':moo_text', $_POST['moo_text'], PDO::PARAM_STR);
-									$update_page->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
-									if ($update_page->execute()) echo "<p style='margin-left:30px;'>The page was saved!</p>";
-									else echo("<p>ERROR: Could not update the page!</p>");
+									
+									$response = NULL;
+
+									if (isset($_POST['new_name'])) {
+										$update_name = $pdo->prepare("UPDATE `pages` SET `name` = :post_new_name WHERE `id` = :id;");
+										$update_name->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
+										$update_name->bindValue(':post_new_name', $_POST['new_name'], PDO::PARAM_STR);
+
+										if ($update_name->execute()) $response += "<p style='margin-left:30px;'>The name was updated!</p>";
+										else $response += "<p>ERROR: Could not update the name!</p>";
+									}
+									if (isset($_POST['new_text'])) {
+										$update_text = $pdo->prepare("UPDATE `pages` SET `text` = :post_new_text WHERE `id` = :id;");
+										$update_text->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
+										$update_text->bindValue(':post_new_text', $_POST['new_text'], PDO::PARAM_STR);
+
+										if ($update_text->execute()) $response += "<p style='margin-left:30px;'>The 'text' was updated!</p>";
+										else $response += "<p>ERROR: Could not update the 'text'!</p>";
+									}
+									if (isset($_POST['new_tmpl'])) {
+										// проверка существования шаблона
+										$update_tmpl = $pdo->prepare("UPDATE `pages` SET `template` = :post_new_tmpl WHERE `id` = :id;");
+										$update_tmpl->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
+										$update_tmpl->bindValue(':post_new_tmpl', $_POST['new_tmpl'], PDO::PARAM_INT);
+
+										if ($update_tmpl->execute()) $response += "<p style='margin-left:30px;'>The 'template' was updated!</p>";
+										else $response += "<p>ERROR: Could not update the 'template'!</p>";
+									}
+									if (isset($_POST['new_prnt'])) {
+										// проверка существования и мб типа родителя (хотя тип может быть любым)
+										$update_prnt = $pdo->prepare("UPDATE `pages` SET `parent` = :post_new_prnt WHERE `id` = :id;");
+										$update_prnt->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
+										$update_prnt->bindValue(':post_new_prnt', $_POST['new_prnt'], PDO::PARAM_INT);
+
+										if ($update_prnt->execute()) $response += "<p style='margin-left:30px;'>The 'parent' was updated!</p>";
+										else $response += "<p>ERROR: Could not update the 'parent'!</p>";
+									}
+									if (isset($_POST['new_publ'])) {
+										$update_publ = $pdo->prepare("UPDATE `pages` SET `public_flag` = :post_new_publ WHERE `id` = :id;");
+										$update_publ->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
+										$update_publ->bindValue(':post_new_publ', $_POST['new_publ'], PDO::PARAM_INT);
+
+										if ($update_publ->execute()) $response += "<p style='margin-left:30px;'>The 'public_flag' was updated!</p>";
+										else $response += "<p>ERROR: Could not update the 'public_flag'!</p>";
+									}
+									if (isset($_POST['new_link'])) {
+										// проверка занятости адреса
+										$update_link = $pdo->prepare("UPDATE `pages` SET `link` = :post_new_link WHERE `id` = :id;");
+										$update_link->bindValue(':id', $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'], PDO::PARAM_INT);
+										$update_link->bindValue(':post_new_link', $_POST['new_link'], PDO::PARAM_STR);
+
+										if ($update_link->execute()) $response += "<p style='margin-left:30px;'>The 'link' was updated!</p>";
+										else $response += "<p>ERROR: Could not update the 'link'! Maybe that is busy. Field is unice</p>";
+									}
+									echo($response);
 									break;
 								default:
 									echo("<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>");
