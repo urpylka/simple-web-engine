@@ -1,4 +1,4 @@
-<?/*<script type="text/javascript" src="https://yastatic.net/jquery/1.7.0/jquery.min.js"></script>*/?>
+<!-- <script src='http://localhost/jquery-3.3.1.min.js'></script> -->
 
 <script type="text/javascript" src="mooeditable/Demos/assets/mootools.js"></script>
 <script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.js"></script>
@@ -43,27 +43,29 @@
 
 	window.addEvent('domready', function() {
 
-		document.getElementById('textarea-1').mooEditable({
+		document.getElementById('textarea1').mooEditable({
 			actions: 'bold italic underline strikethrough | formatBlock justifyleft justifycenter justifyright justifyfull | insertunorderedlist insertorderedlist indent outdent | undo redo removeformat | createlink unlink | urlimage | toggleview'
 		});
 
-		document.getElementById("editor_form").setAttribute("style", "display:none;");
+		document.getElementById("editor_area").setAttribute("style", "display:none;");
+		document.getElementById("save_button").setAttribute("style", "display:none;");
 
-		document.getElementById("editor_form").addEvent('submit', function(event){
+
+		document.getElementById("save_button").onclick = function() {
 			initRequest();
 
 			var url = "redactor?act=update";
-			var data = "link=<?=$page_link?>&new_text="+encodeURIComponent(document.getElementById('textarea-1').value);
+			var data = "link=<?=$page_link?>&new_text="+encodeURIComponent(document.getElementById('textarea1').value);
 			request.open('POST', url, true);
 			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
 			request.onreadystatechange = updatePage;
 			request.send(data);
 
-			document.getElementById("main_cont").innerHTML = document.getElementById('textarea-1').value;
+			document.getElementById("main_cont").innerHTML = document.getElementById('textarea1').value;
 
 			open_textarea();
 			return false;
-		});
+		};
 	});
 	
 	function open_textarea() {
@@ -71,14 +73,17 @@
 		{
 			document.getElementById('edit_button').innerHTML = "Закрыть редактирование";
 			document.getElementById("main_cont").setAttribute("style", "display:none;");
-			document.getElementById("editor_form").setAttribute("style", "display:visible;");
+			document.getElementById("editor_area").setAttribute("style", "display:visible;");
+			document.getElementById("save_button").setAttribute("style", "display:visible;");
 		}
 		else {
 			document.getElementById('edit_button').innerHTML = "Редактировать";
 			document.getElementById("main_cont").setAttribute("style", "display:visible;");
-			document.getElementById("editor_form").setAttribute("style", "display:none;");
+			document.getElementById("editor_area").setAttribute("style", "display:none;");;
+			document.getElementById("save_button").setAttribute("style", "display:none;");
 		}
 	}
+
 </script>
 
 <link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.css">
@@ -95,11 +100,6 @@
 		margin-left: 30px;
 		width: 930px;
 	}
-	/* #editor_form {
-		padding: 0;
-		width: 990px !important;
-		margin: 0px;
-	} */
 	#editor_status {
 		color: green;
 		float: left;
@@ -111,16 +111,17 @@
 		float: right;
 		clear: right;
 	}
-	#textarea-1 {
+	#textarea1 {
 		position: relative;
 		display: block;
 		width: 930px;
 		height: 200px;
 		border: 0px solid #ddd;
 	}
-	#textarea-1-mooeditable-container {
+	#textarea1-mooeditable-container {
 		width: 990px !important;
-		border-width: 0px 0px 1px !important;
+		border: 0;
+		/* border-width: 0px 0px 1px !important; */
 	}
 	.mooeditable-iframe {
 		margin-left: 30px !important;
@@ -131,16 +132,35 @@
 	}
 </style>
 
-<form id="editor_form">
-	<textarea id="textarea-1">
-		<?=$page_content;?>
-	</textarea>
-	<!-- <input value="<?=$page_link?>">
-	<input value="<?=$tmpl_name?>"> -->
-	<input style="margin-left:30px;margin-top:15px;" type="submit" value="Save">
-</form>
+<div id="editor_area">
+	<textarea id="textarea1" class="marg30 js-elasticArea"><?=$page_content;?></textarea>
+</div>
+
+<script>
+(function () {
+  function elasticArea() {
+    $('.js-elasticArea').each(function (index, element) {
+      var elasticElement = element,
+      $elasticElement = $(element),
+      initialHeight = initialHeight || $elasticElement.height(),
+      delta = parseInt($elasticElement.css('paddingBottom')) + parseInt($elasticElement.css('paddingTop')) || 0,
+      resize = function () {
+        $elasticElement.height(initialHeight);
+        $elasticElement.height(elasticElement.scrollHeight - delta);
+      };
+      $elasticElement.on('input change keyup', resize);
+      resize();
+    });
+  };
+  //Init function in the view
+	elasticArea();
+})();
+</script>
+
 <hr/>
+
 <div id="editor_control" class="marg30">
-	<a id="edit_button" onclick="open_textarea();"  href="#">Редактировать</a>
+	<input id="save_button" type="submit" value="Save">
 	<div id="editor_status"></div>
+	<a id="edit_button" onclick="open_textarea();"  href="#">Редактировать</a>
 </div>

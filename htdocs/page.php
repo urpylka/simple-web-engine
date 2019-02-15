@@ -45,7 +45,7 @@ switch($count_users) {
 
 $page_link = $_GET['link'];
 
-$page_by_link = $pdo->prepare("SELECT `pages`.`name`,`pages`.`text`,`pages`.`template` FROM `pages` WHERE `pages`.`link` = :page_link AND ( `pages`.`public_flag` = 1 OR :admin_flag );");
+$page_by_link = $pdo->prepare("SELECT `pages`.`name`,`pages`.`text`,`pages`.`template`,`pages`.`public_flag` FROM `pages` WHERE `pages`.`link` = :page_link AND ( `pages`.`public_flag` = 1 OR :admin_flag );");
 $page_by_link->bindValue(':page_link', $page_link, PDO::PARAM_STR);
 $page_by_link->bindValue(':admin_flag', $admin_flag, PDO::PARAM_STR);
 $page_by_link->execute();
@@ -65,6 +65,7 @@ switch($count_pages) {
 		$page_title = $page_by_link['name'];
 		$page_content = $page_by_link['text'];
 		$page_template = $page_by_link['template'];
+		$page_public = $page_by_link['public_flag'];
 		break;
 	default:
 		$error_output = 1;
@@ -81,6 +82,7 @@ if ($DEBUG) {
 	echo "<p>page_link: ".$page_link."</p>";
 	echo "<p>page_title: ".$page_title."</p>";
 	echo "<p>page_template: ".$page_template."</p>";
+	echo "<p>page_public: ".$page_public."</p>";
 }
 
 $template = $pdo->prepare("SELECT `templates`.`path`,`templates`.`name` FROM `templates` WHERE `templates`.`id` = :tmpl_id;");

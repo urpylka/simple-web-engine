@@ -40,11 +40,22 @@
 					</p>
 				</td>
 				<td class="tmpl">
-					<?echo $list['template'];?>
+					<select id="template" onchange="update_template()">
+					<?
+					// $list_tmpl = $pdo->prepare("SELECT `templates`.`id`,`templates`.`name` FROM `templates`;");
+					// $list_tmpl->execute();
+					// while ( $root_item = $list_tmpl->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) ) {
+					// 	if ($root_item['id'] == $list['template']) {
+					// 		echo("<option value=\"".$root_item['id']."\" selected>".$root_item['name']."</option>");
+					// 	} else {
+					// 		echo("<option value=\"".$root_item['id']."\">".$root_item['name']."</option>");
+					// 	}
+					// }
+					?>
+					</select>
 				</td>
 				<td class="publ">
-					<?echo $list['public_flag'];?>
-					<input name="private" type="checkbox"/>
+					<input id="public_flag" type="checkbox" onchange="update_public_flag()" <? if(!$list['public_flag']) {echo("checked");}?>/>
 				</td>
 				<td class="butt">
 					<p>
@@ -93,7 +104,7 @@
 						<th class="name2">Название</th>
 						<th class="link">Адрес</th>
 						<th class="tmpl">Шаблон</th>
-						<th class="publ">Pub</th>
+						<th class="publ">Priv</th>
 						<th class="butt"></th>
 					</tr>
 				</thead>
@@ -105,14 +116,14 @@
 						<td><input type="text" name="name" value="Новая страница" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" /></td>
 						<td><input type="text" name="link" value="Введите адрес" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" /></td>
 						<td class="tmpl">
-							<select name="template">
-								<!-- <option disabled>Select template</option> -->
-								<option selected value="standart">standart</option>
-								<option value="block">block</option>
-								<option value="main">main</option>
-								<option value="contacts">contacts</option>
-								<option value="blank">blank</option>
-								<option value="section2">section2</option>
+							<select id="template" onchange="select_template_for_new_page()">
+							<?
+							$list_tmpl = $pdo->prepare("SELECT `templates`.`id`,`templates`.`name` FROM `templates`;");
+							$list_tmpl->execute();
+							while ( $root_item = $list_tmpl->FETCH(PDO::FETCH_ASSOC, PDO::FETCH_ORI_NEXT) ) {
+								echo("<option value=\"".$root_item['id']."\">".$root_item['name']."</option>");
+							}
+							?>
 							</select>
 						</td>
 						<td class="publ"><input name="public" type="checkbox"/></td>
