@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.3.11-MariaDB-1:10.3.11+maria~bionic)
 # Database: database
-# Generation Time: 2019-02-15 08:19:53 +0000
+# Generation Time: 2019-02-15 18:10:27 +0000
 # ************************************************************
 
 
@@ -54,7 +54,7 @@ VALUES
 	(10,1,'Структура','<table class=\"struct\">\n						<tbody>\n							<tr>\n								<td>\n									\n<img src=\"http://war.ssau.ru/img/1.jpg\" style=\"float: left;\" />\n									<a href=\"http://war.ssau.ru/index/structure/first/\">1&nbsp;цикл<br />«Общевоинские дисциплины»</a>\n								</td>\n								<td>\n									\n<img height=\"33\" src=\"http://war.ssau.ru/img/2.jpg\" style=\"float: left;\" width=\"47\" />\n									<a href=\"http://war.ssau.ru/index/structure/second/\">2&nbsp;цикл<br />«Эксплуатация и&nbsp;ремонт авиационного оборудования и&nbsp;вертолетов»</a>\n								</td>\n							</tr>\n							<tr>\n								<td>\n									\n<img src=\"http://war.ssau.ru/img/3.jpg\" style=\"float: left;\" />\n									<a href=\"http://war.ssau.ru/index/structure/third/\">3&nbsp;цикл<br />«Эксплуатация самолетов, вертолетов и&nbsp;авиационных двигателей»</a>\n								</td>\n								<td>\n									\n<img src=\"http://war.ssau.ru/img/3.jpg\" style=\"float: left;\" />\n									<a href=\"http://war.ssau.ru/index/structure/fourth/\">4&nbsp;цикл<br />«Эксплуатация и&nbsp;ремонт РЭО самолетов, вертолетов и&nbsp;авиационных ракет»</a><p> </p>\n								</td>\n							</tr>\n							<tr>\n								<td>\n									\n<img src=\"http://war.ssau.ru/img/5.jpg\" style=\"float: left;\" /> <a href=\"http://war.ssau.ru/index/structure/five/\">5&nbsp;цикл<br />«Эксплуатация и&nbsp;ремонт авиационного вооружения самолетов»</a></td>\n							</tr>\n						</tbody>\n					</table>\n						<h2>Подразделение обеспечения учебного процесса</h2>\n						<p> </p>\n					<table class=\"struct\">\n						<tbody>\n							<tr>\n								<td>\n									\n<img src=\"http://war.ssau.ru/img/5.jpg\" style=\"float: left;\" /> <a href=\"http://war.ssau.ru/index/structure/out/\">ОУТиТА<br />Отделение учебной техники и тренировочной аппаратуры</a>\n								</td>\n								<td>\n									\n<img src=\"http://war.ssau.ru/img/5.jpg\" style=\"float: left;\" /> <a href=\"http://war.ssau.ru/index/structure/uvp/\">УВП<br />Учебно-вспомогательный персонал</a>\n								</td>\n							</tr>\n						</tbody>\n					</table>',1,'struktura',1),
 	(11,1,'Новости','modules/page-block_news.php',3,'news',1),
 	(12,1,'Авторизация','modules/page-block_login_form.php',3,'login',1),
-	(13,1,'Редактор','modules/page-block_redactor.php',3,'redactor',0),
+	(13,1,'Редактор','modules/page-block_editor.php',3,'editor',0),
 	(14,1,'Генератор QR','modules/module_qr.php',4,'qr',1),
 	(15,1,'Пустая 2','<p>одна строка</p>',1,'free2',1),
 	(16,8,'Энциклопедия кафедры',NULL,1,'flash-history',0),
@@ -74,13 +74,13 @@ VALUES
 	(30,1,'Мультимедиа',NULL,5,'multimedia',0),
 	(31,30,'Фото',NULL,1,'photo',0),
 	(32,30,'Видео',NULL,1,'video',0),
-	(33,30,'Программы',NULL,1,'programs',0),
-	(34,30,'Сборы 2010',NULL,1,'sbori2010hotilovo',0),
+	(33,30,'Программа','<p>wefwqf</p>\n<p>rwerwыфааывфпфывwrfffwerqwrwq</p>\n<p>rrrrrrrfwfeqweeffr</p>\n<p>wq</p>\n',1,'programs',0),
+	(34,30,'Сборы 2010','<p><b>dfwefqffqfqwfffffddFAFAdfDf</b></p>\nupdate_name();',1,'sbori2010hotilovo',0),
 	(35,30,'Фотоконкурс',NULL,1,'fotokonkurs',0),
 	(36,1,'Выпускникам',NULL,5,'vypusk',0),
 	(37,36,'Вас ждут в войсках',NULL,1,'voysk',0),
 	(38,36,'Приказы о присвоении звания и за',NULL,1,'prik',0),
-	(39,0,'Обработчик AJAX','Пустая страница',1,'editor',1),
+	(39,0,'Обработчик AJAX','modules/blank_redactor.php',4,'redactor',1),
 	(40,0,'Контакты2','<style>\n.left { float:  left; width: 50%; }\n.right { float: right; width: 50%; text-align: right; }\n.clear { clear: both; }\n</style><div class=\"left\">\n<h2>Почтовый адрес</h2>\n					<p>Россия, 443086, г. Самара, ул. Врубеля 27</p>\n					<h2>Начальник военной кафедры</h2>\n					<p>Полковник <em>Хабло Иван Игоревич</em></p>\n					<p>Тел.: (846) 3345754</p>\n					<p>E-mail: <a href=\"mailto:khablo@ssau.ru?subject=%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D1%83%20%D0%92%D0%9A%20%D0%A1%D0%93%D0%90%D0%A3\">khablo@ssau.ru</a></p>\n					<h2>Заместитель начальника военной кафедры</h2>\n					<p>Полковник <em>Одобеску Виктор Трофимович</em></p>\n					<p>Тел.: (846) 2674426</p>\n					<p>E-mail: <a href=\"mailto:odobescu@ssau.ru?subject=%D0%97%D0%B0%D0%BC%D0%B5%D1%81%D1%82%D0%B8%D1%82%D0%B5%D0%BB%D1%8E%20%D0%BD%D0%B0%D1%87.%20%D0%92%D0%9A%20%D0%A1%D0%93%D0%90%D0%A3\">odobescu@ssau.ru</a></p>\n					<h2>Начальник учебной части,<br />заместитель начальника военной кафедры</h2>\n					<p>Подполковник Алексеенко Василий Павлович</p>\n					<p>Тел.: (846) 2674421</p>\n					<p>E-mail.: <a href=\"mailto:alekseenka_v@mail.ru\">alekseenko_v@ma<span style=\"display: none\">&nbsp;</span>il.ru</a></p>\n					<h2>Дежурный по кафедре</h2>\n					<p>Тел.: (846) 2674422</p>\n</div>		\n<p> </p>\n<div class=\"clear\"></div>',1,'cont2',1);
 
 /*!40000 ALTER TABLE `pages` ENABLE KEYS */;
