@@ -1,77 +1,74 @@
 <script language="javascript" type="text/javascript">
+	var request;
 
-var request;
-
-function createRequest() {
-	try { request = new XMLHttpRequest(); }
-	catch (trymicrosoft)
-	{
-		try { request = new ActiveXObject("Msxml2.XMLHTTP"); }
-		catch (othermicrosoft)
+	function createRequest() {
+		try { request = new XMLHttpRequest(); }
+		catch (trymicrosoft)
 		{
-			try { request = new ActiveXObject("Microsoft.XMLHTTP"); }
-			catch (failed) { request = false; }
-    }
-  }
-  if (!request) alert("Error initializing XMLHttpRequest!");
-}
-
-function getCustomerInfo() {
-	createRequest();
-	// Сделать что-то с переменной request 
-	//var phone = document.getElementById("phone").value;
-	//var url = "/cgi-local/lookupCustomer.php?phone=" + escape(phone);
-	//request.open("GET", url, true);
-	//request.onreadystatechange = updatePage;
-	//request.send(null);
-	
-	//var phone = document.getElementById("phone").value;
-	var url = "redactor?act=update";
-	var data = "moo_link=<?=$moo_link?>&moo_text="+encodeURIComponent(document.getElementById('textarea-1').value);
-	request.open('POST', url, true);
-	request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-	//request.setRequestHeader('Content-type: text/html; charset=utf-8');
-	request.onreadystatechange = updatePage;
-	request.send(data);
-}
-
-function updatePage() {
-	if (request.readyState == 4) {
-		if (request.status == 200) {
-			var response = request.responseText;
-			document.getElementById("status_urpylka").innerHTML = response;
-		  //alert(response);
-			//var response = request.responseText.split("|");
-			//document.getElementById("order").value = response[0];
-			//document.getElementById("address").innerHTML = response[1].replace(/\n/g, "<br />");
-		} else if (request.status == 404) {
-			alert ("Requested URL is not found.");
-		} else if (request.status == 403) {
-			alert("Access denied.");
-		} else
-			alert("Server return status: " + request.status);
+			try { request = new ActiveXObject("Msxml2.XMLHTTP"); }
+			catch (othermicrosoft)
+			{
+				try { request = new ActiveXObject("Microsoft.XMLHTTP"); }
+				catch (failed) { request = false; }
+			}
+		}
+		if (!request) alert("Error initializing XMLHttpRequest!");
 	}
-}
+
+	function getCustomerInfo() {
+		createRequest();
+		// Сделать что-то с переменной request 
+		//var phone = document.getElementById("phone").value;
+		//var url = "/cgi-local/lookupCustomer.php?phone=" + escape(phone);
+		//request.open("GET", url, true);
+		//request.onreadystatechange = updatePage;
+		//request.send(null);
+		//var phone = document.getElementById("phone").value;
+
+		var url = "redactor?act=update";
+		var data = "link=<?=$moo_link?>&new_text="+encodeURIComponent(document.getElementById('textarea-1').value);
+		request.open('POST', url, true);
+		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+		//request.setRequestHeader('Content-type: text/html; charset=utf-8');
+		request.onreadystatechange = updatePage;
+		request.send(data);
+	}
+
+	function updatePage() {
+		if (request.readyState == 4) {
+			if (request.status == 200) {
+				var response = request.responseText;
+				document.getElementById("status_urpylka").innerHTML = response;
+				//alert(response);
+				//var response = request.responseText.split("|");
+				//document.getElementById("order").value = response[0];
+				//document.getElementById("address").innerHTML = response[1].replace(/\n/g, "<br />");
+			} else if (request.status == 404) {
+				alert ("Requested URL is not found.");
+			} else if (request.status == 403) {
+				alert("Access denied.");
+			} else
+				alert("Server return status: " + request.status);
+		}
+	}
 </script>
 
 <style type="text/css">
-body{
+	body {
 		font-family: sans-serif;
 		font-size: .9em;
 	}
-	#textarea-1{
+	#textarea-1 {
 		position: relative;
 		display: block;
 		width: 930px;
 		height: 200px;
 		border: 0px solid #ddd;
 	}
-	#textarea-1-mooeditable-container
-	{
+	#textarea-1-mooeditable-container {
 		width: 990px !important; border-width: 0px 0px 1px !important;
 	}
-	.mooeditable-iframe
-	{
+	.mooeditable-iframe {
 		height: 204px; margin-left: 30px !important; margin-right: 30px !important; width: 930px !important; padding: 0 !important;
 	}
 </style>
