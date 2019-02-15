@@ -57,7 +57,7 @@ switch($count_pages) {
 		$page_title = "Ошибка 403";
 		if ( isset($login) ) $page_content = "<p>У вас нет прав, для просмотра этой страницы.</p>";
 		else $page_content = "<p>У вас нет прав, для просмотра этой страницы.</p><p>Пройдите <a href='login?refer=$page_link'>авторизацию</a>.</p>";
-		$page_template = "standart";
+		$page_template = "1";
 		break;
 	case '1':
 		$error_output = 0;
@@ -70,7 +70,7 @@ switch($count_pages) {
 		$error_output = 1;
 		$page_title = "Ошибка!";
 		$page_content = "<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>";
-		$page_template = "standart";
+		$page_template = "1";
 		break;
 }
 
@@ -96,10 +96,6 @@ switch($count_templates) {
 		include_once("modules/template_standart.php");
 		break;
 	case '1':
-		$error_output = 0;
-		$page_title = $page_by_link['name'];
-		$page_content = $page_by_link['text'];
-
 		$tmpl = $template->FETCH(PDO::FETCH_ASSOC);
 		$filename = $tmpl['path'];
 		$tmpl_name = $tmpl['name'];
