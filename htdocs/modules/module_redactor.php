@@ -1,7 +1,15 @@
+<?/*<script type="text/javascript" src="https://yastatic.net/jquery/1.7.0/jquery.min.js"></script>*/?>
+
+<script type="text/javascript" src="mooeditable/Demos/assets/mootools.js"></script>
+<script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.js"></script>
+<script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.UI.MenuList.js"></script>
+<script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.Extras.js"></script>
+
 <script language="javascript" type="text/javascript">
+
 	var request;
 
-	function createRequest() {
+	function initRequest() {
 		try { request = new XMLHttpRequest(); }
 		catch (trymicrosoft)
 		{
@@ -15,31 +23,12 @@
 		if (!request) alert("Error initializing XMLHttpRequest!");
 	}
 
-	function getCustomerInfo() {
-		createRequest();
-		// Сделать что-то с переменной request 
-		//var phone = document.getElementById("phone").value;
-		//var url = "/cgi-local/lookupCustomer.php?phone=" + escape(phone);
-		//request.open("GET", url, true);
-		//request.onreadystatechange = updatePage;
-		//request.send(null);
-		//var phone = document.getElementById("phone").value;
-
-		var url = "redactor?act=update";
-		var data = "link=<?=$moo_link?>&new_text="+encodeURIComponent(document.getElementById('textarea-1').value);
-		request.open('POST', url, true);
-		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-		//request.setRequestHeader('Content-type: text/html; charset=utf-8');
-		request.onreadystatechange = updatePage;
-		request.send(data);
-	}
-
 	function updatePage() {
 		if (request.readyState == 4) {
 			if (request.status == 200) {
 				var response = request.responseText;
-				document.getElementById("status_urpylka").innerHTML = response;
-				//alert(response);
+				document.getElementById("editor_status").innerHTML = response;
+				// alert(response);
 				//var response = request.responseText.split("|");
 				//document.getElementById("order").value = response[0];
 				//document.getElementById("address").innerHTML = response[1].replace(/\n/g, "<br />");
@@ -51,12 +40,76 @@
 				alert("Server return status: " + request.status);
 		}
 	}
+
+	window.addEvent('domready', function() {
+
+		document.getElementById('textarea-1').mooEditable({
+			actions: 'bold italic underline strikethrough | formatBlock justifyleft justifycenter justifyright justifyfull | insertunorderedlist insertorderedlist indent outdent | undo redo removeformat | createlink unlink | urlimage | toggleview'
+		});
+
+		document.getElementById("editor_form").setAttribute("style", "display:none;");
+
+		document.getElementById("editor_form").addEvent('submit', function(event){
+			initRequest();
+
+			var url = "redactor?act=update";
+			var data = "link=<?=$page_link?>&new_text="+encodeURIComponent(document.getElementById('textarea-1').value);
+			request.open('POST', url, true);
+			request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+			request.onreadystatechange = updatePage;
+			request.send(data);
+
+			document.getElementById("main_cont").innerHTML = document.getElementById('textarea-1').value;
+
+			open_textarea();
+			return false;
+		});
+	});
+	
+	function open_textarea() {
+		if (document.getElementById("main_cont").getAttribute("style")!="display:none;")
+		{
+			document.getElementById('edit_button').innerHTML = "Закрыть редактирование";
+			document.getElementById("main_cont").setAttribute("style", "display:none;");
+			document.getElementById("editor_form").setAttribute("style", "display:visible;");
+		}
+		else {
+			document.getElementById('edit_button').innerHTML = "Редактировать";
+			document.getElementById("main_cont").setAttribute("style", "display:visible;");
+			document.getElementById("editor_form").setAttribute("style", "display:none;");
+		}
+	}
 </script>
+
+<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.css">
+<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.Extras.css">
+<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.SilkTheme.css">
 
 <style type="text/css">
 	body {
 		font-family: sans-serif;
 		font-size: .9em;
+	}
+	.marg30 {
+		margin-right: 30px;
+		margin-left: 30px;
+		width: 930px;
+	}
+	/* #editor_form {
+		padding: 0;
+		width: 990px !important;
+		margin: 0px;
+	} */
+	#editor_status {
+		color: green;
+		float: left;
+	}
+	#editor_control {
+		height: 20px;
+	}
+	#edit_button {
+		float: right;
+		clear: right;
 	}
 	#textarea-1 {
 		position: relative;
@@ -66,81 +119,28 @@
 		border: 0px solid #ddd;
 	}
 	#textarea-1-mooeditable-container {
-		width: 990px !important; border-width: 0px 0px 1px !important;
+		width: 990px !important;
+		border-width: 0px 0px 1px !important;
 	}
 	.mooeditable-iframe {
-		height: 204px; margin-left: 30px !important; margin-right: 30px !important; width: 930px !important; padding: 0 !important;
+		margin-left: 30px !important;
+		margin-right: 30px !important; 
+		height: 300px !important;
+		width: 930px !important;
+		padding: 0 !important;
 	}
 </style>
 
-<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.css">
-<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.Extras.css">
-<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.SilkTheme.css">
-
-<?/*<script type="text/javascript" src="https://yastatic.net/jquery/1.7.0/jquery.min.js"></script>*/?>
-
-<script type="text/javascript" src="mooeditable/Demos/assets/mootools.js"></script>
-<script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.js"></script>
-<script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.UI.MenuList.js"></script>
-<script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.Extras.js"></script>
-
-<script type="text/javascript">
-	window.addEvent('domready', function(){
-		document.getElementById('textarea-1').mooEditable({
-			actions: 'bold italic underline strikethrough | formatBlock justifyleft justifycenter justifyright justifyfull | insertunorderedlist insertorderedlist indent outdent | undo redo removeformat | createlink unlink | urlimage | toggleview'
-		});
-
-		document.getElementById("theForm").setAttribute("style", "display:none;");
-		// Post submit
-		document.getElementById("theForm").addEvent('submit', function(event){
-			/*
-            // Предотвращаем обычную отправку формы
-            //event.preventDefault();
-			$.post('/redactor?act=update', {'moo_link':'rules','moo_text':'2222'},
-        	function(data) {
-	//$('#fullpage').html(data);
-	alert(data);
-	});
-	*/
-			//alert(document.getElementById('textarea-1').value);
-			//alert(encodeURIComponent(document.getElementById('textarea-1').value));
-			getCustomerInfo();
-			document.getElementById("main_cont").innerHTML = document.getElementById('textarea-1').value;
-			document.getElementById("theForm").setAttribute("style", "display:none;");
-			document.getElementById("main_cont").setAttribute("style", "display:visible;");
-			return false;
-		});
-		
-	});
-	
-	function knop() {
-		if(document.getElementById("main_cont").getAttribute("style")!="display:none;")
-		{
-			document.getElementById("main_cont").setAttribute("style", "display:none;");
-			document.getElementById("theForm").setAttribute("style", "display:visible;");
-		}
-		else {
-			document.getElementById("main_cont").setAttribute("style", "display:visible;");
-			document.getElementById("theForm").setAttribute("style", "display:none;");
-		}
-	}
-		/*
-		$(document).ready(function(){
-		$('').click(function () {
-			$(this).next('ul').toggle();
-			return false;});});
-			*/
-</script>
-
-<form id="theForm" method="post" action="redactor?act=update" style="padding: 0; width: 990px !important; margin: 0px;">
-	<textarea id="textarea-1" name="editable1">
-	<?=$moo_text;?>
+<form id="editor_form">
+	<textarea id="textarea-1">
+		<?=$page_content;?>
 	</textarea>
-	<?/*<input type="hidden" value="<?=$moo_link?>" name="moo_link">*/?>
-	<input style="margin-left: 30px;margin-top:15px;" type="submit">
+	<!-- <input value="<?=$page_link?>">
+	<input value="<?=$tmpl_name?>"> -->
+	<input style="margin-left:30px;margin-top:15px;" type="submit" value="Save">
 </form>
-<div id="data"></div>
 <hr/>
-<div id="status_urpylka" style="color:green;float:left;"></div>
-<a style="margin-left: 30px;" onclick="knop();"  href="#" style="float:left;">Редактировать <img src="img/de5651dbe70eb0341d1bc6037f19adcb.jpeg" style="margin-top:-3px;height: 20px;"/></a>
-<br/>
+<div id="editor_control" class="marg30">
+	<a id="edit_button" onclick="open_textarea();"  href="#">Редактировать</a>
+	<div id="editor_status"></div>
+</div>
