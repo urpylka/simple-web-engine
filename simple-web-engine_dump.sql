@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.3.11-MariaDB-1:10.3.11+maria~bionic)
 # Database: database
-# Generation Time: 2019-02-15 18:10:27 +0000
+# Generation Time: 2019-02-18 12:44:31 +0000
 # ************************************************************
 
 
@@ -74,12 +74,12 @@ VALUES
 	(30,1,'Мультимедиа',NULL,5,'multimedia',0),
 	(31,30,'Фото',NULL,1,'photo',0),
 	(32,30,'Видео',NULL,1,'video',0),
-	(33,30,'Программа','<p>wefwqf</p>\n<p>rwerwыфааывфпфывwrfffwerqwrwq</p>\n<p>rrrrrrrfwfeqweeffr</p>\n<p>wq</p>\n',1,'programs',0),
+	(33,30,'Программа','Тестовая страница',1,'programs',0),
 	(34,30,'Сборы 2010','<p><b>dfwefqffqfqwfffffddFAFAdfDf</b></p>\nupdate_name();',1,'sbori2010hotilovo',0),
 	(35,30,'Фотоконкурс',NULL,1,'fotokonkurs',0),
 	(36,1,'Выпускникам',NULL,5,'vypusk',0),
 	(37,36,'Вас ждут в войсках',NULL,1,'voysk',0),
-	(38,36,'Приказы о присвоении звания и за',NULL,1,'prik',0),
+	(38,36,'Приказы о присвоении звания','Пустая страница',1,'prik',0),
 	(39,0,'Обработчик AJAX','modules/blank_redactor.php',4,'redactor',1),
 	(40,0,'Контакты2','<style>\n.left { float:  left; width: 50%; }\n.right { float: right; width: 50%; text-align: right; }\n.clear { clear: both; }\n</style><div class=\"left\">\n<h2>Почтовый адрес</h2>\n					<p>Россия, 443086, г. Самара, ул. Врубеля 27</p>\n					<h2>Начальник военной кафедры</h2>\n					<p>Полковник <em>Хабло Иван Игоревич</em></p>\n					<p>Тел.: (846) 3345754</p>\n					<p>E-mail: <a href=\"mailto:khablo@ssau.ru?subject=%D0%9D%D0%B0%D1%87%D0%B0%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D1%83%20%D0%92%D0%9A%20%D0%A1%D0%93%D0%90%D0%A3\">khablo@ssau.ru</a></p>\n					<h2>Заместитель начальника военной кафедры</h2>\n					<p>Полковник <em>Одобеску Виктор Трофимович</em></p>\n					<p>Тел.: (846) 2674426</p>\n					<p>E-mail: <a href=\"mailto:odobescu@ssau.ru?subject=%D0%97%D0%B0%D0%BC%D0%B5%D1%81%D1%82%D0%B8%D1%82%D0%B5%D0%BB%D1%8E%20%D0%BD%D0%B0%D1%87.%20%D0%92%D0%9A%20%D0%A1%D0%93%D0%90%D0%A3\">odobescu@ssau.ru</a></p>\n					<h2>Начальник учебной части,<br />заместитель начальника военной кафедры</h2>\n					<p>Подполковник Алексеенко Василий Павлович</p>\n					<p>Тел.: (846) 2674421</p>\n					<p>E-mail.: <a href=\"mailto:alekseenka_v@mail.ru\">alekseenko_v@ma<span style=\"display: none\">&nbsp;</span>il.ru</a></p>\n					<h2>Дежурный по кафедре</h2>\n					<p>Тел.: (846) 2674422</p>\n</div>		\n<p> </p>\n<div class=\"clear\"></div>',1,'cont2',1);
 
