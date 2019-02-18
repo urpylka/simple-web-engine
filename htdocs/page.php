@@ -4,7 +4,7 @@ header('Content-Type: text/html; charset=utf-8');
 
 include("config.php");
 
-if (DEBUG) {
+if ($DEBUG) {
 	ini_set('display_errors', 1);
 	ini_set('display_startup_errors', 1);
 }
