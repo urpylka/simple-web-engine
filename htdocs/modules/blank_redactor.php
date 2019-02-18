@@ -2,13 +2,33 @@
 if ( ! isset($_GET['act']) ) echo "<p>Ошибка! Неккоректный запрос 1.</p>"; 
 else {
     switch ($_GET['act']) {
-        case "remove":
+        case "drop":
             if ( ! $admin_flag ) { echo "<p>Ошибка! Только администраторы могут удалять страницы.</p>"; }
             else {
                 //echo "<p>Ошибка! Проверка можно ли удалить страницу.</p>";
+                $response = NULL;
 
-                // удаляем
+                if ( isset($_POST['link']) ) {
+                    $page_by_link = $pdo->prepare("DELETE FROM `pages` WHERE `link` = :link;");
+                    $page_by_link->bindValue(':link', $_POST['link'], PDO::PARAM_STR);
+                    $page_by_link->execute();
+
+                    if ($page_by_link->execute()) $response .= "The page was deleted!";
+                    else $response .= "<p>ERROR: Could not delete the page!</p>";
+
+                } else echo("<p>ERROR: The post request is not correct!</p>");
+
+                if ( isset($_POST['id']) ) {
+                    $page_by_id = $pdo->prepare("DELETE FROM `pages` WHERE `id` = :id;");
+                    $page_by_id->bindValue(':id', $_POST['id'], PDO::PARAM_STR);
+                    $page_by_id->execute();
+
+                    if ($page_by_id->execute()) $response .= "The page was deleted!";
+                    else $response .= "<p>ERROR: Could not delete the page!</p>";
+
+                } else $response .= "<p>ERROR: The post request is not correct!</p>";
             }
+            echo($response);
             break;
         case "update":
             if ( ! $admin_flag ) { echo "<p>Ошибка! Только администраторы могут удалять страницы.</p>"; }
@@ -89,10 +109,44 @@ else {
                 else echo("<p>ERROR: The post request is not correct!</p>");
             }
             break;
-        case "create":
+        case "new":
             if ( ! $admin_flag ) { echo "<p>Ошибка! Только администраторы могут удалять страницы.</p>"; }
             else {
-                //fsdfgsdgsdgkodsgjiwgoi
+                if ( isset($_POST['link']) && isset($_POST['name']) && isset($_POST['prnt']) && isset($_POST['tmpl']) && isset($_POST['priv']) )
+                {
+                    $page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :post_link;");
+                    $page_by_link->bindValue(':post_link', $_POST['link'], PDO::PARAM_STR);
+                    $page_by_link->execute();
+                    $count_pages = $page_by_link->rowCount();
+
+                    switch($count_pages) {
+                        case '0':
+                            $response = NULL;
+
+                            $new_page = $pdo->prepare("INSERT INTO `pages` (parent, name, template, link) VALUES (:parent, :name, :template, :link);");
+                            $new_page->bindValue(':parent', $_POST['prnt'], PDO::PARAM_INT);
+                            $new_page->bindValue(':name', $_POST['name'], PDO::PARAM_STR);
+                            $new_page->bindValue(':template', $_POST['tmpl'], PDO::PARAM_INT);
+                            $new_page->bindValue(':link', $_POST['link'], PDO::PARAM_STR);
+
+                            if ($new_page->execute()) {
+                                $response .= "The page was created!";
+                                $response .= "<script>location=\"\/".$_POST['link']."\";</script>";
+                                
+                            }
+                            else $response .= "<p>ERROR: Could not create page!</p>";
+
+                            echo($response);
+                            break;
+                        case '1':
+                            echo("<p>ERROR: The page w same link already have.</p>");
+                            break;
+                        default:
+                            echo("<p>ERROR: $count_pages pages have been returned for this request, but there must be zero!</p>");
+                            break;
+                    }
+                }
+                else echo("<p>ERROR: The post request is not correct!</p>");
             }
 
             break;

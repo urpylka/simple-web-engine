@@ -16,15 +16,6 @@
 		document.getElementById("editor_area").setAttribute("style", "display:none;");
 		document.getElementById("save_button").setAttribute('disabled', '');
 
-		$('#page_link_field').dblclick(function() {
-			if( $('#page_link_field').attr('contenteditable') !== undefined ) {
-				$('#page_link_filed').removeAttr('contenteditable');
-				update_link();
-			} else {
-				$('#page_link_field').attr('contenteditable', '');
-			};
-		});
-
 		$('#page_title').dblclick(function() {
 			if( $(this).attr('contenteditable') !== undefined ) {
 				$(this).removeAttr('contenteditable');
@@ -174,10 +165,13 @@
 		}
 		if (!request) alert("Error initializing XMLHttpRequest!");
 
+		var st = false;
+
 		function updateStatus() {
 			if (request.readyState == 4) {
 				if (request.status == 200) {
 					var response = request.responseText;
+					if (response.startsWith("The")) { st = true; };
 					show_status(response);
 					// alert(response);
 					//var response = request.responseText.split("|");
@@ -192,12 +186,17 @@
 			}
 		}
 
+		link = document.getElementById('page_link_field').value;
+
 		var url = "redactor?act=update";
-		var data = "link=<?=$page_link?>&new_link="+encodeURIComponent(document.getElementById('page_link_field').innerHTML);
+		var data = "link=<?=$page_link?>&new_link="+encodeURIComponent(link);
 		request.open('POST', url, true);
 		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
 		request.onreadystatechange = updateStatus;
 		request.send(data);
+
+		// redirect to new address
+		setTimeout(function(){if(st){location=link;}}, 100);
 
 		return false;
 	};
@@ -294,6 +293,56 @@
 	};
 
 
+	function delete_page() {
+		var request;
+
+		try { request = new XMLHttpRequest(); }
+		catch (trymicrosoft)
+		{
+			try { request = new ActiveXObject("Msxml2.XMLHTTP"); }
+			catch (othermicrosoft)
+			{
+				try { request = new ActiveXObject("Microsoft.XMLHTTP"); }
+				catch (failed) { request = false; }
+			}
+		}
+		if (!request) alert("Error initializing XMLHttpRequest!");
+
+		var st = false;
+
+		function updateStatus() {
+			if (request.readyState == 4) {
+				if (request.status == 200) {
+					var response = request.responseText;
+					if (response.startsWith("The")) { st = true; };
+					show_status(response);
+					// alert(response);
+					//var response = request.responseText.split("|");
+					//document.getElementById("order").value = response[0];
+					//document.getElementById("address").innerHTML = response[1].replace(/\n/g, "<br />");
+				} else if (request.status == 404) {
+					show_status("Requested URL is not found.");
+				} else if (request.status == 403) {
+					show_status("Access denied.");
+				} else
+				show_status("Server return status: " + request.status);
+			}
+		}
+
+		var url = "redactor?act=drop";
+		var data = "link=<?=$page_link?>";
+		request.open('POST', url, true);
+		request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+		request.onreadystatechange = updateStatus;
+		request.send(data);
+
+
+		// redirect to new address
+		setTimeout(function(){if(st){location="editor";}}, 1000);
+		return false;
+	};
+
+
 	function open_textarea() {
 		if (document.getElementById("main_cont").getAttribute("style")!="display:none;") {
 			// Редактирование
@@ -322,7 +371,6 @@
 		font-size: .9em;
 	}
 	#page_title[contenteditable] {background-color: orange; color: black;}
-	#page_link_field[contenteditable] {background-color: orange; color: white;}
 	.marg30 {
 		margin-right: 30px;
 		margin-left: 30px;
@@ -375,7 +423,7 @@
 						<input id="public_flag" type="checkbox" onchange="update_public_flag()" <? if(!$page_public) {echo("checked");}?>/>
 						Private
 					</td>
-					<td width="100px">
+					<td width="90px">
 						<select id="template" onchange="update_template()">
 						<?
 						$list_tmpl = $pdo->prepare("SELECT `templates`.`id`,`templates`.`name` FROM `templates`;");
@@ -391,8 +439,11 @@
 						?>
 						</select>
 					</td>
-					<td width="240px" style="font-size:14px;" id="page_link">
-						http://robotic.lol/<b id="page_link_field"><? echo($page_link);?></b>
+					<td width="160px" style="font-size:14px;">
+					<input value="<? echo($page_link);?>" type="text" id="page_link_field" onchange="update_link()"/>
+					</td>
+					<td width="120px">
+						<input id="delete_button" type="submit" value="Delete" onclick="delete_page()" />
 					</td>
 					<td width="350px">
 						<div id="editor_status" style="font-size:14px;"></div>
