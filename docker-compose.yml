@@ -1,42 +1,48 @@
 version: "2"
+
 services:
-  web:
-    image: tutum/apache-php
-    environment:
-      - ALLOW_OVERRIDE=true
-    ports:
-      - "80:80"
-    volumes:
-      - ./htdocs:/app
-      - ./logs-apache:/var/log/apache2
-    restart: always
 
-    # не понимаю зачем    
-    #links:
-    #  - db
+    web:
+        image: tutum/apache-php
+        restart: always
+        volumes:
+            - ./htdocs:/app
+            - ./logs-apache:/var/log/apache2
+        ports:
+            - "1080:80"
+        environment:
+            - ALLOW_OVERRIDE=true
 
-  db:
-    image: mariadb
-    restart: always
-    volumes:
-      - ./mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: test
-      MYSQL_DATABASE: database
 
-    # порт по внешку нужен лишь для отладки
-    ports:
-     - "3306:3306"
+    db:
+        image: mariadb
+        restart: always
+        volumes:
+            - ./mysql:/var/lib/mysql
+#        ports:
+#            - "3306:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: test
+            MYSQL_DATABASE: database
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    links:
-      - db
-    ports:
-      - 8800:80
-    environment:
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: test
-      MYSQL_DATABASE: database
+    pma:
+        image: phpmyadmin/phpmyadmin:latest
+        restart: always
+        ports:
+            - 2080:80
+        environment:
+            MYSQL_DB_SERVER: db
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: test
+            MYSQL_DATABASE: database
+
+# not needed because automatically creating network
+# beatween web, db, phpmyadmin
+#        links:
+#            - db
+
+# throw ports needs for outside apps
+# like nginx-reverse-proxy (if it don't use that network)
+# or for db-manager
