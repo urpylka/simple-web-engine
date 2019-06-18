@@ -22,10 +22,10 @@ services:
 #        ports:
 #            - "3306:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: admin
-            MYSQL_PASSWORD: test
-            MYSQL_DATABASE: database
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
 
     pma:
         image: phpmyadmin/phpmyadmin:latest
@@ -34,9 +34,9 @@ services:
             - 2080:80
         environment:
             MYSQL_DB_SERVER: db
-            MYSQL_USER: admin
-            MYSQL_PASSWORD: test
-            MYSQL_DATABASE: database
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
 
 # not needed because automatically creating network
 # beatween web, db, phpmyadmin
