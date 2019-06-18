@@ -1,4 +1,3 @@
-/mysql
+.vscode
 .DS_Store
-/logs-apache
-.vscode/*
+/tmp

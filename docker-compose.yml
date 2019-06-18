@@ -7,7 +7,7 @@ services:
         restart: always
         volumes:
             - ./htdocs:/app
-            - ./logs-apache:/var/log/apache2
+            - ./tmp/logs-apache:/var/log/apache2
         ports:
             - ${WEB_PORT}:80
         environment:
@@ -18,7 +18,7 @@ services:
         image: mariadb
         restart: always
         volumes:
-            - ./mysql:/var/lib/mysql
+            - ./tmp/mysql:/var/lib/mysql
 #        ports:
 #            - 3306:3306
         environment:
