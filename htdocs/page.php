@@ -88,13 +88,13 @@ function tableExists($pdo, $table) {
 // }
 
 
-// $tables = array("pages", "sessions", "templates", "top_menu", "users");
-// foreach ($tables as $value) {
-// 	if (! tableExists($pdo, $value)) {
-// 		$needs_import = TRUE;
-// 		break;
-// 	}
-// }
+$tables = array("pages", "sessions", "templates", "top_menu", "users");
+foreach ($tables as $value) {
+	if (! tableExists($pdo, $value)) {
+		$needs_import = TRUE;
+		break;
+	}
+}
 
 if ($needs_import) {
 
