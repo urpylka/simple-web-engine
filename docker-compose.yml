@@ -9,7 +9,7 @@ services:
             - ./htdocs:/app
             - ./logs-apache:/var/log/apache2
         ports:
-            - "1080:80"
+            - ${WEB_PORT}:80
         environment:
             - ALLOW_OVERRIDE=true
 
@@ -20,7 +20,7 @@ services:
         volumes:
             - ./mysql:/var/lib/mysql
 #        ports:
-#            - "3306:3306"
+#            - 3306:3306
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             MYSQL_USER: ${MYSQL_USER}
@@ -31,7 +31,7 @@ services:
         image: phpmyadmin/phpmyadmin:latest
         restart: always
         ports:
-            - 2080:80
+            - ${PMA_PORT}:80
         environment:
             MYSQL_DB_SERVER: db
             MYSQL_USER: ${MYSQL_USER}
