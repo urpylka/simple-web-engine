@@ -1,13 +1,10 @@
 # ************************************************************
-# Sequel Pro SQL dump
-# Version 4541
-#
-# http://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
 #
 # Host: 127.0.0.1 (MySQL 5.5.5-10.3.11-MariaDB-1:10.3.11+maria~bionic)
-# Database: database
-# Generation Time: 2019-02-18 12:44:31 +0000
+#
+# Schema created for the initialization of DB
+# by Artem Smirnov @urpylka
+#
 # ************************************************************
 
 
@@ -75,7 +72,7 @@ VALUES
 	(31,30,'Фото',NULL,1,'photo',0),
 	(32,30,'Видео',NULL,1,'video',0),
 	(33,30,'Программа','Тестовая страница',1,'programs',0),
-	(34,30,'Сборы 2010','<p><b>dfwefqffqfqwfffffddFAFAdfDf</b></p>\nupdate_name();',1,'sbori2010hotilovo',0),
+	(34,30,'Сборы 2010','<p><b>dfwefqffqfqwfffffddFAFAdfDf</b></p>\n',1,'sbori2010hotilovo',1),
 	(35,30,'Фотоконкурс',NULL,1,'fotokonkurs',0),
 	(36,1,'Выпускникам',NULL,5,'vypusk',0),
 	(37,36,'Вас ждут в войсках',NULL,1,'voysk',0),
@@ -98,16 +95,6 @@ CREATE TABLE `sessions` (
   UNIQUE KEY `phpsessid` (`phpsessid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-LOCK TABLES `sessions` WRITE;
-/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-
-INSERT INTO `sessions` (`phpsessid`, `login`)
-VALUES
-	('4jj4kg2gtsc3u3ceffbv3rs3l4','aaa'),
-	('jg7j5ki72g6ok18oqmhledl9s5','urpylka');
-
-/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 # Dump of table templates
@@ -184,12 +171,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `login`, `pbkdf2`, `admin_flag`)
 VALUES
-	(1,'urpylka','sha256$1000$8d9aefcf3d4d6c38$d48bc2df4ed0f46e0538',1),
-	(2,'dizel','sha256$1000$c08cf0db09d49f7a$3ec5cbcfc74bbdc70a2b',0),
-	(3,'aa','sha256$1000$c4c7b46068363ef2$59ef558ad514fdb666ce',0),
-	(4,'sda','sha256$1000$ddaef69e708eba69$fa249dd6edb61c6871c4',0),
-	(5,'aaa','sha256$1000$63bf45353792f41b$fd41b1c9c5536fe2c44e',0),
-	(6,'qqq','sha256$1000$1d9d5ac5fe0a43f3$241aba7c770a152f7e3f',0);
+	(1,'urpylka','sha256$1000$8d9aefcf3d4d6c38$d48bc2df4ed0f46e0538',1);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
