@@ -10,7 +10,8 @@
     $port = "3306";
     $login_mysql = "admin";
     $password_mysql = "test";
-    $dbname = "database";
+    $dbname = "swe";
+    $backup = "create_schema.sql";
 
     //Developer settings
     $DEBUG = FALSE;

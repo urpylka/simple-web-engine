@@ -13,13 +13,109 @@ else {
 	ini_set('display_startup_errors', 0);
 }
 
+$needs_import = FALSE;
+
+back:
 try { $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8",  $login_mysql,  $password_mysql); }
 catch(PDOException $e) {
-	echo "You have an error: ".$e->getMessage()."<br>";
-	echo "On line: ".$e->getLine();
-	exit(1);
+
+	// CREATE DATABASE IF NOT EXISTS
+	function startsWith($haystack, $needle)
+	{
+		return strpos($haystack, $needle) === 0;
+	}
+
+	if (startsWith($e->getMessage(), "SQLSTATE[42000] [1049] Unknown database")) {
+
+		$create = new mysqli($host, $login_mysql, $password_mysql);
+		if (mysqli_connect_errno()) { // проверяем подключение
+			echo "Connect failed: %s\n", mysqli_connect_error();
+			exit(1);
+		}
+		if ($create->query("CREATE DATABASE ".$dbname.";") === FALSE) {
+			echo "Error creating database: ".$create->error;
+			$create->close();
+			exit(1);
+		} else {
+			echo "Database created successfully.<br/>";
+			$create->close();
+			$needs_import = TRUE;
+			goto back;
+		}
+
+	} else {
+		if ($DEBUG) {
+			echo "You have an error: ".$e->getMessage()."<br/>";
+			echo "On line: ".$e->getLine();
+		}
+		exit(1);
+	}
 }
 
+// CHECK TABLES IF NOT EXISTS -> IMPORT FROM BACKUP-FILE
+
+/**
+ * Check if a table exists in the current database.
+ *
+ * @param PDO $pdo PDO instance connected to a database.
+ * @param string $table Table to search for.
+ * @return bool TRUE if table exists, FALSE if no table found.
+ */
+function tableExists($pdo, $table) {
+
+    // Try a select statement against the table
+    // Run it in try/catch in case PDO is in ERRMODE_EXCEPTION.
+    try {
+        $result = $pdo->query("SELECT 1 FROM $table LIMIT 1");
+    } catch (Exception $e) {
+        // We got an exception == table not found
+        return FALSE;
+    }
+
+    // Result is either boolean FALSE (no table found) or PDOStatement Object (table found)
+    return $result !== FALSE;
+}
+
+// function check_table_for_exist($pdo, $table_name) {
+
+// 	$check_table = $pdo->query("CHECK TABLE pages;");
+// 	$check_table = $check_table->fetch(PDO::FETCH_ASSOC);
+// 	if (($check_table['Msg_type'] == 'error') && ($check_table['Msg_text'] == "Table '".$dbname.".".$table_name."' doesn't exist")) {
+// 		return FALSE;
+// 	} else {
+// 		return TRUE;
+// 	}
+// }
+
+
+// $tables = array("pages", "sessions", "templates", "top_menu", "users");
+// foreach ($tables as $value) {
+// 	if (! tableExists($pdo, $value)) {
+// 		$needs_import = TRUE;
+// 		break;
+// 	}
+// }
+
+if ($needs_import) {
+
+	$import = new mysqli($host, $login_mysql, $password_mysql, $dbname);
+	if (mysqli_connect_errno()) { /* check connection */
+		printf("Connect failed: %s\n", mysqli_connect_error());
+		exit(1);
+	}
+
+	if ($import->multi_query(file_get_contents($backup))) {
+		echo "Tables imported successfully. Reload the page.";
+		exit(0);
+
+	} else {
+		echo "Error importing database: ".$import->error;
+		exit(1);
+	}
+	$import->close();
+}
+
+// THE MAIN LOGIC
 $login = NULL;
 $admin_flag = 0;
 
