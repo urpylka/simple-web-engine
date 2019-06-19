@@ -50,5 +50,5 @@ section.text-content h1:after {
 	top: 100%;
 	border-width: 5px 10px; /* Отступ ищи полоски */
 	border-style: solid;
-	border-color: #2c4e66 #254a66 transparent transparent;}
+	border-color: #2c4e66 #254a66 transparent transparent;
 }
