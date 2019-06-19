@@ -1,6 +1,13 @@
 ﻿@import url("reset.css") all;
 @import url("layout.css") all;
-@import url("feedback-form.css") all;
-@import url("struktura-page.css") all;
-@import url("section-news.css") all;
-@import url("section-text-content.css") all;
+
+@import url("block-navbar.css") all;
+@import url("block-promo.css") all;
+@import url("block-quickmenu.css") all;
+@import url("block-sitemap.css") all;
+@import url("block-article.css") all;
+@import url("block-footer.css") all;
+@import url("block-copyrights.css") all;
+@import url("block-news.css") all;
+@import url("block-sponsors.css") all;
+@import url("block-latestnews.css") all;

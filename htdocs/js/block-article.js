@@ -1,34 +1,4 @@
-window.addEvent('domready', function() {
 
-    // Раскоментируйте, чтобы включить MooEditable
-    // document.getElementById('textarea1').mooEditable({
-    // 	actions: 'bold italic underline strikethrough | formatBlock justifyleft justifycenter justifyright justifyfull | insertunorderedlist insertorderedlist indent outdent | undo redo removeformat | createlink unlink | urlimage | toggleview'
-    // });
-
-    document.getElementById("editor_area").setAttribute("style", "display:none;");
-    document.getElementById("save_button").setAttribute('disabled', '');
-
-    $('#page_title').dblclick(function() {
-        if( $(this).attr('contenteditable') !== undefined ) {
-            $(this).removeAttr('contenteditable');
-            update_name();
-        } else {
-            $(this).attr('contenteditable', '');
-        };
-    });
-
-    // если нажать enter все равно запишется <br>
-    $('#page_title').keydown(function(e) {
-        if (e.keyCode === 13 || e.keyCode === 27) {
-            if( $(this).attr('contenteditable') !== undefined ) {
-                $(this).removeAttr('contenteditable');
-                update_name();
-            } else {
-                // $(this).attr('contenteditable', '');
-            };
-        }
-    });
-});
 
 function show_status(message) {
     document.getElementById("editor_status").innerHTML = message;
@@ -349,4 +319,22 @@ function open_textarea() {
         document.getElementById("editor_area").setAttribute("style", "display:none;");
         document.getElementById("save_button").setAttribute('disabled', '');
     }
+};
+
+
+// ELASTIC AREA
+
+function elasticArea() {
+    $('.js-elasticArea').each(function (index, element) {
+    var elasticElement = element,
+    $elasticElement = $(element),
+    initialHeight = initialHeight || $elasticElement.height(),
+    delta = parseInt($elasticElement.css('paddingBottom')) + parseInt($elasticElement.css('paddingTop')) || 0,
+    resize = function () {
+        $elasticElement.height(initialHeight);
+        $elasticElement.height(elasticElement.scrollHeight - delta);
+    };
+    $elasticElement.on('input change keyup', resize);
+    resize();
+    });
 };

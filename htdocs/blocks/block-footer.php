@@ -1,5 +1,5 @@
 <!-- <script type="text/javascript" src="js/some.js" /> -->
-<link rel="stylesheet" type="text/css" href="css/block_footer.css" />
+<link rel="stylesheet" type="text/css" href="css/block-footer.css" />
 
 <div class="block-footer">
     <div class="colft1">

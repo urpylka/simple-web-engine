@@ -24,9 +24,9 @@
 	</head>
 	<body>
 		<header>
-			<? include_once 'blocks/block-yandex_map.php'; ?>
+			<? include_once 'blocks/block-yandexmap.php'; ?>
 			<? include_once 'blocks/block-navbar.php'; ?>
-			<? include_once 'blocks/block-site_map.php'; ?>
+			<? include_once 'blocks/block-sitemap.php'; ?>
 		</header>
 		<main>
 			<? include_once 'blocks/block-article.php'; ?>

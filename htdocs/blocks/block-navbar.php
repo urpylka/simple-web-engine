@@ -1,36 +1,3 @@
-<style>
-#slider { display: block; }
-#quickmenu { display: block; }
-#block_menu { display: none; }
-</style>
-<style>
-/* основное меню и лого */
-nav{
-	height:80px;width:100%;text-transform:uppercase;
-	background-image:-moz-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
-	background-image:-o-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
-	background-image:-webkit-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
-	background-image:linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
-}
-nav ul{
-	float:right !important;
-	margin-right:30px !important;
-}
-.logo{
-	padding-top:7px;
-	margin-left:30px;
-	float:left;
-	width:300px;
-}
-
-nav li{
-	float:left;
-	font-size:17px;
-	margin-left:30px; /* было 35 */
-	margin-top:34px;
-}
-</style>
-
 <script src="https://yastatic.net/jquery/1.7.0/jquery.min.js"></script>
 
 <script type="text/javascript">

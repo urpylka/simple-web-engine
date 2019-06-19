@@ -1,0 +1,4 @@
+/* Спонсоры список */
+section.sponsor {text-align: center;}
+.sponsor ul {margin-top: 10px;display: inline-block;margin: 16px 0px 0px 0px}
+.sponsor li {list-style: none;;width: 190px;height: 80px;float: left;margin-top: 15px;}
