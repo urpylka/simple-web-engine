@@ -22,7 +22,7 @@
 	<body>
 		<header>
 			<? include_once 'blocks/block-navbar.php'; ?>
-			<? include_once 'modules/site_gototop.php'; ?>
+			<? include_once 'blocks/block-gototop.php'; ?>
 			<? include_once 'blocks/block-sitemap.php'; ?>
 		</header>
 		<main>

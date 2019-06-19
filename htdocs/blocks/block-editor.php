@@ -1,4 +1,4 @@
-<? include_once 'modules/block_site_map.php'; ?>
+<? include_once 'blocks/block-sitemap.php'; ?>
 <article>
 	<section class="text-content" id="fullpage">
 		<h1><?=$page_title?></h1>
