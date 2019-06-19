@@ -1,0 +1,40 @@
+/* Футер */
+.block-footer {
+    color:#4e4a43;
+
+	padding-top:20px;
+	padding-left:30px;
+    padding-right:30px;
+
+	background-image: -moz-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image: -o-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+	background-image: -webkit-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+    background-image: linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
+
+	height: 200px;
+	width: 930px;
+}
+
+.colft1 {float:left;width:230px;}
+.colft1 span {margin-top:-32px;margin-left:60px;display:block;}
+.colft1 .name {margin-left:0px;}
+.colft1 img {height:45px;}
+.colft1 ul {margin-top:9px;}
+.colft1 li {padding-top:4px;width: 250px;list-style: none;height:45px;}
+
+
+.colft2 {float:left;width:200px;margin-right:0px;}
+
+.colftbig {width:330px; float:left;text-align: left;}
+.colftbig .name {margin-left: 0px;}
+.colftbig p{margin-top: 10px;}
+
+.colft4 {float:left;width:170px;margin-right:0px;}
+
+.name {
+    font-size: 16px;/*width: 275px; вообще ширина блока везде разная */
+    margin: 0 auto;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+.menuft li {margin-top: 13px;list-style: none;}
