@@ -22,6 +22,7 @@
 - page-block_editor.php
 - page-block_login_form.php
 - page-block_main.php
+- page-block_article.php - редактор и отображение новости в шаблоне template_standart и template_contacts
 - page-block_news.ideas.php
 - page-block_news.php
 
@@ -32,14 +33,6 @@
 - module_navbar.php
 - module_qr.php
 - module_redactor.php
-
-## site_*
-
-основные составляющие дизайна сайта
-
-- site_footer.php
-- site_gototop.php
-- site_header.php
 
 ## template_*
 
