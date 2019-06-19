@@ -7,14 +7,14 @@
 	</head>
 	<body>
 		<header>
-			<? include_once 'modules/module_navbar.php'; ?>
+			<? include_once 'blocks/block-navbar.php'; ?>
 		</header>
 		<main>
 			<? try { include_once($page_content); } catch (Exception $e) { throw $e; }?>
 		</main>
 		<footer>
-			<? include_once 'modules/block_footer.php'; ?>
-			<? include_once 'modules/block_copyrights.php'; ?>
+			<? include_once 'blocks/block-footer.php'; ?>
+			<? include_once 'blocks/block-copyrights.php'; ?>
 		</footer>
 	</body>
 </html>

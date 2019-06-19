@@ -24,16 +24,16 @@
 	</head>
 	<body>
 		<header>
-			<? include_once 'modules/block_yandex_map.php'; ?>
-			<? include_once 'modules/module_navbar.php'; ?>
-			<? include_once 'modules/block_site_map.php'; ?>		</header>
+			<? include_once 'blocks/block-yandex_map.php'; ?>
+			<? include_once 'blocks/block-navbar.php'; ?>
+			<? include_once 'blocks/block-site_map.php'; ?>
 		</header>
 		<main>
-			<? include_once 'modules/page-block_article.php'; ?>
+			<? include_once 'blocks/block-article.php'; ?>
 		</main>
 		<footer>
-			<? include_once 'modules/block_footer.php'; ?>
-			<? include_once 'modules/block_copyrights.php'; ?>
+			<? include_once 'blocks/block-footer.php'; ?>
+			<? include_once 'blocks/block-copyrights.php'; ?>
 		</footer>
 	</body>
 </html>
