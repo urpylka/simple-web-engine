@@ -1,0 +1,37 @@
+body {
+    font-family: sans-serif;
+    font-size: .9em;
+}
+#page_title[contenteditable] {background-color: orange; color: black;}
+.marg30 {
+    margin-right: 30px;
+    margin-left: 30px;
+    width: 930px;
+}
+#editor_status {
+    font-size: 12px !important;
+    color: green;
+    float: left;
+}
+#edit_button {
+    width: 100px;
+}
+#textarea1 {
+    position: relative;
+    display: block;
+    width: 930px;
+    height: 200px;
+    border: 0px solid #ddd;
+}
+#textarea1-mooeditable-container {
+    width: 990px !important;
+    border: 0;
+    /* border-width: 0px 0px 1px !important; */
+}
+.mooeditable-iframe {
+    margin-left: 30px !important;
+    margin-right: 30px !important; 
+    height: 300px !important;
+    width: 930px !important;
+    padding: 0 !important;
+}
