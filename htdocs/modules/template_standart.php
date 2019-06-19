@@ -9,6 +9,7 @@
 
 	window.addEvent('domready', function() {
 
+		// Раскоментируйте, чтобы включить MooEditable
 		// document.getElementById('textarea1').mooEditable({
 		// 	actions: 'bold italic underline strikethrough | formatBlock justifyleft justifycenter justifyright justifyfull | insertunorderedlist insertorderedlist indent outdent | undo redo removeformat | createlink unlink | urlimage | toggleview'
 		// });
@@ -484,7 +485,6 @@
 			})();
 			</script>
 		<?}?>
-
 
 	</main>
 <? include_once 'modules/site_footer.php'; ?>
