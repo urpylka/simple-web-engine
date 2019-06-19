@@ -6,8 +6,7 @@
 		<? include_once 'modules/block_site_map.php'; ?>
 	</header>
 	<main>
-		<article>
-			<?=$page_content?>
-		</article>
+		<?//=$page_content?>
+		<? include_once $page_content; ?>
 	</main>
 <? include_once 'modules/site_footer.php'; ?>
