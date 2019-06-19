@@ -191,7 +191,7 @@ switch($count_templates) {
 		$error_output = 1;
 		$page_title = "Ошибка 500";
 		$page_content = "Не найден шаблон под id=\"<b>".$page_template."</b>\" для страницы <b>".$page_link."</b> отсутствует.";
-		include_once("modules/template_standart.php");
+		include_once("templates/template-standart.php");
 		break;
 	case '1':
 		$tmpl = $template->FETCH(PDO::FETCH_ASSOC);
@@ -203,14 +203,14 @@ switch($count_templates) {
 			$error_output = 1;
 			$page_title = "Ошибка 500";
 			$page_content = "Шаблон \"<b>".$tmpl_name."</b>\" для страницы <b>".$page_link."</b> отсутствует.";
-			include_once("modules/template_standart.php");
+			include_once("templates/template-standart.php");
 		}
 		break;
 	default:
 		$error_output = 1;
 		$page_title = "Ошибка 500";
 		$page_content = "<p>ERROR: Системная ошибка при попытке получить шаблон страницы.</p>";
-		include_once("modules/template_standart.php");
+		include_once("templates/template-standart.php");
 		break;
 }
 ?>
