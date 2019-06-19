@@ -16,8 +16,45 @@
 2. Выдача пользователю тех страниц, на которые у него есть доступ.
 3. Редактирование и создание страниц.
 
+## Структура
+
+### blank-*
+
+модули вызываемые самостоятельно, либо через шаблон template_blank.php
+
+- blank-phpinfo.php - выводит результат функции phpinfo()
+- blank-redactor.php - API построенное на AJAX для редактирования страниц
+
+### block-*
+
+модули встраиваемые в шаблон сайта в <header>, <main> или <footer>, встраивается между другими такими блоками в любом порядке
+
+- block-promo.php - блок с бендером
+- block-quickmenu.php - три кнопки (быстрый доступ)
+- block-sitemap.php - используется в editor для отображения структуры сайта второго уровня
+- block-yandexmap.php - используется в contacts
+- block-editor.ideas.php
+- block-editor.php
+- block-login_form.php
+- block-main.php
+- block-article.php - редактор и отображение новости в шаблоне template_standart и template_contacts
+- block-news.ideas.php
+- block-news.php
+- block-navbar.php
+
+### template-*
+
+шаблон, имеет ряд переменных определяющих его
+
+- template_blank.php
+- template_block.php
+- template_contacts.php
+- template_main.php
+- template_standart.php
+
 ## TODO
 
+* По ходу `page.php` не обрабатывает прямые запросы на `some.php`
 * Обезличить (удалить все внешние ссылки, изображения)
 * Создать скрипт для простого развертывания
 * Необходим класс для работы со страницей
