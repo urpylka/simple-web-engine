@@ -9,8 +9,20 @@ else {
                 $response = NULL;
 
                 if ( isset($_POST['link']) ) {
+
+                    // почему-то isset($_POST['link'])
+                    // вообще нормально не работает
+                    // выдает непонятно какой один символ,
+                    // и никак не могу его отловить
+                    // при этом вообще не передаю link
+                    if ( count($_POST['link']) == 1 ) {
+                        $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
+                    } else {
+                        $link = $_POST['link'];
+                    }
+
                     $page_by_link = $pdo->prepare("DELETE FROM `pages` WHERE `link` = :link;");
-                    $page_by_link->bindValue(':link', $_POST['link'], PDO::PARAM_STR);
+                    $page_by_link->bindValue(':link', $link, PDO::PARAM_STR);
                     $page_by_link->execute();
 
                     if ($page_by_link->execute()) $response .= "The page was deleted!";
@@ -35,14 +47,26 @@ else {
             else {
                 if ( isset($_POST['link']) && count($_POST) > 1 )
                 {
+
+                    // почему-то isset($_POST['link'])
+                    // вообще нормально не работает
+                    // выдает непонятно какой один символ,
+                    // и никак не могу его отловить
+                    // при этом вообще не передаю link
+                    if ( count($_POST['link']) == 1 ) {
+                        $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
+                    } else {
+                        $link = $_POST['link'];
+                    }
+
                     $page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :post_link;");
-                    $page_by_link->bindValue(':post_link', $_POST['link'], PDO::PARAM_STR);
+                    $page_by_link->bindValue(':post_link', $link, PDO::PARAM_STR);
                     $page_by_link->execute();
                     $count_pages = $page_by_link->rowCount();
 
                     switch($count_pages) {
                         case '0':
-                            echo("<p>ERROR: No pages were found in the database for this query.</p>");
+                            echo("<p>ERROR: No pages were found in the database for this query.</p> ");
                             break;
                         case '1':
                             
@@ -114,8 +138,21 @@ else {
             else {
                 if ( isset($_POST['link']) && isset($_POST['name']) && isset($_POST['prnt']) && isset($_POST['tmpl']) && isset($_POST['priv']) )
                 {
+
+
+                    // почему-то isset($_POST['link'])
+                    // вообще нормально не работает
+                    // выдает непонятно какой один символ,
+                    // и никак не могу его отловить
+                    // при этом вообще не передаю link
+                    if ( count($_POST['link']) == 1 ) {
+                        $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
+                    } else {
+                        $link = $_POST['link'];
+                    }
+
                     $page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :post_link;");
-                    $page_by_link->bindValue(':post_link', $_POST['link'], PDO::PARAM_STR);
+                    $page_by_link->bindValue(':post_link', $link, PDO::PARAM_STR);
                     $page_by_link->execute();
                     $count_pages = $page_by_link->rowCount();
 

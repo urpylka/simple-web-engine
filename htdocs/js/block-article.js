@@ -52,7 +52,7 @@ function update_template() {
        var tmpl= document.getElementById("template").options[selind].value;
 
     var url = "redactor?act=update";
-    var data = "link=<?=$page_link?>&new_tmpl="+tmpl;
+    var data = "new_tmpl="+tmpl;
     request.open('POST', url, true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     request.onreadystatechange = updateStatus;
@@ -102,7 +102,7 @@ function update_public_flag() {
     };
 
     var url = "redactor?act=update";
-    var data = "link=<?=$page_link?>&new_publ="+flag;
+    var data = "new_publ="+flag;
     request.open('POST', url, true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     request.onreadystatechange = updateStatus;
@@ -151,7 +151,7 @@ function update_link() {
     link = document.getElementById('page_link_field').value;
 
     var url = "redactor?act=update";
-    var data = "link=<?=$page_link?>&new_link="+encodeURIComponent(link);
+    var data = "new_link="+encodeURIComponent(link);
     request.open('POST', url, true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     request.onreadystatechange = updateStatus;
@@ -198,7 +198,7 @@ function update_name() {
     }
 
     var url = "redactor?act=update";
-    var data = "link=<?=$page_link?>&new_name="+encodeURIComponent(document.getElementById('page_title').innerHTML);
+    var data = "new_name="+encodeURIComponent(document.getElementById('page_title').innerHTML);
     request.open('POST', url, true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     request.onreadystatechange = updateStatus;
@@ -242,7 +242,9 @@ function update_text() {
     }
 
     var url = "redactor?act=update";
-    var data = "link=<?=$page_link?>&new_text="+encodeURIComponent(document.getElementById('textarea1').value);
+    // https://realadmin.ru/coding/url-javascript.html
+
+    var data = "new_text="+encodeURIComponent(document.getElementById('textarea1').value);
     request.open('POST', url, true);
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     request.onreadystatechange = updateStatus;
