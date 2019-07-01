@@ -1,0 +1,59 @@
+<script type="text/javascript" src="js/block-feedback.js"></script>
+<link rel="stylesheet" type="text/css" href="css/block-feedback.css">
+
+<p align="justify">На данной странице Вы можете анонимно оставить отзыв, жалобу, благодарность или предложение</p>
+<p align="justify" id="error2" style="color:green;">Поля отмеченные * обязательны к заполнению</p>
+<p align="justify" id="error" style="color:red;"></p>
+<form onsubmit="return checkForm();" name="feedback" method="post" action="feedback.php" style="display: table !important;">
+    <!--div class="notall">Поля, выделенные красной рамкой, заполнены неправильно.</div-->
+    <div class="totalnames">
+        <div>Ваше имя</div>
+        <div>Тип обращения *</div>
+        <div>Номер вашего взвода</div>
+        <div class="text1">Текст обращения *</div>
+        <div>Телефон</div>
+        <div>Email</div>
+        <div class="text1">Капча *</div>
+        <!--div class="m1" title="Запоминать ее не обязательно">Кодовая строка</div-->
+    </div>
+
+    <div class="totalfields">
+        <div>
+            <input type="text" placeholder="не обязательно" id="totalfname" />
+        </div>
+        <div>
+            <select id="totalvoen" size="1">
+                <option value='жалоба'>жалоба</option>
+                <option value='отзыв'>отзыв</option>
+                <option value='благодарность'>благодарность</option>
+                <option value='предложение'>предложение</option>
+            </select>
+        </div>
+        <div>
+            <input type="text" placeholder="не обязательно" id="totallname" />
+        </div>
+        <div class="text1">
+            <textarea id="totalltext" name="text" style="resize: none;" rows="10" cols="42" placeholder="изложите суть вашего обращения" required></textarea>
+        </div>
+        <div>
+            <input type="tel"  placeholder="не обязательно" id="totalphone" />
+        </div>
+        <div>
+            <input type="email"  placeholder="не обязательно" id="totalemail" />
+        </div>
+        <!--div class="text1" style="width:320px !important;margin-bottom:-30px !important;margin-left:-2px !important;">
+            <script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6LcC38gSAAAAAKuNyOQqWe87N60pvz28Ocp5tk4e"></script>
+            <noscript>
+                <iframe src="http://www.google.com/recaptcha/api/noscript?k=6LcC38gSAAAAAKuNyOQqWe87N60pvz28Ocp5tk4e" height="300" width="500" frameborder="0"></iframe><br/>
+                <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
+                <input type="hidden" name="recaptcha_response_field" value="manual_challenge" />
+            </noscript>							
+        </div-->
+        <div class="text1" style="width:410px !important;margin-bottom:-30px !important;background-image: url('/img/kapcha.png');">
+            <input type="kapcha"  placeholder="введите символы с картинки" id="totalkapcha" />				
+        </div>
+        <div>
+            <input style="float:left;" type="submit" value="Отправить отзыв" />
+        </div>
+    </div>
+</form>
