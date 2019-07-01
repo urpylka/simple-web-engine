@@ -1,9 +1,9 @@
 <?
-if ( ! isset($_GET['act']) ) echo "<p>Ошибка! Неккоректный запрос 1.</p>"; 
+if ( ! isset($_GET['act']) ) echo "<p>ERROR 22: Incorrect request.</p>"; 
 else {
     switch ($_GET['act']) {
         case "drop":
-            if ( ! $admin_flag ) { echo "<p>Ошибка! Только администраторы могут удалять страницы.</p>"; }
+            if ( ! $admin_flag ) { echo "<p>ERROR 21! Only administators can remove pages.</p>"; }
             else {
                 //echo "<p>Ошибка! Проверка можно ли удалить страницу.</p>";
                 $response = NULL;
@@ -25,10 +25,10 @@ else {
                     $page_by_link->bindValue(':link', $link, PDO::PARAM_STR);
                     $page_by_link->execute();
 
-                    if ($page_by_link->execute()) $response .= "The page was deleted!";
-                    else $response .= "<p>ERROR: Could not delete the page!</p>";
+                    if ($page_by_link->execute()) $response .= "The page was deleted.";
+                    else $response .= "<p>ERROR 1: Could not delete the page.</p>";
 
-                } else echo("<p>ERROR: The post request is not correct!</p>");
+                } else echo("<p>ERROR 2: The post request is not correct.</p>");
 
                 if ( isset($_POST['id']) ) {
                     $page_by_id = $pdo->prepare("DELETE FROM `pages` WHERE `id` = :id;");
@@ -36,14 +36,14 @@ else {
                     $page_by_id->execute();
 
                     if ($page_by_id->execute()) $response .= "The page was deleted!";
-                    else $response .= "<p>ERROR: Could not delete the page!</p>";
+                    else $response .= "<p>ERROR 3: Could not delete the page.</p>";
 
-                } else $response .= "<p>ERROR: The post request is not correct!</p>";
+                } else $response .= "<p>ERROR 4: The post request is not correct.</p>";
             }
             echo($response);
             break;
         case "update":
-            if ( ! $admin_flag ) { echo "<p>Ошибка! Только администраторы могут удалять страницы.</p>"; }
+            if ( ! $admin_flag ) { echo "<p>ERROR 5! Only administators can remove pages.</p>"; }
             else {
                 if ( isset($_POST['link']) && count($_POST) > 1 )
                 {
@@ -66,7 +66,7 @@ else {
 
                     switch($count_pages) {
                         case '0':
-                            echo("<p>ERROR: No pages were found in the database for this query.</p> ");
+                            echo("<p>ERROR 6: No pages were found in the database for this query.</p> ");
                             break;
                         case '1':
                             
@@ -78,7 +78,7 @@ else {
                                 $update_name->bindValue(':post_new_name', $_POST['new_name'], PDO::PARAM_STR);
 
                                 if ($update_name->execute()) $response .= "The 'name' was updated!";
-                                else $response .= "<p>ERROR: Could not update the name!</p>";
+                                else $response .= "<p>ERROR 7: Could not update the name.</p>";
                             }
                             if (isset($_POST['new_text'])) {
                                 $update_text = $pdo->prepare("UPDATE `pages` SET `text` = :post_new_text WHERE `id` = :id;");
@@ -86,7 +86,7 @@ else {
                                 $update_text->bindValue(':post_new_text', $_POST['new_text'], PDO::PARAM_STR);
 
                                 if ($update_text->execute()) $response .= "The 'text' was updated!";
-                                else $response .= "<p>ERROR: Could not update the 'text'!</p>";
+                                else $response .= "<p>ERROR 8: Could not update the 'text'.</p>";
                             }
                             if (isset($_POST['new_tmpl'])) {
                                 // проверка существования шаблона
@@ -95,7 +95,7 @@ else {
                                 $update_tmpl->bindValue(':post_new_tmpl', $_POST['new_tmpl'], PDO::PARAM_INT);
 
                                 if ($update_tmpl->execute()) $response .= "The 'template' was updated!";
-                                else $response .= "<p>ERROR: Could not update the 'template'!</p>";
+                                else $response .= "<p>ERROR 9: Could not update the 'template'.</p>";
                             }
                             if (isset($_POST['new_prnt'])) {
                                 // проверка существования и мб типа родителя (хотя тип может быть любым)
@@ -104,7 +104,7 @@ else {
                                 $update_prnt->bindValue(':post_new_prnt', $_POST['new_prnt'], PDO::PARAM_INT);
 
                                 if ($update_prnt->execute()) $response .= "The 'parent' was updated!";
-                                else $response .= "<p>ERROR: Could not update the 'parent'!</p>";
+                                else $response .= "<p>ERROR 10: Could not update the 'parent'.</p>";
                             }
                             if (isset($_POST['new_publ'])) {
                                 $update_publ = $pdo->prepare("UPDATE `pages` SET `public_flag` = :post_new_publ WHERE `id` = :id;");
@@ -112,7 +112,7 @@ else {
                                 $update_publ->bindValue(':post_new_publ', $_POST['new_publ'], PDO::PARAM_INT);
 
                                 if ($update_publ->execute()) $response .= "The 'public_flag' was updated!";
-                                else $response .= "<p>ERROR: Could not update the 'public_flag'!</p>";
+                                else $response .= "<p>ERROR 11: Could not update the 'public_flag'.</p>";
                             }
                             if (isset($_POST['new_link'])) {
                                 // проверка занятости адреса
@@ -121,20 +121,19 @@ else {
                                 $update_link->bindValue(':post_new_link', $_POST['new_link'], PDO::PARAM_STR);
 
                                 if ($update_link->execute()) $response .= "The 'link' was updated!";
-                                else $response .= "<p>ERROR: Could not update the 'link'! Maybe that is busy. Field is unice</p>";
+                                else $response .= "<p>ERROR 12: Could not update the 'link'! Maybe that is busy. Field is unice.</p>";
                             }
                             echo($response);
                             break;
                         default:
-                            echo("<p>ERROR: $count_pages pages have been returned for this request, but there must be one!</p>");
+                            echo("<p>ERROR 13: $count_pages pages have been returned for this request, but there must be one.</p>");
                             break;
                     }
-                }
-                else echo("<p>ERROR: The post request is not correct!</p>");
+                } else echo("<p>ERROR 14: The post request is not correct.</p>");
             }
             break;
         case "new":
-            if ( ! $admin_flag ) { echo "<p>Ошибка! Только администраторы могут удалять страницы.</p>"; }
+            if ( ! $admin_flag ) { echo "<p>ERROR 15! Only administators can remove pages.</p>"; }
             else {
                 if ( isset($_POST['link']) && isset($_POST['name']) && isset($_POST['prnt']) && isset($_POST['tmpl']) && isset($_POST['priv']) )
                 {
@@ -170,25 +169,23 @@ else {
                                 $response .= "The page was created!";
                                 $response .= "<script>location=\"\/".$_POST['link']."\";</script>";
                                 
-                            }
-                            else $response .= "<p>ERROR: Could not create page!</p>";
+                            } else $response .= "<p>ERROR 16: Could not create page.</p>";
 
                             echo($response);
                             break;
                         case '1':
-                            echo("<p>ERROR: The page w same link already have.</p>");
+                            echo("<p>ERROR 17: The page w same link already have.</p>");
                             break;
                         default:
-                            echo("<p>ERROR: $count_pages pages have been returned for this request, but there must be zero!</p>");
+                            echo("<p>ERROR 18: $count_pages pages have been returned for this request, but there must be zero.</p>");
                             break;
                     }
-                }
-                else echo("<p>ERROR: The post request is not correct!</p>");
+                } else echo("<p>ERROR 19: The post request is not correct.</p>");
             }
 
             break;
         default:
-            echo "<p>Ошибка! Неккоректный запрос 2.</p>";
+            echo "<p>ERROR 20: Incorrect request.</p>";
             break;
     }	
 }
