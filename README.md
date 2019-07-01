@@ -145,3 +145,39 @@ ___
 
 Нужно сделать страничку первоначальной настройки настройки
 И сохранения бекапа
+
+## Связка nginx + letsencrypt
+
+-> https://hixon.ru/programmirovanie-2/delaem-https-sajtik-s-pomoshhyu-nginx-docker-compose-lets-encrypt.html
+Обзорная статья описывающая процесс
+
+    -> https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion
+    docker-compose с тремя контейнерами и сеткой
+
+        -> https://github.com/jwilder/docker-gen
+        docker-gen is a file generator that renders templates using docker container meta-data.
+
+        -> nginx-web
+        по сути официальный nginx
+
+        -> https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
+
+            -> simp_le бот для получения сертефиката (вроде как работает на https://letsencrypt.org/2017/06/14/acme-v2-api.html)
+
+## nginx + php docker-compose
+
+https://phptoday.ru/post/gotovim-lokalnuyu-sredu-docker-dlya-razrabotki-na-php
+Статья про nginx + mysql + php
+
+https://github.com/nanoninja/docker-nginx-php-mysql
+Аналогичная статья правда тут тоже есть про SSL
+
+https://stackoverflow.com/questions/44994418/docker-compose-for-nginx-php-fpm-composer
+
+Что-то старое депрекейченое для запуска nginx + ssl
+https://github.com/libresh/compose-nginx/blob/master/docker-compose.yml
+
+https://hub.docker.com/r/phpmyadmin/phpmyadmin/
+
+старая статья на хабр об идеальном окружении (php, apache, nginx)
+https://habr.com/en/post/346086/
