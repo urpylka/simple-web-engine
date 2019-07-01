@@ -8,18 +8,10 @@ else {
                 //echo "<p>Ошибка! Проверка можно ли удалить страницу.</p>";
                 $response = NULL;
 
-                if ( isset($_POST['link']) ) {
+                if ( count($_POST) > 0 ) {
 
-                    // почему-то isset($_POST['link'])
-                    // вообще нормально не работает
-                    // выдает непонятно какой один символ,
-                    // и никак не могу его отловить
-                    // при этом вообще не передаю link
-                    if ( count($_POST['link']) == 1 ) {
-                        $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
-                    } else {
-                        $link = $_POST['link'];
-                    }
+                    if ( isset($_POST['link']) ) $link = $_POST['link'];
+                    else $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
 
                     $page_by_link = $pdo->prepare("DELETE FROM `pages` WHERE `link` = :link;");
                     $page_by_link->bindValue(':link', $link, PDO::PARAM_STR);
@@ -45,19 +37,10 @@ else {
         case "update":
             if ( ! $admin_flag ) { echo "<p>ERROR 5! Only administators can remove pages.</p>"; }
             else {
-                if ( isset($_POST['link']) && count($_POST) > 1 )
+                if ( count($_POST) > 0 )
                 {
-
-                    // почему-то isset($_POST['link'])
-                    // вообще нормально не работает
-                    // выдает непонятно какой один символ,
-                    // и никак не могу его отловить
-                    // при этом вообще не передаю link
-                    if ( count($_POST['link']) == 1 ) {
-                        $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
-                    } else {
-                        $link = $_POST['link'];
-                    }
+                    if ( isset($_POST['link']) ) $link = $_POST['link'];
+                    else $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
 
                     $page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :post_link;");
                     $page_by_link->bindValue(':post_link', $link, PDO::PARAM_STR);
@@ -135,20 +118,11 @@ else {
         case "new":
             if ( ! $admin_flag ) { echo "<p>ERROR 15! Only administators can remove pages.</p>"; }
             else {
-                if ( isset($_POST['link']) && isset($_POST['name']) && isset($_POST['prnt']) && isset($_POST['tmpl']) && isset($_POST['priv']) )
+                if ( isset($_POST['name']) && isset($_POST['prnt']) && isset($_POST['tmpl']) && isset($_POST['priv']) )
                 {
 
-
-                    // почему-то isset($_POST['link'])
-                    // вообще нормально не работает
-                    // выдает непонятно какой один символ,
-                    // и никак не могу его отловить
-                    // при этом вообще не передаю link
-                    if ( count($_POST['link']) == 1 ) {
-                        $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
-                    } else {
-                        $link = $_POST['link'];
-                    }
+                    if ( isset($_POST['link']) ) $link = $_POST['link'];
+                    else $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
 
                     $page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :post_link;");
                     $page_by_link->bindValue(':post_link', $link, PDO::PARAM_STR);
@@ -182,7 +156,6 @@ else {
                     }
                 } else echo("<p>ERROR 19: The post request is not correct.</p>");
             }
-
             break;
         default:
             echo "<p>ERROR 20: Incorrect request.</p>";
