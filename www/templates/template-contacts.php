@@ -5,8 +5,6 @@
 		<title><?=$site_name?></title>
 		<link rel="stylesheet" href="css/style.css" />
 
-		<link rel="stylesheet" type="text/css" href="css/template_standart.css">
-
 		<script type="text/javascript" src="mooeditable/Demos/assets/mootools.js"></script>
 
 		<!-- <script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.js"></script>
@@ -18,8 +16,6 @@
 		<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.SilkTheme.css"> -->
 		
 		<!-- <script src='http://localhost/jquery-3.3.1.min.js'></script> -->
-
-	<script type="text/javascript" src="js/template_standart.js"></script>
 
 	</head>
 	<body>
