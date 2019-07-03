@@ -1,18 +1,36 @@
-version: "2"
+version: '3'
 
 services:
-
     web:
-        image: tutum/apache-php
+        image: nginx:latest
         restart: always
         volumes:
-            - ./htdocs:/app
-            - ./tmp/logs-apache:/var/log/apache2
+            - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
+            - ./www:/var/www
+            - ./tmp/logs:/var/log/nginx
         ports:
             - ${WEB_PORT}:80
-        environment:
-            - ALLOW_OVERRIDE=true
+        # links:
+        #     - php
 
+    php:
+        build: ./php-fpm
+        restart: always
+        volumes:
+            - ./www:/var/www
+        # links:
+        #     - db
+
+    # web:
+    #     image: tutum/apache-php
+    #     restart: always
+    #     volumes:
+    #         - ./www:/app
+    #         - ./tmp/logs-apache:/var/log/apache2
+    #     ports:
+    #         - ${WEB_PORT}:80
+    #     environment:
+    #         - ALLOW_OVERRIDE=true
 
     db:
         image: mariadb
@@ -45,4 +63,4 @@ services:
 
 # throw ports needs for outside apps
 # like nginx-reverse-proxy (if it don't use that network)
-# or for db-manager
+# or like Sequel Pro (db manager)
