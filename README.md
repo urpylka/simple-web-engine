@@ -151,18 +151,19 @@ ___
 -> https://hixon.ru/programmirovanie-2/delaem-https-sajtik-s-pomoshhyu-nginx-docker-compose-lets-encrypt.html
 Обзорная статья описывающая процесс
 
-    -> https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion
-    docker-compose с тремя контейнерами и сеткой
+-> https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion
+docker-compose с тремя контейнерами и сеткой
 
-        -> https://github.com/jwilder/docker-gen
-        docker-gen is a file generator that renders templates using docker container meta-data.
+-> https://github.com/jwilder/docker-gen
+docker-gen is a file generator that renders templates using docker container meta-data.
 
-        -> nginx-web
-        по сути официальный nginx
+-> nginx-web
+по сути официальный nginx
 
-        -> https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
+-> https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion
 
-            -> simp_le бот для получения сертефиката (вроде как работает на https://letsencrypt.org/2017/06/14/acme-v2-api.html)
+-> simp_le бот для получения сертефиката (вроде как работает на https://letsencrypt.org/2017/06/14/acme-v2-api.html)
+что-то аля https://certbot.eff.org
 
 ## nginx + php docker-compose
 
