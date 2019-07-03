@@ -15,3 +15,7 @@ php_value short_open_tag 1
   # [QSA] - flag for transmission GET params to orig address
   # For debug use: print_r($_GET);
 </IfModule>
+
+
+# The service for convetation .htaccess to nginx server section
+# https://winginx.com/ru/htaccess
