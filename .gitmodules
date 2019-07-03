@@ -1,4 +1,4 @@
-[submodule "htdocs/mooeditable"]
-	path = htdocs/mooeditable
+[submodule "www/mooeditable"]
+	path = www/mooeditable
 	url = https://github.com/urpylka/mooeditable.git
 	ignore = dirty
