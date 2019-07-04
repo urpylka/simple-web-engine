@@ -41,8 +41,8 @@ services:
         restart: always
         volumes:
             - ./tmp/mysql:/var/lib/mysql
-#        ports:
-#            - 3306:3306
+        ports:
+            - ${DB_EXT_PORT}:3306
         environment:
             MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWD}
             MYSQL_USER: ${DB_USER_LOGIN}
