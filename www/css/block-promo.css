@@ -29,7 +29,7 @@
 	font-weight:400;
 }
 
-.buttonGOGOGOZaebalsya, .buttonGOGOGOZaebalsya:active{
+.promo_button, .promo_button:active{
 	margin-top:7px;
 	width: 118px;
 	background-color: #0097D3;
@@ -37,6 +37,6 @@
 	padding-left: 20px;
 	margin-bottom: 55px;
 }
-.buttonGOGOGOZaebalsya:active{background-color: #0097D3;}
-.buttonGOGOGOZaebalsya:hover{background-color: #21ABDC;}
-.buttonGOGOGOZaebalsya a{color:#FFF;display:block;padding:15px;font-weight:400;}
+.promo_button:active{background-color: #0097D3;}
+.promo_button:hover{background-color: #21ABDC;}
+.promo_button a{color:#FFF;display:block;padding:15px;font-weight:400;}
