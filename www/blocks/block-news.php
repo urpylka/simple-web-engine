@@ -59,7 +59,7 @@
 				<p align="justify">В рамках курсовой работы разработан сайт для военной кафедры Самарского университета. Сайт выполнен в статичном виде. Применено 5 javascript`ов. Автор сайта Смирнов Артем.
 				</p>
 			</div>
-			<img src="img/dwfwfw.png" class="prewiw">
+			<img src="img/assets/dwfwfw.png" class="prewiw">
 		</div>
 		<div class="news">
 			<a href="#" class="button" onclick="show('block','news2')">Подробнее</a>
@@ -71,7 +71,7 @@
 				<p align="justify">Приглашаем студентов вторых и третьих курсов для обучения на военной кафедре по программам сержантов и офицеров запаса.
 				</p>
 			</div>
-			<img src="img/1.jpg" class="prewiw">
+			<img src="img/assets/1.jpg" class="prewiw">
 		</div>
 	</section>
 </article>

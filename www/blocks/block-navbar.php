@@ -27,7 +27,7 @@ $(document).ready(function() {
 
 <nav>
 	<div class="logo">
-		<a href="http://ssau.ru"><img src="img/Unknown.svg" style="padding-top:15px;" height="40px;" alt="Главная"></a>
+		<a href="http://ssau.ru"><img src="img/block-navbar/logo-ssau.svg" style="padding-top:15px;" height="40px;" alt="Главная"></a>
 		<a href="/"><div style="padding-left:35px;margin-top:-17px;"><b>ВОЕННАЯ</b> КАФЕДРА</div></a>
 	</div>
 	<ul class="TopMenu">

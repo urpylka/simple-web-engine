@@ -5,9 +5,9 @@
     <div class="colft1">
         <div class="name">Общайтесь с нами</div>
         <ul>
-            <li><a href="http://vk.com/smirart"><img src="img/vk.png"><span>Вконтакте</span></a></li>
-            <li><a href="https://twitter.com/urpylka"><img src="img/tw.png"><span>Twitter</span></a></li>
-            <li><a href="https://www.youtube.com/user/urpylka"><img src="img/yo.png"><span>YouTube</span></a></li>
+            <li><a href="http://vk.com/smirart"><img src="img/block-footer/vk.png"><span>Вконтакте</span></a></li>
+            <li><a href="https://twitter.com/urpylka"><img src="img/block-footer/tw.png"><span>Twitter</span></a></li>
+            <li><a href="https://www.youtube.com/user/urpylka"><img src="img/block-footer/yo.png"><span>YouTube</span></a></li>
         </ul>
     </div>
     <div class="colft2">
@@ -30,6 +30,6 @@
         <span style="color:#000;">Россия, 443086, г. Самара, ул. Врубеля 27</span>
     </div>
     <div class="colft4">
-        <img height="170px" src="img/yo.png">
+        <img height="170px" src="img/block-footer/190.png">
     </div>
 </div>
