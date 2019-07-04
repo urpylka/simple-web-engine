@@ -8,10 +8,12 @@
 }
 
 #search input[type="text"] {
-	width: 880px;
+	margin-left: -550px;
+	margin-top: 65px;
+	width: 730px;
 	padding: 6px;
 
-	line-height: 40px;
+	line-height: 30px;
 	padding: 6px 0 4px 10px;
 
 	border: 6px solid #401078;
@@ -23,7 +25,7 @@
 	background: #fff !important;
 	outline: none;
 	color: #000;
-	font-size: 30px;
+	font-size: 25px;
 	font-family: Tahoma;
 }
 
@@ -37,6 +39,20 @@
 
 </style>
 
+<style>
+.left { float:  left; width: 50%; }
+.right { float: right; width: 50%; text-align: right; }
+.clear { clear: both; }
+</style>
+
 <div id="search">
-	<input type="text" width="48" height="48">
+
+	<div class="left">
+		<img src="img/bender-ours.png" style="margin-left: -20px;" width="150px" />
+	</div>
+	<div class="right">
+		<input type="text" width="48" style="" height="48">
+	</div>
+
+	<div class="clear"></div>
 </div>
