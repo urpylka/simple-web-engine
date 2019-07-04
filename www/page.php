@@ -1,8 +1,23 @@
 <?
 error_reporting(E_ALL);
+session_start();
 header('Content-Type: text/html; charset=utf-8');
 
-include("config.php");
+// SITE CONFIGS
+
+$site_url = $_ENV["SITE_URL"];
+$site_name = $_ENV["SITE_NAME"];
+
+// Developer settings
+$DEBUG = (boolean)$_ENV["SITE_DEBUG"];
+
+// Database settings
+$host = $_ENV["DB_HOST"];
+$port = $_ENV["DB_PORT"];
+$login_mysql = $_ENV["DB_USER_LOGIN"];
+$password_mysql = $_ENV["DB_USER_PASSWD"];
+$dbname = $_ENV["DB_NAME"];
+$backup = $_ENV["DB_BACKUP_FILE"];
 
 if ($DEBUG) {
 	ini_set('display_errors', 1);
@@ -119,7 +134,6 @@ if ($needs_import) {
 $login = NULL;
 $admin_flag = 0;
 
-session_start();
 $user_by_phpsessid = $pdo->prepare("SELECT `users`.`login`,`users`.`admin_flag` FROM `users` INNER JOIN `sessions` ON `sessions`.`login` = `users`.`login` WHERE `sessions`.`phpsessid` = :phpsessid;");
 $user_by_phpsessid->bindValue(':phpsessid', session_id(), PDO::PARAM_STR);
 $user_by_phpsessid->execute();
@@ -179,6 +193,7 @@ if ($DEBUG) {
 	echo "<p>page_title: ".$page_title."</p>";
 	echo "<p>page_template: ".$page_template."</p>";
 	echo "<p>page_public: ".$page_public."</p>";
+	echo "<p>session_id: ".session_id()."</p>";
 }
 
 $template = $pdo->prepare("SELECT `templates`.`path`,`templates`.`name` FROM `templates` WHERE `templates`.`id` = :tmpl_id;");
