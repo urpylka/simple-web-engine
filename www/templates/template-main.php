@@ -8,9 +8,10 @@
 	<body>
 		<header>
 			<? include_once 'blocks/block-navbar.php'; ?>
-			<? include_once 'blocks/block-promo.php'; ?>
+			<? /* include_once 'blocks/block-promo.php'; ?>
 			<? include_once 'blocks/block-quickmenu.php'; ?>
-			<? include_once 'blocks/block-sitemap.php'; ?>
+			<? include_once 'blocks/block-sitemap.php'; */ ?>
+			<? include_once 'blocks/block-search.php'; ?>
 		</header>
 		<main>
 			<?//=$page_content?>
