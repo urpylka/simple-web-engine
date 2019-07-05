@@ -4,7 +4,11 @@
 
 /* основное меню и лого */
 nav{
-	height:80px;width:100%;text-transform:uppercase;
+	height:80px;
+	width:100%;
+
+	text-transform:uppercase;
+
 	background-image:-moz-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
 	background-image:-o-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
 	background-image:-webkit-linear-gradient(bottom, #d7d7d7 0%, #f1f1f1 100%);
@@ -24,6 +28,6 @@ nav ul{
 nav li{
 	float:left;
 	font-size:17px;
-	margin-left:30px; /* было 35 */
+	margin-left:30px;
 	margin-top:34px;
 }

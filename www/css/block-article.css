@@ -2,20 +2,23 @@ body {
     font-family: sans-serif;
     font-size: .9em;
 }
-#page_title[contenteditable] {background-color: orange; color: black;}
+
 .marg30 {
     margin-right: 30px;
     margin-left: 30px;
     width: 930px;
 }
+
 #editor_status {
     font-size: 12px !important;
     color: green;
     float: left;
 }
+
 #edit_button {
     width: 100px;
 }
+
 #textarea1 {
     position: relative;
     display: block;
@@ -23,11 +26,13 @@ body {
     height: 200px;
     border: 0px solid #ddd;
 }
+
 #textarea1-mooeditable-container {
     width: 990px !important;
     border: 0;
     /* border-width: 0px 0px 1px !important; */
 }
+
 .mooeditable-iframe {
     margin-left: 30px !important;
     margin-right: 30px !important; 
@@ -35,13 +40,16 @@ body {
     width: 930px !important;
     padding: 0 !important;
 }
+
 /* SECTION TEXT-CONTNET */
 section a {
 	color:#679f33;
 	text-decoration: underline;
     -moz-text-decoration-line: underline;
 }
-.headnews{
+
+/* используется на главной */
+.headnews {
 	width: 320px;
 	font-size: 1.5em;
 	font-weight: bold;
@@ -54,30 +62,49 @@ section a {
 	-webkit-box-shadow: 0px 2px 4px #888;
 	-moz-box-shadow: 0px 2px 4px #888;
 	box-shadow: 0px 2px 4px #888;
-	}
-section.text-content{
+}
+
+section.text-content {
 	display: table;
 }
-#fullpage{
+
+section.text-content #main_cont {
+	/* font-family: Marat-Sans-Regular; */
+}
+
+#fullpage {
 	display: block !important;
 }
-#fullpage h1{
-	width:940px !important;}
-section.text-content h1{
+
+#fullpage h1 {
+	width: 940px !important;
+}
+
+#page_title[contenteditable] {
+	background-color: orange;
+	color: black;
+}
+
+section.text-content h1 {
 	position: relative;
+
+	/* на главной этот стиль используется */
 	width: 520px;
+
+	padding: 6px 20px 6px 50px;
+	margin: 30px 10px 10px -50px;
+
 	font-size: 1.5em;
 	font-weight: bold;
-	padding: 6px 20px 6px 50px;
-	margin: 30px 10px 10px -41px;
+	text-transform: uppercase;
 	color: #fff;
+
 	background-color: #0097D3;
 	text-shadow: 0px 1px 2px #000;
-	text-transform: uppercase;
-	margin-left: -50px;
 	-webkit-box-shadow: 0px 2px 4px #888;
 	-moz-box-shadow: 0px 2px 4px #888;
-    box-shadow: 0px 2px 4px #888;}
+	box-shadow: 0px 2px 4px #888;
+}
 
 section.text-content h1:after {
 	content: ' ';
