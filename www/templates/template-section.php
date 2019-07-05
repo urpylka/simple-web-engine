@@ -8,17 +8,9 @@
 	<body>
 		<header>
 			<? include_once 'blocks/block-navbar.php'; ?>
-			<? include_once 'blocks/block-promo.php'; ?>
-			<? include_once 'blocks/block-quickmenu.php'; ?>
-			<? include_once 'blocks/block-sitemap.php'; ?>
-
-			<? include_once 'blocks/block-search.php'; ?>
 		</header>
 		<main>
-
 			<? include_once 'blocks/block-list.php'; ?>
-			<?//=$page_content?>
-			<? try { include_once($page_content); } catch (Exception $e) { throw $e; }?>
 		</main>
 		<footer>
 			<? include_once 'blocks/block-footer.php'; ?>

@@ -8,7 +8,8 @@
 @import url("block-article.css") all;
 @import url("block-footer.css") all;
 @import url("block-copyrights.css") all;
-@import url("block-news.css") all;
+@import url("primitive-tape.css") all;
+@import url("block-list.css") all;
 @import url("block-sponsors.css") all;
 @import url("block-latestnews.css") all;
 @import url("block-gototop.css") all;

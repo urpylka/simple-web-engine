@@ -1,6 +1,6 @@
 <article>
-	<section class="text-content" id="fullpage">
-		<h1><?=$page_title?></h1>
+	<section>
+		<h1 class="tape"><?=$page_title?></h1>
 		<?
 
 		function view_login_form() {

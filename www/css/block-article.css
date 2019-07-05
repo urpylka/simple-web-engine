@@ -3,11 +3,18 @@ body {
     font-size: .9em;
 }
 
+.toolbox {
+	margin-top:10px;
+	margin-bottom:-10px;
+}
+
 .marg30 {
     margin-right: 30px;
     margin-left: 30px;
     width: 930px;
 }
+
+/* EDITOR */
 
 #editor_status {
     font-size: 12px !important;
@@ -48,72 +55,15 @@ section a {
     -moz-text-decoration-line: underline;
 }
 
-/* используется на главной */
-.headnews {
-	width: 320px;
-	font-size: 1.5em;
-	font-weight: bold;
-	padding: 8px 70px 9px 20px;
-	margin: -46px 100px 10px 0px !important;
-	color: #fff;
-	background-color: #0097D3;
-	text-shadow: 0px 1px 2px #000;
-	text-transform: uppercase;
-	-webkit-box-shadow: 0px 2px 4px #888;
-	-moz-box-shadow: 0px 2px 4px #888;
-	box-shadow: 0px 2px 4px #888;
+section {
+
 }
 
-section.text-content {
-	display: table;
-}
-
-section.text-content #main_cont {
+section #main_cont {
 	/* font-family: Marat-Sans-Regular; */
-}
-
-#fullpage {
-	display: block !important;
-}
-
-#fullpage h1 {
-	width: 940px !important;
 }
 
 #page_title[contenteditable] {
 	background-color: orange;
 	color: black;
-}
-
-section.text-content h1 {
-	position: relative;
-
-	/* на главной этот стиль используется */
-	width: 520px;
-
-	padding: 6px 20px 6px 50px;
-	margin: 30px 10px 10px -50px;
-
-	font-size: 1.5em;
-	font-weight: bold;
-	text-transform: uppercase;
-	color: #fff;
-
-	background-color: #0097D3;
-	text-shadow: 0px 1px 2px #000;
-	-webkit-box-shadow: 0px 2px 4px #888;
-	-moz-box-shadow: 0px 2px 4px #888;
-	box-shadow: 0px 2px 4px #888;
-}
-
-section.text-content h1:after {
-	content: ' ';
-	position: absolute;
-	width: 0;
-	height: 0;
-	left: 0px;
-	top: 100%;
-	border-width: 5px 10px; /* Отступ ищи полоски */
-	border-style: solid;
-	border-color: #2c4e66 #254a66 transparent transparent;
 }

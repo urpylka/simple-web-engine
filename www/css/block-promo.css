@@ -32,11 +32,11 @@
 .promo_button, .promo_button:active{
 	margin-top:7px;
 	width: 118px;
-	background-color: #0097D3;
+	background-color: #401078;
 	margin-left: 501px;
 	padding-left: 20px;
 	margin-bottom: 55px;
 }
-.promo_button:active{background-color: #0097D3;}
-.promo_button:hover{background-color: #21ABDC;}
+.promo_button:active{background-color: #401078;}
+.promo_button:hover{background-color: #47117d;}
 .promo_button a{color:#FFF;display:block;padding:15px;font-weight:400;}

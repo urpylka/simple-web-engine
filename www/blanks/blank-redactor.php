@@ -1,36 +1,54 @@
 <?
+
+// $var = NULL;
+// if (isset($var)) echo("set"); else echo("not");
+// => not
+
 if ( ! isset($_GET['act']) ) echo "<p>ERROR 22: Incorrect request.</p>"; 
 else {
+
+    $p_id = NULL;
+    $p_link = NULL;
+    $p_text = NULL;
+    $p_name = NULL;
+    $p_tmpl = NULL;
+    $p_prnt = NULL;
+
+    $p_link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
+    if ( count($_POST) > 0 ) {
+        if ( isset($_POST['link']) ) { $p_id = $_POST['link']; }
+        if ( isset($_POST['link']) ) { $p_link = $_POST['link']; }
+        if ( isset($_POST['link']) ) { $p_name = $_POST['link']; }
+        if ( isset($_POST['link']) ) { $p_text = $_POST['link']; }
+        if ( isset($_POST['link']) ) { $p_tmpl = $_POST['link']; }
+        if ( isset($_POST['link']) ) { $p_prnt = $_POST['link']; }
+    }
+
     switch ($_GET['act']) {
         case "drop":
+            $response = NULL;
             if ( ! $admin_flag ) { echo "<p>ERROR 21! Only administators can remove pages.</p>"; }
             else {
                 //echo "<p>Ошибка! Проверка можно ли удалить страницу.</p>";
-                $response = NULL;
 
-                if ( count($_POST) > 0 ) {
-
-                    if ( isset($_POST['link']) ) $link = $_POST['link'];
-                    else $link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
-
+                if ( isset($p_link) ) {
                     $page_by_link = $pdo->prepare("DELETE FROM `pages` WHERE `link` = :link;");
-                    $page_by_link->bindValue(':link', $link, PDO::PARAM_STR);
+                    $page_by_link->bindValue(':link', $p_link, PDO::PARAM_STR);
                     $page_by_link->execute();
 
                     if ($page_by_link->execute()) $response .= "The page was deleted.";
                     else $response .= "<p>ERROR 1: Could not delete the page.</p>";
 
-                } else echo("<p>ERROR 2: The post request is not correct.</p>");
-
-                if ( isset($_POST['id']) ) {
+                } else if (isset($p_id)) {
                     $page_by_id = $pdo->prepare("DELETE FROM `pages` WHERE `id` = :id;");
-                    $page_by_id->bindValue(':id', $_POST['id'], PDO::PARAM_STR);
+                    $page_by_id->bindValue(':id', $p_id, PDO::PARAM_STR);
                     $page_by_id->execute();
 
-                    if ($page_by_id->execute()) $response .= "The page was deleted!";
-                    else $response .= "<p>ERROR 3: Could not delete the page.</p>";
+                    if ($page_by_id->execute()) $response .= "The page was deleted.";
+                    else $response .= "<p>ERROR 2: Could not delete the page.</p>";
 
-                } else $response .= "<p>ERROR 4: The post request is not correct.</p>";
+                } else echo("<p>ERROR 3, 4: The post request is not correct.</p>");
+
             }
             echo($response);
             break;

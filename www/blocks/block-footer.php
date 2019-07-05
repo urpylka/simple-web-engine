@@ -13,11 +13,9 @@
     <div class="colft2">
         <div class="name">Быстрый доступ</div>
         <ul class="menuft">
-            <li><a href="/director">Руководство</a></li>
-            <li><a href="/history">История</a></li>
-            <li><a href="/struktura">Структура</a></li>
-            <li><a href="/library">Библиотека</a></li>
-            <li><a href="/feedback">Обратная связь</a></li>
+            <li><a href="/login">Авторизация</a></li>
+            <li><a href="/editor">Редактор</a></li>
+            <li><a href="/primitives">Примитивы</a></li>
         </ul>
     </div>
     <div class="colftbig">

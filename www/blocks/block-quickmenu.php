@@ -1,17 +1,17 @@
 <div id="quickmenu">
-	<a href="/for-abiturients" class="col">
+	<a href="/primitives" class="col">
 		<img src="img/block-quickmenu/pipl.png" alt="Что бы Валидатор неохуел"/>
-		<span>Абитуриенту</span>
-		<p>Правила приема,<br/>основное положение</p>
+		<span>Примитивы</span>
+		<p>Основные источники<br/>наборов и данных</p>
 	</a>
-	<a href="/for-students" class="col">
+	<a href="/editor" class="col">
 		<img src="img/block-quickmenu/plosha.png" alt="Что бы Валидатор неохуел"/>
-		<span>Студенту</span>
-		<p>Учебный материал,<br/>необходимые документы</p>
+		<span>Редактор</span>
+		<p>Просмотр всех,<br/>страниц сайта</p>
 	</a>
-	<a href="/for-emploeers" class="col">
+	<a href="/new-page" class="col">
 		<img src="img/block-quickmenu/blog.png" alt="Что бы Валидатор неохуел"/>
-		<span>Сотруднику</span><!-- СМИ, ниже мероприятия и контакты-->
-		<p>Структура кафедры,<br/>руководство</p>
+		<span>Написать</span><!-- СМИ, ниже мероприятия и контакты-->
+		<p>Создать новую<br/>страницу сайта</p>
 	</a>
 </div>

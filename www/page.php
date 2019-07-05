@@ -155,7 +155,7 @@ switch($count_users) {
 
 $page_link = $_GET['link'];
 
-$page_by_link = $pdo->prepare("SELECT `pages`.`name`,`pages`.`text`,`pages`.`template`,`pages`.`public_flag` FROM `pages` WHERE `pages`.`link` = :page_link AND ( `pages`.`public_flag` = 1 OR :admin_flag );");
+$page_by_link = $pdo->prepare("SELECT `pages`.`name`,`pages`.`text`,`pages`.`template`,`pages`.`public_flag`,`pages`.`id` FROM `pages` WHERE `pages`.`link` = :page_link AND ( `pages`.`public_flag` = 1 OR :admin_flag );");
 $page_by_link->bindValue(':page_link', $page_link, PDO::PARAM_STR);
 $page_by_link->bindValue(':admin_flag', $admin_flag, PDO::PARAM_STR);
 $page_by_link->execute();
@@ -176,6 +176,7 @@ switch($count_pages) {
 		$page_content = $page_by_link['text'];
 		$page_template = $page_by_link['template'];
 		$page_public = $page_by_link['public_flag'];
+		$page_id = $page_by_link['id'];
 		break;
 	default:
 		$error_output = 1;

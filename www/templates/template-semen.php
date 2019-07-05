@@ -15,6 +15,7 @@
 			<? include_once 'blocks/block-sitemap.php'; */ ?>
 		</header>
 		<main>
+			<? include_once 'blocks/block-news.php'; ?>
 			<?//=$page_content?>
 			<? // try { include_once($page_content); } catch (Exception $e) { throw $e; }?>
 		</main>

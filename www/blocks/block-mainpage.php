@@ -1,9 +1,30 @@
+<style>
+section.main-page h1 { width: 520px !important; }
+section.main-page { display: table; }
+.headnews {
+	width: 320px;
+	font-size: 1.5em;
+	font-weight: bold;
+	padding: 8px 70px 9px 20px;
+	margin: -46px 100px 10px 0px !important;
+	color: #fff;
+	background-color: #0097D3;
+
+	text-transform: uppercase;
+	
+	text-shadow: 0px 1px 2px #000;
+	-webkit-box-shadow: 0px 2px 4px #888;
+	-moz-box-shadow: 0px 2px 4px #888;
+	box-shadow: 0px 2px 4px #888;
+}
+
+</style>
 <article>
-	<section class="text-content">
-		<h1>О кафедре</h1>
+	<section class="main-page">
+		<h1 class="tape">О кафедре</h1>
 		<div style="width:530px;float:left;margin-right: 20px;">
 		<h2>Цели и задачи кафедры</h2>
-		<img alt="" src="img/assets/gerb.jpg" style="width: 140px; margin: 15px; float: left;" />
+		<img alt="" src="img/assets/coda.png" style="width: 140px; margin: 15px; float: left;" />
 		<br/>
 		<p align="justify">Военная кафедра при Федеральном  государственном бюджетном образовательном учреждении высшего профессионального образования "Самарский национальный исследовательский университет имени академика С.П. Королева" создана в целях обучения по программе военной подготовке офицеров запаса граждан Российской Федерации, обучающихся в этом университете по очной форме обучения по основным образовательным программам высшего профессионального образования.<p/>
 		<br/>
@@ -12,42 +33,6 @@
 			<li align="justify">реализация программ военной подготовки офицеров, сержантов и солдат запаса на военной кафедре по военно-учетным специальностям;</li>
 			<li align="justify">участие в проведении воспитательной работы и работы по военно-профессиональной ориентации молодежи.</li>
 		</ul>
-		<h2>Специальности</h2>
-		<br/>
-		<table width="100%">
-			<tr>
-				<td width="80px" style="border:1px #000 solid;">ВУС 461000</td>
-				<td style="border:1px #000 solid;">Эксплуатация и ремонт самолетов, вертолетов и авиационных двигателей</td>
-			</tr>
-			<tr>
-				<td style="border:1px #000 solid;">ВУС 461100</td>
-				<td style="border:1px #000 solid;">Эксплуатация и ремонт авиационного вооружения</td>
-			</tr>
-			<tr>
-				<td style="border:1px #000 solid;">ВУС 461200</td>
-				<td style="border:1px #000 solid;">Эксплуатация и ремонт авиационного оборудования самолетов и вертолетов</td>
-			</tr>
-			<tr>
-				<td style="border:1px #000 solid;">ВУС 461300</td>
-				<td style="border:1px #000 solid;">Эксплуатация и ремонт радиоэлектронного оборудования самолетов, вертолетов и авиационных ракет</td>
-			</tr>
-			<tr>
-				<td style="border:1px #000 solid;">ВУС 220</td>
-				<td style="border:1px #000 solid;">Эксплуатация и ремонт самолетов с реактивными (турбовентиляторными), турбореактивными и турбовинтовыми двигателями</td>
-			</tr>
-			<tr>
-				<td style="border:1px #000 solid;">ВУС 233</td>
-				<td style="border:1px #000 solid;">Эксплуатация и ремонт ракетного вооружения, систем наведения и управления ракет</td>
-			</tr>
-			<tr>
-				<td style="border:1px #000 solid;">ВУС 262</td>
-				<td style="border:1px #000 solid;">Эксплуатация и ремонт электрооборудования самолетов и вертолетов</td>
-			</tr>
-			<tr>
-				<td style="border:1px #000 solid;">ВУС 250</td>
-				<td style="border:1px #000 solid;">Эксплуатация и ремонт радиосвязного оборудования самолетов и вертолетов</td>
-			</tr>
-		</table>
 		</div>
 		<div style="float:left;width:360px;">
 			<div class="headnews">Новости</div>

@@ -1,6 +1,5 @@
 <?if ($admin_flag && ! $error_output){?>
-
-<table width="930px" style="margin-top:10px;margin-bottom:-22px;" class="marg30">
+<table class="toolbox marg30">
     <tr>
         <td width="160px">
             <input id="edit_button" type="submit" value="Change" onclick="open_textarea()" />
@@ -40,7 +39,7 @@
 <?}?>
 <article>
 <section class="text-content" id="fullpage">
-    <h1 id="page_title"><?=$page_title?></h1>
+    <h1 class="tape" id="page_title"><?=$page_title?></h1>
     <div id="main_cont"><?=$page_content?></div>
 </section>
 </article>
