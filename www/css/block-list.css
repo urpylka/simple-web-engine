@@ -35,11 +35,11 @@
 	font-weight: 400;
 
 	/* background-color: #0097D3; */
-	background-color: #b88d58;
+	background-color: #888;
 }
 
 .page_preview a:hover {
 	/* background-color: #21ABDC; */
-	background-color: #c89b63;
+	background-color: #d7d7d7;
 	color: #FFF;
 }
