@@ -19,7 +19,7 @@ $p_tmpl = 1;
 $pages_by_cond = $pdo->prepare("SELECT `pages`.`name`,`pages`.`text`,`pages`.`template`,`pages`.`public_flag`,`pages`.`link` FROM `pages` WHERE ( `pages`.`parent` = :page_prnt ) AND ( `pages`.`template` = :page_tmpl ) AND ( `pages`.`public_flag` = 1 OR :admin_flag );");
 $pages_by_cond->bindValue(':page_prnt', $p_prnt, PDO::PARAM_INT);
 $pages_by_cond->bindValue(':page_tmpl', $p_tmpl, PDO::PARAM_INT);
-$pages_by_cond->bindValue(':admin_flag', $admin_flag, PDO::PARAM_STR);
+$pages_by_cond->bindValue(':admin_flag', $admin_flag, PDO::PARAM_INT);
 $pages_by_cond->execute();
 // echo($pages_by_cond->rowCount());
 
