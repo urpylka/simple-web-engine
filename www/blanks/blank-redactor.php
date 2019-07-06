@@ -138,8 +138,8 @@ else {
     $p_tmpl = isset($_POST['tmpl']) ? $_POST['tmpl'] : NULL;
     $p_priv = isset($_POST['priv']) ? $_POST['priv'] : NULL;
 
-    $new_p_link = isset($_POST['new_link']) ? $_POST['new_link'] : NULL;
     $new_p_name = isset($_POST['new_name']) ? $_POST['new_name'] : NULL;
+    $new_p_link = isset($_POST['new_link']) ? $_POST['new_link'] : NULL;
     $new_p_text = isset($_POST['new_text']) ? $_POST['new_text'] : NULL;
     $new_p_tmpl = isset($_POST['new_tmpl']) ? $_POST['new_tmpl'] : NULL;
     $new_p_prnt = isset($_POST['new_prnt']) ? $_POST['new_prnt'] : NULL;
@@ -153,9 +153,9 @@ else {
     else {
         switch ($_GET['act']) {
             case "new":
-                if ( isset($p_name) && isset($p_prnt) && isset($p_tmpl) && isset($p_priv) )
+                if ( isset($new_p_name) && isset($new_p_link) && isset($new_p_tmpl) && isset($new_p_prnt) && isset($new_p_publ) )
                 {
-                    $page_by_link = get_page_id_by_link($pdo, $p_link);
+                    $page_by_link = get_page_id_by_link($pdo, $new_p_link);
                     $count_pages = $page_by_link->rowCount();
                     switch($count_pages) {
                         default:
@@ -165,11 +165,9 @@ else {
                             $response .= "<p>ERROR 17: The page w same link already have.</p>";
                             break;
                         case '0':
-                            create_page($p_name, $p_link, $p_tmpl, $p_prnt);
+                            create_page($pdo, $new_p_name, $new_p_link, $new_p_tmpl, $new_p_publ);
                             break;
                     }
-
-
                 } else $response .= "<p>ERROR 19: The post request is not correct.</p>";
                 break;
             case "update":
