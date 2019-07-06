@@ -3,7 +3,7 @@
     font-family: 'medium-content-serif-font';
     font-weight: 400;
     font-style: italic;
-    src: url('fonts/medium2/charter-400-italic.woff') format('woff');
+    src: url('/fonts/medium2/charter-400-italic.woff') format('woff');
     unicode-range: U+0-7F,U+A0,U+200A,U+2014,U+2018,U+2019,U+201C,U+201D,U+2022,U+2026;
   }
   
@@ -12,7 +12,7 @@
     font-family: 'medium-content-serif-font';
     font-weight: 400;
     font-style: italic;
-    src: url('fonts/medium2/charter-400-italic.woff') format('woff');
+    src: url('/fonts/medium2/charter-400-italic.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
   
@@ -21,7 +21,7 @@
     font-family: 'medium-content-serif-font';
     font-weight: 400;
     font-style: normal;
-    src: url('fonts/medium2/charter-400-normal.woff') format('woff');
+    src: url('/fonts/medium2/charter-400-normal.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
   
@@ -39,7 +39,7 @@
     font-family: 'medium-content-serif-font';
     font-weight: 700;
     font-style: italic;
-    src: url('fonts/medium2/charter-700-italic.woff') format('woff');
+    src: url('/fonts/medium2/charter-700-italic.woff') format('woff');
     unicode-range: U+0-7F,U+A0,U+200A,U+2014,U+2018,U+2019,U+201C,U+201D,U+2022,U+2026;
   }
   
@@ -48,7 +48,7 @@
     font-family: 'medium-content-serif-font';
     font-weight: 700;
     font-style: italic;
-    src: url('fonts/medium2/charter-700-italic.woff') format('woff');
+    src: url('/fonts/medium2/charter-700-italic.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
   
@@ -57,7 +57,7 @@
     font-family: 'medium-content-serif-font';
     font-weight: 700;
     font-style: normal;
-    src: url('fonts/medium2/charter-700-normal.woff') format('woff');
+    src: url('/fonts/medium2/charter-700-normal.woff') format('woff');
     unicode-range: U+0-7F,U+A0,U+200A,U+2014,U+2018,U+2019,U+201C,U+201D,U+2022,U+2026;
   }
   
@@ -66,7 +66,7 @@
     font-family: 'medium-content-serif-font';
     font-weight: 700;
     font-style: normal;
-    src: url('fonts/medium2/charter-700-normal.woff') format('woff');
+    src: url('/fonts/medium2/charter-700-normal.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
   
@@ -75,7 +75,7 @@
     font-family: 'medium-content-title-font';
     font-weight: 400;
     font-style: normal;
-    src: url('fonts/medium2/fell-400-normal.woff') format('woff');
+    src: url('/fonts/medium2/fell-400-normal.woff') format('woff');
     unicode-range: U+0-7F,U+A0,U+200A,U+2014,U+2018,U+2019,U+201C,U+201D,U+2022,U+2026;
   }
   
@@ -84,7 +84,7 @@
     font-family: 'medium-content-title-font';
     font-weight: 400;
     font-style: normal;
-    src: url('fonts/medium2/fell-400-normal.woff') format('woff');
+    src: url('/fonts/medium2/fell-400-normal.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
   
@@ -93,7 +93,7 @@
     font-family: 'medium-content-slab-serif-font';
     font-weight: 300;
     font-style: italic;
-    src: url('fonts/medium2/marat-sans-300-italic.woff') format('woff');
+    src: url('/fonts/medium2/marat-sans-300-italic.woff') format('woff');
     unicode-range: U+0-7F,U+A0,U+200A,U+2014,U+2018,U+2019,U+201C,U+201D,U+2022,U+2026;
   }
   
@@ -102,7 +102,7 @@
     font-family: 'medium-content-slab-serif-font';
     font-weight: 300;
     font-style: italic;
-    src: url('fonts/medium2/marat-sans-300-italic.woff') format('woff');
+    src: url('/fonts/medium2/marat-sans-300-italic.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
   
@@ -111,7 +111,7 @@
     font-family: 'medium-content-sans-serif-font';
     font-weight: 400;
     font-style: normal;
-    src: url('fonts/medium2/marat-sans-400-normal.woff') format('woff');
+    src: url('/fonts/medium2/marat-sans-400-normal.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
   
@@ -129,7 +129,7 @@
     font-family: 'medium-content-sans-serif-font';
     font-weight: 600;
     font-style: normal;
-    src: url('fonts/medium2/marat-sans-600-normal.woff') format('woff');
+    src: url('/fonts/medium2/marat-sans-600-normal.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
   
@@ -147,7 +147,7 @@
     font-family: 'medium-marketing-display-font';
     font-weight: 500;
     font-style: normal;
-    src: url('fonts/medium2/noe-display-500-normal.woff') format('woff');
+    src: url('/fonts/medium2/noe-display-500-normal.woff') format('woff');
     unicode-range: U+0-7F,U+A0,U+200A,U+2014,U+2018,U+2019,U+201C,U+201D,U+2022,U+2026;
   }
   
@@ -156,6 +156,6 @@
     font-family: 'medium-marketing-display-font';
     font-weight: 500;
     font-style: normal;
-    src: url('fonts/medium2/noe-display-500-normal.woff') format('woff');
+    src: url('/fonts/medium2/noe-display-500-normal.woff') format('woff');
     unicode-range: U+80-9F,U+A1-2009,U+200B-2013,U+2015-2017,U+201A-201B,U+201E-2021,U+2023-2025,U+2027-10FFFF;
   }
