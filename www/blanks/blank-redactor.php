@@ -5,7 +5,8 @@
 // => not
 
 
-function update_name_by_id($id, $new_name) {
+function update_name_by_id($pdo, $id, $new_name) {
+    $response = "";
     $update_name = $pdo->prepare("UPDATE `pages` SET `name` = :new_name WHERE `id` = :id;");
     $update_name->bindValue(':id', $id, PDO::PARAM_INT);
     $update_name->bindValue(':new_name', $new_name, PDO::PARAM_STR);
@@ -16,7 +17,8 @@ function update_name_by_id($id, $new_name) {
 }
 
 
-function update_text_by_id($id, $new_text) {
+function update_text_by_id($pdo, $id, $new_text) {
+    $response = "";
     $update_text = $pdo->prepare("UPDATE `pages` SET `text` = :post_new_text WHERE `id` = :id;");
     $update_text->bindValue(':id', $id, PDO::PARAM_INT);
     $update_text->bindValue(':post_new_text', $new_text, PDO::PARAM_STR);
@@ -27,7 +29,8 @@ function update_text_by_id($id, $new_text) {
 }
 
 
-function update_tmpl_by_id($id, $new_tmpl) {
+function update_tmpl_by_id($pdo, $id, $new_tmpl) {
+    $response = "";
     // проверка существования шаблона
     $update_tmpl = $pdo->prepare("UPDATE `pages` SET `template` = :new_tmpl WHERE `id` = :id;");
     $update_tmpl->bindValue(':id', $id, PDO::PARAM_INT);
@@ -39,7 +42,8 @@ function update_tmpl_by_id($id, $new_tmpl) {
 }
 
 
-function update_prnt_by_id($id, $new_prnt) {
+function update_prnt_by_id($pdo, $id, $new_prnt) {
+    $response = "";
     // проверка существования и мб типа родителя (хотя тип может быть любым)
     $update_prnt = $pdo->prepare("UPDATE `pages` SET `parent` = :post_new_prnt WHERE `id` = :id;");
     $update_prnt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -51,7 +55,8 @@ function update_prnt_by_id($id, $new_prnt) {
 }
 
 
-function update_publ_by_id($id, $new_publ) {
+function update_publ_by_id($pdo, $id, $new_publ) {
+    $response = "";
     $update_publ = $pdo->prepare("UPDATE `pages` SET `public_flag` = :post_new_publ WHERE `id` = :id;");
     $update_publ->bindValue(':id', $id, PDO::PARAM_INT);
     $update_publ->bindValue(':post_new_publ', $new_publ, PDO::PARAM_INT);
@@ -62,7 +67,8 @@ function update_publ_by_id($id, $new_publ) {
 }
 
 
-function update_link_by_id($id, $new_link) {
+function update_link_by_id($pdo, $id, $new_link) {
+    $response = "";
     // проверка занятости адреса
     $update_link = $pdo->prepare("UPDATE `pages` SET `link` = :new_link WHERE `id` = :id;");
     $update_link->bindValue(':id', $id, PDO::PARAM_INT);
@@ -73,7 +79,8 @@ function update_link_by_id($id, $new_link) {
 }
 
 
-function drop_page_by_id($id) {
+function drop_page_by_id($pdo, $id) {
+    $response = "";
     $page_by_id = $pdo->prepare("DELETE FROM `pages` WHERE `id` = :id;");
     $page_by_id->bindValue(':id', $id, PDO::PARAM_STR);
     $page_by_id->execute();
@@ -84,7 +91,8 @@ function drop_page_by_id($id) {
 }
 
 
-function drop_page_by_link($link) {
+function drop_page_by_link($pdo, $link) {
+    $response = "";
     $page_by_link = $pdo->prepare("DELETE FROM `pages` WHERE `link` = :link;");
     $page_by_link->bindValue(':link', $link, PDO::PARAM_STR);
     $page_by_link->execute();
@@ -95,7 +103,8 @@ function drop_page_by_link($link) {
 }
 
 
-function create_page($p_name, $p_link, $p_tmpl, $p_prnt) {
+function create_page($pdo, $p_name, $p_link, $p_tmpl, $p_prnt) {
+    $response = "";
     $new_page = $pdo->prepare("INSERT INTO `pages` (parent, name, template, link) VALUES (:parent, :name, :template, :link);");
     $new_page->bindValue(':parent', $p_prnt, PDO::PARAM_INT);
     $new_page->bindValue(':name', $p_name, PDO::PARAM_STR);
@@ -110,65 +119,35 @@ function create_page($p_name, $p_link, $p_tmpl, $p_prnt) {
 }
 
 
-function get_id_by_link($link) {
+function get_page_id_by_link($pdo, $link) {
     $page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :link;");
     $page_by_link->bindValue(':link', $link, PDO::PARAM_STR);
     $page_by_link->execute();
-    $count_pages = $page_by_link->rowCount();
-
-    $response = "";
-    $id = -1;
-
-    switch($count_pages) {
-        default:
-            $response .= "<p>ERROR 13: $count_pages pages have been returned for this request, but there must be one.</p>";
-            break;
-        case '0':
-            $response .= "<p>ERROR 6: No pages were found in the database for this query.</p> ";
-            break;
-        case '1':
-            $id = $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'];
-            break;
-    }
-    echo($response);
-    return $id;
+    return $page_by_link;
 }
 
 
 if ( ! isset($_GET['act']) ) echo "<p>ERROR 22: Incorrect request.</p>"; 
 else {
 
-    $p_id = NULL;
-    $p_link = substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 1);
-    $p_text = NULL;
-    $p_name = NULL;
-    $p_tmpl = NULL;
-    $p_prnt = NULL;
+    // https://fortress-design.com/php-if-compact-syntax/
+    $p_id = isset($_POST['id']) ? $_POST['id'] : NULL;
+    $p_link = isset($_POST['link']) ? $_POST['link'] : substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 2);
+    $p_name = isset($_POST['name']) ? $_POST['name'] : NULL;
+    $p_prnt = isset($_POST['prnt']) ? $_POST['prnt'] : NULL;
+    $p_tmpl = isset($_POST['tmpl']) ? $_POST['tmpl'] : NULL;
+    $p_priv = isset($_POST['priv']) ? $_POST['priv'] : NULL;
 
-    $new_p_text = NULL;
-    $new_p_name = NULL;
-    $new_p_tmpl = NULL;
-    $new_p_prnt = NULL;
-
-    if ( count($_POST) > 0 ) {
-        // https://fortress-design.com/php-if-compact-syntax/
-        // min = (а < b ? a : b);
-        if ( isset($_POST['id']) ) { $p_id = $_POST['id']; }
-        if ( isset($_POST['link']) ) { $p_link = $_POST['link']; }
-        if ( isset($_POST['name']) ) { $p_name = $_POST['name']; }
-        if ( isset($_POST['prnt']) ) { $p_prnt = $_POST['prnt']; }
-        if ( isset($_POST['tmpl']) ) { $p_tmpl = $_POST['tmpl']; }
-        if ( isset($_POST['priv']) ) { $p_priv = $_POST['priv']; }
-
-        if ( isset($_POST['new_link']) ) { $new_p_link = $_POST['new_link']; }
-        if ( isset($_POST['new_name']) ) { $new_p_name = $_POST['new_name']; }
-        if ( isset($_POST['new_text']) ) { $new_p_text = $_POST['new_text']; }
-        if ( isset($_POST['new_tmpl']) ) { $new_p_tmpl = $_POST['new_tmpl']; }
-        if ( isset($_POST['new_prnt']) ) { $new_p_prnt = $_POST['new_prnt']; }
-        if ( isset($_POST['new_publ']) ) { $new_p_publ = $_POST['new_publ']; }
-    }
+    $new_p_link = isset($_POST['new_link']) ? $_POST['new_link'] : NULL;
+    $new_p_name = isset($_POST['new_name']) ? $_POST['new_name'] : NULL;
+    $new_p_text = isset($_POST['new_text']) ? $_POST['new_text'] : NULL;
+    $new_p_tmpl = isset($_POST['new_tmpl']) ? $_POST['new_tmpl'] : NULL;
+    $new_p_prnt = isset($_POST['new_prnt']) ? $_POST['new_prnt'] : NULL;
+    $new_p_publ = isset($_POST['new_publ']) ? $_POST['new_publ'] : NULL;
 
     $response = NULL;
+    if ($DEBUG) $response .= $p_link;
+    if (count($_POST) > 0 && $DEBUG) $response .= serialize($_POST);
 
     if ( ! $admin_flag ) { $response .= "<p>ERROR 21! Only administators can remove pages.</p>"; }
     else {
@@ -176,13 +155,8 @@ else {
             case "new":
                 if ( isset($p_name) && isset($p_prnt) && isset($p_tmpl) && isset($p_priv) )
                 {
-
-
-                    $page_by_link = $pdo->prepare("SELECT id FROM pages WHERE link = :link;");
-                    $page_by_link->bindValue(':link', $p_link, PDO::PARAM_STR);
-                    $page_by_link->execute();
+                    $page_by_link = get_page_id_by_link($pdo, $p_link);
                     $count_pages = $page_by_link->rowCount();
-
                     switch($count_pages) {
                         default:
                             $response .= "<p>ERROR 18: $count_pages pages have been returned for this request, but there must be zero.</p>";
@@ -200,22 +174,33 @@ else {
                 break;
             case "update":
                 if ( isset($p_link) ) {
-                    $id = get_id_by_link($p_link);
-
-                    if (isset($new_p_name)) update_name_by_id($id, $new_p_name);
-                    if (isset($new_p_text)) update_text_by_id($id, $new_p_text);
-                    if (isset($new_p_tmpl)) update_tmpl_by_id($id, $new_p_tmpl);
-                    if (isset($new_p_prnt)) update_prnt_by_id($id, $new_p_prnt);
-                    if (isset($new_p_publ)) update_publ_by_id($id, $new_p_publ);
-                    if (isset($new_p_link)) update_link_by_id($id, $new_p_link);            
+                    $page_by_link = get_page_id_by_link($pdo, $p_link);
+                    $count_pages = $page_by_link->rowCount();
+                    switch($count_pages) {
+                        default:
+                            $response .= "<p>ERROR 13: $count_pages pages have been returned for this request, but there must be one.</p>";
+                            break;
+                        case '0':
+                            $response .= "<p>ERROR 6: No pages were found in the database for this query.</p> ";
+                            break;
+                        case '1':
+                            $id = $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'];
+                            if (isset($new_p_name)) update_name_by_id($pdo, $id, $new_p_name);
+                            if (isset($new_p_text)) update_text_by_id($pdo, $id, $new_p_text);
+                            if (isset($new_p_tmpl)) update_tmpl_by_id($pdo, $id, $new_p_tmpl);
+                            if (isset($new_p_prnt)) update_prnt_by_id($pdo, $id, $new_p_prnt);
+                            if (isset($new_p_publ)) update_publ_by_id($pdo, $id, $new_p_publ);
+                            if (isset($new_p_link)) update_link_by_id($pdo, $id, $new_p_link);   
+                            break;     
+                    }
 
                 } else $response .= "<p>ERROR 14: The post request is not correct.</p>";
                 break;
             case "drop":
                 //echo "<p>Ошибка! Проверка можно ли удалить страницу.</p>";
 
-                if (isset($p_link)) $response .= drop_page_by_link($p_link);
-                else if (isset($p_id)) $response .= drop_page_by_id($p_id);
+                if (isset($p_link)) $response .= drop_page_by_link($pdo, $p_link);
+                else if (isset($p_id)) $response .= drop_page_by_id($pdo, $p_id);
                 else $response .= "<p>ERROR 3, 4: The post request is not correct.</p>";
                 break;
             default:
