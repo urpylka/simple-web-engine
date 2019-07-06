@@ -26,6 +26,11 @@ body {
     width: 100px;
 }
 
+#editor_area {
+    /* visibility: hidden; */
+    display: none;
+}
+
 #textarea1 {
     position: relative;
     display: block;
