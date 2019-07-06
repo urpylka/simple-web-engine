@@ -149,7 +149,7 @@ else {
     if ($DEBUG) $response .= $p_link;
     if (count($_POST) > 0 && $DEBUG) $response .= serialize($_POST);
 
-    if ( ! $admin_flag ) { $response .= "<p>ERROR 21! Only administators can remove pages.</p>"; }
+    if ( ! $admin_flag ) { $response .= "<p>ERROR 21: Only administators can remove pages.</p>"; }
     else {
         switch ($_GET['act']) {
             case "new":
