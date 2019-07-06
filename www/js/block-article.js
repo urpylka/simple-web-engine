@@ -5,7 +5,7 @@ function show_status(message) {
         document.getElementById("editor_status").style.display = 'block'; // показываем .loader
         setTimeout(function() {
             document.getElementById("editor_status").style.display = 'none'; // скрываем .loader
-        }, 4000); // зарежка перед скрытием в миллисекундах
+        }, 100000); // зарежка перед скрытием в миллисекундах
     }
     disappear();
 }
