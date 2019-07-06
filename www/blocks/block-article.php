@@ -1,13 +1,16 @@
 <?if ($admin_flag && ! $error_output){?>
 <table class="toolbox marg30">
     <tr>
-        <td width="160px">
+        <td>
             <input id="edit_button" type="submit" value="Change" onclick="open_textarea()" />
             <input id="save_button" type="submit" value="Save" onclick="update_text()" />
         </td>
-        <td width="80px" style="font-size:14px;">
+        <td id="page_public_flag_field_td">
             <input id="public_flag" type="checkbox" onchange="update_public_flag()" <? if(!$page_public) {echo("checked");}?>/>
-            Private
+            private
+        </td>
+        <td style="font-size:14px;">
+            <input size="3" step="1" value="<? echo($page_prnt);?>" type="number" id="page_prnt_field" onchange="update_prnt()"/>
         </td>
         <td width="90px">
             <select id="template" onchange="update_template()">
@@ -25,11 +28,11 @@
             ?>
             </select>
         </td>
-        <td width="160px" style="font-size:14px;">
-        <input value="<? echo($page_link);?>" type="text" id="page_link_field" onchange="update_link()"/>
+        <td style="font-size:14px;">
+            <input value="<? echo($page_link);?>" type="text" id="page_link_field" onchange="update_link()"/>
         </td>
-        <td width="120px">
-            <input id="delete_button" type="submit" value="Delete" onclick="delete_page()" />
+        <td>
+            <input width="90px" id="delete_button" type="submit" value="Delete" onclick="delete_page()" />
         </td>
         <td width="350px">
             <div id="editor_status" style="font-size:14px;"></div>

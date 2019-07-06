@@ -103,6 +103,13 @@ async function update_link() {
 };
 
 
+function update_prnt() {
+    prnt = document.getElementById('page_prnt_field').value;
+    send_request("redactor?act=update", "new_prnt="+encodeURIComponent(prnt), show_status);
+    return false;
+};
+
+
 function update_text() {
     // https://realadmin.ru/coding/url-javascript.html
     send_request("redactor?act=update", "new_text="+encodeURIComponent(document.getElementById('textarea1').value), show_status);
@@ -126,13 +133,14 @@ async function delete_page() {
 
 function open_textarea() {
     if (document.getElementById("main_cont").getAttribute("style")!="display:none;") {
-        // Редактирование
+        // EDITOR
         document.getElementById('edit_button').value = "Cancel";
         document.getElementById("main_cont").setAttribute("style", "display:none;");
         document.getElementById("editor_area").setAttribute("style", "display:visible;");
+        document.getElementById("textarea1").focus();
         document.getElementById("save_button").removeAttribute('disabled');
     } else {
-        // Просмотр
+        // RESULT
         document.getElementById('edit_button').value = "Change";
         document.getElementById("main_cont").setAttribute("style", "display:visible;");
         document.getElementById("editor_area").setAttribute("style", "display:none;");

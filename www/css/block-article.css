@@ -23,12 +23,35 @@ body {
 }
 
 #edit_button {
-    width: 100px;
+    width: 80px;
+    margin-right: 5px;
+}
+
+#save_button {
+    width: 40px;
+}
+
+#page_public_flag_field_td {
+    width: 60px;
+    font-size:10px;
+}
+
+#public_flag {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#page_prnt_field {
+    width: 40px;
+}
+
+#page_link_field {
+    width: 180px;
 }
 
 #editor_area {
     /* visibility: hidden; */
-    display: none;
+    /* display: none; */
 }
 
 #textarea1 {
