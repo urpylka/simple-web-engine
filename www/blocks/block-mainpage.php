@@ -8,7 +8,7 @@ section.main-page { display: table; }
 	padding: 8px 70px 9px 20px;
 	margin: -46px 100px 10px 0px !important;
 	color: #fff;
-	background-color: #0097D3;
+	background-color: #252525;
 
 	text-transform: uppercase;
 	
