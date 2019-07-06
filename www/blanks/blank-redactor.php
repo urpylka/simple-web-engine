@@ -132,7 +132,7 @@ else {
 
     // https://fortress-design.com/php-if-compact-syntax/
     $p_id = isset($_POST['id']) ? $_POST['id'] : NULL;
-    $p_link = isset($_POST['link']) ? $_POST['link'] : substr(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), 2);
+    $p_link = isset($_POST['link']) ? $_POST['link'] : ltrim(parse_url($_SERVER['HTTP_REFERER'], PHP_URL_PATH), '/');
     $p_name = isset($_POST['name']) ? $_POST['name'] : NULL;
     $p_prnt = isset($_POST['prnt']) ? $_POST['prnt'] : NULL;
     $p_tmpl = isset($_POST['tmpl']) ? $_POST['tmpl'] : NULL;
