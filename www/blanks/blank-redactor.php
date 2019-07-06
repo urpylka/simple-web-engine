@@ -127,7 +127,7 @@ function get_page_id_by_link($pdo, $link) {
 }
 
 
-if ( ! isset($_GET['act']) ) echo "<p>ERROR 22: Incorrect request.</p>"; 
+if ( ! isset($_GET['act']) ) echo("<p>ERROR 22: Incorrect request.</p>"); 
 else {
 
     // https://fortress-design.com/php-if-compact-syntax/
@@ -185,12 +185,12 @@ else {
                             break;
                         case '1':
                             $id = $page_by_link->FETCH(PDO::FETCH_ASSOC)['id'];
-                            if (isset($new_p_name)) update_name_by_id($pdo, $id, $new_p_name);
-                            if (isset($new_p_text)) update_text_by_id($pdo, $id, $new_p_text);
-                            if (isset($new_p_tmpl)) update_tmpl_by_id($pdo, $id, $new_p_tmpl);
-                            if (isset($new_p_prnt)) update_prnt_by_id($pdo, $id, $new_p_prnt);
-                            if (isset($new_p_publ)) update_publ_by_id($pdo, $id, $new_p_publ);
-                            if (isset($new_p_link)) update_link_by_id($pdo, $id, $new_p_link);   
+                            if (isset($new_p_name)) $response .= update_name_by_id($pdo, $id, $new_p_name);
+                            if (isset($new_p_text)) $response .= update_text_by_id($pdo, $id, $new_p_text);
+                            if (isset($new_p_tmpl)) $response .= update_tmpl_by_id($pdo, $id, $new_p_tmpl);
+                            if (isset($new_p_prnt)) $response .= update_prnt_by_id($pdo, $id, $new_p_prnt);
+                            if (isset($new_p_publ)) $response .= update_publ_by_id($pdo, $id, $new_p_publ);
+                            if (isset($new_p_link)) $response .= update_link_by_id($pdo, $id, $new_p_link);   
                             break;     
                     }
 
