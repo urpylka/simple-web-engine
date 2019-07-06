@@ -4,6 +4,9 @@
 		<meta charset="utf-8">
 		<title><?=$site_name?></title>
 		<link rel="stylesheet" href="css/style.css" />
+		<script type="text/javascript" src="js/block-article.js"></script>
+		<script type="text/javascript" src="mooeditable/Demos/assets/mootools.js"></script>
+
 	</head>
 	<body>
 		<header>

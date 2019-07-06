@@ -20,6 +20,9 @@ body {
     font-size: 12px !important;
     color: green;
     float: left;
+    margin-left: 10px;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 #edit_button {
@@ -42,11 +45,12 @@ body {
 }
 
 #page_prnt_field {
+    font-size:12px;
     width: 40px;
 }
 
 #page_link_field {
-    width: 180px;
+    width: 170px;
 }
 
 #editor_area {
