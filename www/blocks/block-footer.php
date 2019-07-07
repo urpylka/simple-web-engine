@@ -13,8 +13,9 @@
     <div class="colft2">
         <div class="name">Быстрый доступ</div>
         <ul class="menuft">
-            <li><a href="/login">Авторизация</a></li>
+            <li><a href="/new-page">Добавить страницу</a></li>
             <li><a href="/editor">Редактор</a></li>
+            <li><a href="/login">Авторизация</a></li>
             <li><a href="/primitives">Примитивы</a></li>
         </ul>
     </div>

@@ -31,15 +31,15 @@
 	margin-left: 330px;
 	padding: 12px;
 
-	color: #FFF;
-	font-weight: 400;
+	color: #555;
+	font-weight: 600;
 
-	/* background-color: #0097D3; */
-	background-color: #888;
+	border: 1px solid #555;
+	border-radius: 5px;
+	text-decoration: none;
 }
 
 .page_preview a:hover {
-	/* background-color: #21ABDC; */
-	background-color: #d7d7d7;
-	color: #FFF;
+	background-color: #555;
+	color: #fff;
 }

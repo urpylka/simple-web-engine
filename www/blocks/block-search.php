@@ -16,7 +16,7 @@
 	line-height: 30px;
 	padding: 6px 0 4px 10px;
 
-	border: 6px solid #401078;
+	border: 6px solid #252525;
 	border-radius: 6px;
 	-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
@@ -30,11 +30,6 @@
 }
 
 #search input[type="text"]:focus {
-	border: 5px solid #401078;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-khtml-border-radius: 5px;
 }
 
 </style>

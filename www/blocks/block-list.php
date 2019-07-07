@@ -8,7 +8,7 @@ function show_page_as_item($_p_name, $_p_img, $_p_desc, $_p_link) {
 	<div class="page_preview">
 		<img src="<?=$_p_img?>" />
 		<p><?=$_p_desc?></p>
-		<a href="<?=$_p_link?>">Подробнее</a>
+		<a href="<?=$_p_link?>">подробнее</a>
 	</div>
 </div> <?
 }
