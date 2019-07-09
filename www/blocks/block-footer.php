@@ -17,6 +17,7 @@
             <li><a href="/editor">Редактор</a></li>
             <li><a href="/login">Авторизация</a></li>
             <li><a href="/primitives">Примитивы</a></li>
+            <li><a href="/engine">Движок</a></li>
         </ul>
     </div>
     <div class="colftbig">
