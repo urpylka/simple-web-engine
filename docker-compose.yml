@@ -71,7 +71,7 @@ services:
 #            - db
 
 # throw ports needs for outside apps
-# like nginx-reverse-proxy (if it don't use that network)
+# like nginx-reverse-proxy (if it don't use network below)
 # or like Sequel Pro (db manager)
 
 networks:
