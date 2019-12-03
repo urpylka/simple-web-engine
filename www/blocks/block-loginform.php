@@ -11,7 +11,7 @@
 				<input type="password" name="password" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
 				<input type="submit" value="Войти" />
 			</form>
-			
+
 			<div>Регистрация</div>
 			<form method="post" action="login?act=register">
 				<input type="text" name="login" value="" onclick="if(this.value=='')this.value='';" onblur="if(this.value=='')this.value='';" />
@@ -32,7 +32,7 @@
 		if ( isset($_GET['act']) ) {
 			switch ($_GET['act']) {
 				case "change":
-					// if(!isset($_GET['op'])) { 
+					// if(!isset($_GET['op'])) {
 					//   <div id="workzone">
 					// 	<div class="corner tl"></div>
 					// 	<div class="corner tr"></div>
@@ -47,45 +47,44 @@
 					//   </div>
 					//
 					// }
-					
+
 					// #обработка изменения пароля
 					// if($_GET['op'] == 'new'){
 					// 		// если введены логин и пароль и они совпадают
-					// 	if($_POST['old_pass'] == $_SESSION['password'])  
-					// 	{      
-					// 		//  обновляем БД  
-					// 		$query = mysql_query("  
+					// 	if($_POST['old_pass'] == $_SESSION['password'])
+					// 	{
+					// 		//  обновляем БД
+					// 		$query = mysql_query("
 					// 		UPDATE admin
-					// 		SET login = '".$_POST['login']."',   
+					// 		SET login = '".$_POST['login']."',
 					// 		password = '".md5($_POST['new_pass'])."'
-					// 		");  
-					// 		// если успешно, то...  
-					// 		if ($query) {echo "<center><strong> 
+					// 		");
+					// 		// если успешно, то...
+					// 		if ($query) {echo "<center><strong>
 					// 		Обновление данных успешно завершено</strong></center>";}
-					// 		else { echo "<center><strong> 
+					// 		else { echo "<center><strong>
 					// 		Не удалось обновить данные</strong></center>";}
-					// 		unset ($_SESSION['login'],$_SESSION['password']);// удаляем 
-					// 		$login = $_POST['login']; 
-					// 		$password = $_POST['new_pass']; 
-					// 		session_register("login"); 
-					// 		session_register("password"); 
-						
+					// 		unset ($_SESSION['login'],$_SESSION['password']);// удаляем
+					// 		$login = $_POST['login'];
+					// 		$password = $_POST['new_pass'];
+					// 		session_register("login");
+					// 		session_register("password");
+
 					// 	}
 					// 	else {echo "<center><strong>Старый пароль введен неверно</strong></center>";}
 					// }
 				case "logout":
 
 
-					// if(@$_GET['action'] == "logout") // если в адресной строке переменная action равна "logout" 
-					// {                                             
+					// if(@$_GET['action'] == "logout") // если в адресной строке переменная action равна "logout"
+					// {
 					// 	if(isset($_SESSION['login']) && isset($_SESSION['password'])) // если существуют сессионные переменные login и password 
-					// 	{ 
-					// 		session_unregister("login"); // удаляем 
-					// 		session_unregister("password"); // удаляем 
-					// 		unset ($_SESSION['login'],$_SESSION['password']);// удаляем 
+					// 	{
+					// 		session_unregister("login"); // удаляем
+					// 		session_unregister("password"); // удаляем
+					// 		unset ($_SESSION['login'],$_SESSION['password']);// удаляем
 					// 		session_destroy();// убиваем сессию
-							
-					// 	} 
+					// 	}
 					// }
 
 
@@ -112,12 +111,12 @@
 							// получить (по логину) pbkdf2 правило для проверки пароля по хешу
 							// https://docs.djangoproject.com/en/2.1/topics/auth/passwords/
 							// http://php.net/manual/en/function.hash-pbkdf2.php
-		
+
 							$pbkdf2_by_login = $pdo->prepare("SELECT `users`.`pbkdf2` FROM `users` WHERE `users`.`login` = :login;");
 							$pbkdf2_by_login->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 							$pbkdf2_by_login->execute();
 							$count_pbkdf2 = $pbkdf2_by_login->rowCount();
-		
+
 							switch($count_pbkdf2) {
 								case '0':
 								echo "<div>Вы ввели неправильный логин или пароль!</div>";
@@ -174,7 +173,7 @@
 								$hash = hash_pbkdf2("sha256", $password, $salt, $iterations, 20);
 								// <algorithm>$<iterations>$<salt>$<hash>
 								$pbkdf2 = "sha256\$".$iterations."\$".$salt."\$".$hash;
-								
+
 								$user_add = $pdo->prepare("INSERT INTO `users` (`login`,`pbkdf2`) VALUES (:login, :pbkdf2);");
 								$user_add->bindValue(':login', $_POST['login'], PDO::PARAM_STR);
 								$user_add->bindValue(':pbkdf2', $pbkdf2, PDO::PARAM_STR);
@@ -192,7 +191,6 @@
 					echo "<p>Ошибка - ты чего хочешь?</p>";
 					break;
 			}
-			
 		}
 		else {
 			if ( isset($login) ) { view_login(); }

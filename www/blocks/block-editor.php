@@ -50,8 +50,8 @@
 						<div id="editor_status" style="font-size:14px;"></div>
 					</td>
 				</tr>
-			</table>	
-			<br>	
+			</table>
+			<br>
 			<br>
 			<div>
 				<b>Функционал не полностью введен в эксплуатацию!</b>
@@ -94,13 +94,13 @@
 
 			<?
 			#выводим страницы каталога
-			
+
 			function view_pages($list, $level, $list_tmpl) {
 
 				// level2 = "&nbsp;&nbsp;&rarr;&nbsp;";
 				// level3 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;&nbsp;";
 				// level4 = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr;&nbsp;";
-	
+
 				?>
 				<script>$("td.name").dblclick(function() {alert("fadasf")});</script>
 				<tr>
@@ -127,7 +127,6 @@
 					<td class="tmpl">
 						<select id="template" onchange="update_template()">
 						<?
-						
 						foreach ($list_tmpl as $tmpl) {
 							if ($tmpl['id'] == $list['template']) {
 								echo("<option value=\"".$tmpl['id']."\" selected>".$tmpl['name']."</option>");

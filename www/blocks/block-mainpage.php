@@ -11,7 +11,7 @@ section.main-page { display: table; }
 	background-color: #252525;
 
 	text-transform: uppercase;
-	
+
 	text-shadow: 0px 1px 2px #000;
 	-webkit-box-shadow: 0px 2px 4px #888;
 	-moz-box-shadow: 0px 2px 4px #888;

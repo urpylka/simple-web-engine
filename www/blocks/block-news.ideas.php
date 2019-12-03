@@ -55,8 +55,8 @@ elseif($_GET['op'] == 'addform') { ?>
 
 #обработка добавления новости
 elseif($_GET['op'] == 'addpage'){
-        $add = mysql_query("  
-        INSERT news  
+        $add = mysql_query("
+        INSERT news
         SET date = '".$_POST['date']."',
         text = '".$_POST['text']."'
         ");
@@ -81,7 +81,7 @@ elseif($_GET['op'] == 'del'){
 
 #обработка редактирования новости
 elseif($_GET['op'] == 'editpage'){
-        $edit = mysql_query("  
+        $edit = mysql_query("
         UPDATE news
         SET date = '".$_POST['date']."',
         text = '".$_POST['text']."'
@@ -96,7 +96,7 @@ elseif($_GET['op'] == 'editpage'){
 }
 
 #редактирование новости
-elseif($_GET['op'] == 'editform'){ 
+elseif($_GET['op'] == 'editform'){
 $news = mysql_query("SELECT * FROM news WHERE id = '".$_GET['id']."'");
 $list_news = mysql_fetch_assoc($news); ?>
   <div id="workzone">
