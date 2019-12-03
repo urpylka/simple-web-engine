@@ -119,7 +119,7 @@
 					</td>
 					<td class="link">
 						<p>
-							<a href="http://<?echo $_SERVER['HTTP_HOST'];?>/<?echo $list['link'];?>">
+							<a href="/<?echo $list['link'];?>">
 								<?echo $list['link'];?>
 							</a>
 						</p>
