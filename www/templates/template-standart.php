@@ -3,10 +3,10 @@
 	<head>
 		<meta charset="utf-8">
 		<title><?=$site_name?> - <?=$page_title?></title>
-		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="/css/style.css" />
 
-		<script type="text/javascript" src="js/block-article.js"></script>
-		<script type="text/javascript" src="mooeditable/Demos/assets/mootools.js"></script>
+		<script type="text/javascript" src="/js/block-article.js"></script>
+		<script type="text/javascript" src="/mooeditable/Demos/assets/mootools.js"></script>
 
 		<!-- <script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.js"></script>
 		<script type="text/javascript" src="mooeditable/Source/MooEditable/MooEditable.UI.MenuList.js"></script>
