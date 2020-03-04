@@ -15,7 +15,7 @@
 		<!-- <link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.css">
 		<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.Extras.css">
 		<link rel="stylesheet" type="text/css" href="mooeditable/Assets/MooEditable/MooEditable.SilkTheme.css"> -->
-		
+
 		<!-- <script src='http://localhost/jquery-3.3.1.min.js'></script> -->
 
 	</head>

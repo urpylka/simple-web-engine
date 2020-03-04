@@ -23,7 +23,8 @@
 модули вызываемые самостоятельно, либо через шаблон template_blank.php
 
 - blank-phpinfo.php - выводит результат функции phpinfo()
-- blank-redactor.php - API построенное на AJAX для редактирования страниц
+- blank-page-api.php - API построенное на AJAX для редактирования страниц
+- blank-user-api.php - API построенное на AJAX для работы с пользователями
 
 ### block-*
 
