@@ -7,7 +7,7 @@ services:
         volumes:
             - ./nginx.conf:/etc/nginx/conf.d/nginx.conf
             - ./www:/var/www
-            - ./tmp/logs:/var/log/nginx
+            - ./temp/logs:/var/log/nginx
         ports:
             - ${WEB_EXT_PORT}:80
         # links:
@@ -40,7 +40,7 @@ services:
         image: mariadb:latest
         restart: always
         volumes:
-            - ./tmp/mysql:/var/lib/mysql
+            - ./temp/mysql:/var/lib/mysql
         ports:
             - ${DB_EXT_PORT}:3306
         environment:
