@@ -10,28 +10,17 @@ services:
             - ./temp/logs:/var/log/nginx
         ports:
             - ${WEB_EXT_PORT}:80
-        # links:
-        #     - php
-        environment:
-            VIRTUAL_HOST: ${WEB_VIRTUAL_HOST}
-            VIRTUAL_PORT: ${WEB_VIRTUAL_PORT}
-            LETSENCRYPT_HOST: ${WEB_LETSENCRYPT_HOST}
-            LETSENCRYPT_EMAIL: ${WEB_LETSENCRYPT_EMAIL}
-
     php:
         build: ./php-fpm
         restart: always
         volumes:
             - ./www:/var/www
-        # links:
-        #     - db
         environment:
             SITE_NAME: ${SITE_NAME}
             SITE_URL: ${SITE_URL}
             SITE_DEBUG: ${SITE_DEBUG}
-
-            DB_HOST: ${DB_HOST}
-            DB_PORT: ${DB_PORT}
+            DB_HOST: db
+            DB_PORT: 3306
             DB_USER_LOGIN: ${DB_USER_LOGIN}
             DB_USER_PASSWD: ${DB_USER_PASSWD}
             DB_NAME: ${DB_NAME}
@@ -48,33 +37,13 @@ services:
             MYSQL_USER: ${DB_USER_LOGIN}
             MYSQL_PASSWORD: ${DB_USER_PASSWD}
             MYSQL_DATABASE: ${DB_NAME}
-
     pma:
         image: phpmyadmin/phpmyadmin:latest
         restart: always
         ports:
             - ${PMA_EXT_PORT}:80
         environment:
-            MYSQL_DB_SERVER: ${DB_HOST}
+            MYSQL_DB_SERVER: db
             MYSQL_USER: ${DB_USER_LOGIN}
             MYSQL_PASSWORD: ${DB_USER_PASSWD}
             MYSQL_DATABASE: ${DB_NAME}
-
-            VIRTUAL_HOST: ${PMA_VIRTUAL_HOST}
-            VIRTUAL_PORT: ${PMA_VIRTUAL_PORT}
-            LETSENCRYPT_HOST: ${PMA_LETSENCRYPT_HOST}
-            LETSENCRYPT_EMAIL: ${PMA_LETSENCRYPT_EMAIL}
-
-# not needed because automatically creating network
-# beatween web, db, phpmyadmin
-#        links:
-#            - db
-
-# throw ports needs for outside apps
-# like nginx-reverse-proxy (if it don't use network below)
-# or like Sequel Pro (db manager)
-
-networks:
-    default:
-        external:
-            name: ${NETWORK:-webproxy}
