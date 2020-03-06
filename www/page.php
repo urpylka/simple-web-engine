@@ -3,8 +3,10 @@ error_reporting(E_ALL);
 session_start();
 header('Content-Type: text/html; charset=utf-8');
 
-// SITE CONFIGS
+// Нужно сделать станицу первого запуска, которая работает без подлючения к БД
+// Сюда же сделать страницу бекапа
 
+// SITE CONFIGS
 $site_url = $_ENV["SITE_URL"];
 $site_name = $_ENV["SITE_NAME"];
 
