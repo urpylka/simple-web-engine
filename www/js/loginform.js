@@ -12,7 +12,7 @@ var LoginModalController = {
     activeTab: null,
     tabSelection: 0, // 0 - first, 1 - second
 
-    findElements: function () {
+    findElements: function() {
         var base = this;
         base.tabsElement = $(base.tabsElementName);
         base.tabElement = $(base.tabElementName);
@@ -21,7 +21,7 @@ var LoginModalController = {
         return base;
     },
 
-    setState: function (state) {
+    setState: function(state) {
         var base = this,
             elem = null;
 
@@ -38,10 +38,10 @@ var LoginModalController = {
         return base;
     },
 
-    getActiveTab: function () {
+    getActiveTab: function() {
         var base = this;
 
-        base.tabsElement.each(function (i, el) {
+        base.tabsElement.each(function(i, el) {
             if ($(el).hasClass("current")) {
                 base.activeTab = $(el);
             }
@@ -50,10 +50,10 @@ var LoginModalController = {
         return base;
     },
 
-    addClickEvents: function () {
+    addClickEvents: function() {
         var base = this;
 
-        base.hidePassword.on("click", function (e) {
+        base.hidePassword.on("click", function(e) {
             var $this = $(this),
                 $pwInput = $this.prev("input");
 
@@ -66,7 +66,7 @@ var LoginModalController = {
             }
         });
 
-        base.tabsElement.on("click", function (e) {
+        base.tabsElement.on("click", function(e) {
             var targetTab = $(this).attr("data-tabtar");
 
             e.preventDefault();
@@ -74,7 +74,7 @@ var LoginModalController = {
             base.activeTab = $(this);
             base.activeTab.addClass("current");
 
-            base.tabElement.each(function (i, el) {
+            base.tabElement.each(function(i, el) {
                 el = $(el);
                 el.removeClass("show");
                 if (el.hasClass(targetTab)) {
@@ -83,16 +83,16 @@ var LoginModalController = {
             });
         });
 
-        base.inputElements.find("label").on("click", function (e) {
+        base.inputElements.find("label").on("click", function(e) {
             var $this = $(this),
-            $input = $this.next("input");
+                $input = $this.next("input");
             $input.focus();
         });
 
         return base;
     },
 
-    initialize: function () {
+    initialize: function() {
         var base = this;
         base.findElements().setState().getActiveTab().addClickEvents();
     }
