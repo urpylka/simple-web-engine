@@ -190,7 +190,7 @@ function popup(state) {
 	</ul> -->
 
 	<ul id="navbar">
-		<li><a href="#" onclick="popup('block')">Войти</a></li>
+		<li><a href="#" onclick="popup('block')">Login / Sign up</a></li>
 		<? /*
 			$list_menu = $pdo->query("SELECT `pages`.`name`,`pages`.`link` FROM `pages`,`top_menu` WHERE `pages`.`id` = `top_menu`.`page_id` ORDER BY `top_menu`.`queue` ASC;");
 			foreach ($list_menu as $option) echo "<li><a href=\"".$option['link']."\">".$option['name']."</a></li>";
