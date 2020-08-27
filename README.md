@@ -20,96 +20,38 @@
 
 ### blank-*
 
-модули вызываемые самостоятельно, либо через шаблон template_blank.php
+модули вызываемые самостоятельно, либо через шаблон `template_blank.php`
 
-- blank-phpinfo.php - выводит результат функции phpinfo()
-- blank-page-api.php - API построенное на AJAX для редактирования страниц
-- blank-user-api.php - API построенное на AJAX для работы с пользователями
+- `blank-phpinfo.php` - выводит результат функции `phpinfo()`
+- `blank-page-api.php` - API построенное на AJAX для редактирования страниц
+- `blank-user-api.php` - API построенное на AJAX для работы с пользователями
 
 ### block-*
 
-модули встраиваемые в шаблон сайта в <header>, <main> или <footer>, встраивается между другими такими блоками в любом порядке
+модули встраиваемые в шаблон сайта в `<header>`, `<main>` или `<footer>`, встраивается между другими такими блоками в любом порядке
 
-- block-promo.php - блок с бендером
-- block-quickmenu.php - три кнопки (быстрый доступ)
-- block-sitemap.php - используется в editor для отображения структуры сайта второго уровня
-- block-yandexmap.php - используется в contacts
-- block-editor.ideas.php
-- block-editor.php
-- block-login_form.php
-- block-main.php
-- block-article.php - редактор и отображение новости в шаблоне template_standart и template_contacts
-- block-news.ideas.php
-- block-news.php
-- block-navbar.php
+- `block-promo.php` - блок с бендером
+- `block-quickmenu.php` - три кнопки (быстрый доступ)
+- `block-sitemap.php` - используется в editor для отображения структуры сайта второго уровня
+- `block-yandexmap.php` - используется в contacts
+- `block-editor.ideas.php`
+- `block-editor.php`
+- `block-login_form.php`
+- `block-main.php`
+- `block-article.php` - редактор и отображение новости в шаблоне `template_standart` и `template_contacts`
+- `block-news.ideas.php`
+- `block-news.php`
+- `block-navbar.php`
 
 ### template-*
 
 шаблон, имеет ряд переменных определяющих его
 
-- template_blank.php
-- template_block.php
-- template_contacts.php
-- template_main.php
-- template_standart.php
-
-## TODO
-
-* По ходу `page.php` не обрабатывает прямые запросы на `some.php`
-* Обезличить (удалить все внешние ссылки, изображения)
-* Создать скрипт для простого развертывания
-* Необходим класс для работы со страницей
-* Семантическая проблема движок работает только на новости или вообще на все страницы?
-* При уменьшении размера страницы quickmenu вылезает за границы
-* Qr код внизу справа
-* Шаблоны перевести на функции
-* Codeinteger
-  * https://ru.wikipedia.org/wiki/CodeIgniter
-  * https://ru.wikipedia.org/wiki/Model-View-Controller
-  * http://codeigniter3.info
-  * http://codeigniter3.info/guide/overview/at_a_glance
-* Drupal
-  * https://habrahabr.ru/post/103600/
-  * https://ru.wikipedia.org/wiki/Content_Management_Framework
-  * https://ru.wikipedia.org/wiki/Drupal
-* Изменение производится на сервере, потом производится рендер в статику (кешируются) - средства сборки
-* Умное логирование и сессирование =D тех кто заходит ip, размер экрана, откуда и тд
-* min js
-* Доделать меню
-* Отключение доступа если у тебя говнобраузер
-* Свой обработчик ошибок
-* Усовершенствовать права доступа
-* Апач смотрит конфиги от рута
-
-# Docker LAMP
-
-Linux + Apache + MariaDB (MySQL) + PHP 7.2 on Docker Compose. Mod_rewrite enabled by default.
-
-## Instructions
-
-Enter the following command to start your containers:
-
-```bash
-sudo docker-compose up -d
-```
-
-To stop them, use this:
-
-```bash
-sudo docker-compose stop
-```
-
-To view logs, use them:
-
-```bash
-sudo docker-compose logs -f -t
-```
-
-Feel free to make pull requests and help to improve this.
-
-If you are looking for phpMyAdmin, take a look at [this](https://github.com/celsocelante/docker-lamp/issues/2).
-
-___
+- `template_blank.php`
+- `template_block.php`
+- `template_contacts.php`
+- `template_main.php`
+- `template_standart.php`
 
 Проверка доступа:
 
@@ -119,7 +61,7 @@ ___
 Авторизация:
 
 1. Если сессия не авторизована
-2. Присваиваем сессии user_id
+2. Присваиваем сессии `user_id`
 
 Выход:
 
