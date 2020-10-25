@@ -1,4 +1,6 @@
-from flask import Flask
+#! /usr/bin/env python3
+
+from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api, Resource, reqparse
 
@@ -46,17 +48,22 @@ class PostsModel(db.Model):
     created_at = db.Column(db.String(50))
     author = db.Column(db.Integer(), db.ForeignKey('users.id'))
 
-class User(Resource):
+class Users(Resource):
     def get(self, id=0):
         try:
             if id == 0:
-                return UsersModel.query.all(), 200
+                data = UsersModel.query.all()
+                print(data)
+                return jsonify(data), 200
             else:
-                return UsersModel.query.filter_by(id = id).first(), 200
+                data = UsersModel.query.filter_by(id = id).first()
+                return jsonify(data), 200
         except:
-            return "Quote not found", 404
+            # нужно сделать проверку на наличие id
+            data = {"message":"ID does not exist"}
+            return jsonify(data), 404
 
-    def post(self, id):
+    def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("name")
         parser.add_argument("email")
