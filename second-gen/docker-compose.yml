@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+    web:
+        image: nginx:1.17.9
+        restart: always
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./www:/var/www
+            - ./temp/logs:/var/log/nginx
+        ports:
+            - ${WEB_EXT_PORT}:80
+    # php:
+    #     build: ./php-fpm
+    #     restart: always
+    #     volumes:
+    #         - ./www:/var/www
+    #     environment:
+    #         SITE_NAME: ${SITE_NAME}
+    #         SITE_URL: ${SITE_URL}
+    #         SITE_DEBUG: ${SITE_DEBUG}
+    #         DB_HOST: db
+    #         DB_PORT: 3306
+    #         DB_USER_LOGIN: ${DB_USER_LOGIN}
+    #         DB_USER_PASSWD: ${DB_USER_PASSWD}
+    #         DB_NAME: ${DB_NAME}
+    #         DB_BACKUP_FILE: ${DB_BACKUP_FILE}
+    db:
+        image: mariadb:latest
+        restart: always
+        volumes:
+            - ./temp/mysql:/var/lib/mysql
+        ports:
+            - ${DB_EXT_PORT}:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWD}
+            MYSQL_USER: ${DB_USER_LOGIN}
+            MYSQL_PASSWORD: ${DB_USER_PASSWD}
+            MYSQL_DATABASE: ${DB_NAME}
+    pma:
+        image: phpmyadmin/phpmyadmin:latest
+        restart: always
+        ports:
+            - ${PMA_EXT_PORT}:80
+        environment:
+            MYSQL_DB_SERVER: db
+            MYSQL_USER: ${DB_USER_LOGIN}
+            MYSQL_PASSWORD: ${DB_USER_PASSWD}
+            MYSQL_DATABASE: ${DB_NAME}
