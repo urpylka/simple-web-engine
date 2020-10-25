@@ -1,3 +1,5 @@
 flask
 flask-restful
-gunicorn
+flask_sqlalchemy
+psycopg2-binary
+#gunicorn
