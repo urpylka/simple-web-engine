@@ -1,3 +1,5 @@
 .vscode
 .DS_Store
 /temp
+*.pyc
+__pycache__/
