@@ -46,7 +46,6 @@ class SessionsModel(db.Model):
     user = db.Column(db.Integer(), db.ForeignKey('users.id'))
 
 class UsersModel(db.Model, Serializer):
-    # https://www.codementor.io/@olawalealadeusi896/restful-api-with-python-flask-framework-and-postgres-db-part-1-kbrwbygx5
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key = True, nullable=False)
     name = db.Column(db.String(50), nullable=False)
@@ -62,7 +61,7 @@ class UsersModel(db.Model, Serializer):
     # def __repr__(self):
     #     return self.serialize()
 
-    def __init__(name, email, role, password):
+    def __init__(self, name, email, role, password):
         self.name = name
         self.email = email
         self.role = role

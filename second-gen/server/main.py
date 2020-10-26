@@ -1,10 +1,10 @@
 #! /usr/bin/env python3
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 # from flask_security import
-import json
+import psycopg2
 
 from db_models import Serializer, RolesModel, TagsModel, SessionsModel, UsersModel, PostsModel
 
@@ -32,14 +32,14 @@ def user_show(id):
 
 @app.route('/api/v1/users', methods=['POST'])
 def user_create():
-    parser = reqparse.RequestParser()
-    parser.add_argument("name")
-    parser.add_argument("email")
-    parser.add_argument("role")
-    parser.add_argument("pbkdf2")
-    params = parser.parse_args()
-
-    users_model = UsersModel(params["name"], params["email"], '')
+    # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
+    try:
+        users_model = UsersModel(request.args["name"], request.args["email"], request.args["role"], request.args["password"])
+    except Exception as ex:
+        if str(ex).startswith("400 Bad Request"):
+            return jsonify({"message": "400 Bad Request"}), 400
+        else:
+            return jsonify({"message": str(ex)}), 500
 
     save_to_database = db.session
     try:
@@ -48,11 +48,11 @@ def user_create():
     except Exception as ex:
         save_to_database.rollback()
         save_to_database.flush()
-        return jsonify({"message":"User with this ID already exist", "error": str(ex)}), 500
-    except psycopg2.errors.NotNullViolation as ex:
-        save_to_database.rollback()
-        save_to_database.flush()
-        return jsonify({"message":"Error: Some value is null", "error": str(ex)}), 500
+        if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
+            return jsonify({"message":"Error: Some value is not unique"}), 400
+        if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
+            return jsonify({"message":"Error: Some value is null"}), 400
+        return jsonify({"message":str(ex)}), 500
 
     id = users_model.id
     data = UsersModel.query.filter_by(id = id).first()
@@ -60,17 +60,12 @@ def user_create():
     return jsonify(data), 201
 
 @app.route('/api/v1/users/<int:id>', methods=['PUT'])
-def user_change(id):
-    parser = reqparse.RequestParser()
-    parser.add_argument("name")
-    parser.add_argument("email")
-    params = parser.parse_args()
-
+def user_update(id):
     save_to_database = db.session
     try:
         user_model = UsersModel.query.filter_by(id = id).first()
-        user_model.name = params["name"]
-        user_model.email = params["email"]
+        user_model.name = request.args["name"]
+        user_model.email = request.args["email"]
         save_to_database.commit()
 
         data = UsersModel.query.filter_by(id = id).first()
@@ -84,10 +79,6 @@ def user_change(id):
 
 @app.route('/api/v1/users/<int:id>', methods=['DELETE'])
 def user_delete(id):
-    parser = reqparse.RequestParser()
-    parser.add_argument("name")
-    params = parser.parse_args()
-
     save_to_database = db.session
     try:
         UsersModel.query.filter_by(id = id).delete()
@@ -102,4 +93,3 @@ if __name__ == '__main__':
     db.create_all()
     app.debug = True  # enables auto reload during development
     app.run()
-
