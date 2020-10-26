@@ -34,7 +34,7 @@ def user_show(id):
 def user_create():
     # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
     try:
-        users_model = UsersModel(request.args["name"], request.args["email"], request.args["role"], request.args["password"])
+        users_model = UsersModel(request.args.get("name", ''), request.args.get("email", ''), request.args.get("role", ''), request.args.get("password", ''))
     except Exception as ex:
         if str(ex).startswith("400 Bad Request"):
             return jsonify({"message": "400 Bad Request"}), 400
@@ -64,8 +64,8 @@ def user_update(id):
     save_to_database = db.session
     try:
         user_model = UsersModel.query.filter_by(id = id).first()
-        user_model.name = request.args["name"]
-        user_model.email = request.args["email"]
+        user_model.name = request.args.get("name", '')
+        user_model.email = request.args.get("email", '')
         save_to_database.commit()
 
         data = UsersModel.query.filter_by(id = id).first()
