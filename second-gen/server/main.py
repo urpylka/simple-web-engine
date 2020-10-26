@@ -13,14 +13,14 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:example@localhost:5432/postgres'
 db = SQLAlchemy(app)
 
-@app.route('/api/v0.1/users', methods=['GET'])
+@app.route('/api/v1/users', methods=['GET'])
 def user_showall():
     # https://medium.com/@erdoganyesil/typeerror-object-of-type-is-not-json-serializable-6230ccc74975
     data = UsersModel.query.all()
     data = UsersModel.serialize_list(data)
     return jsonify(data), 200
 
-@app.route('/api/v0.1/users/<int:id>', methods=['GET'])
+@app.route('/api/v1/users/<int:id>', methods=['GET'])
 def user_show(id):
     data = UsersModel.query.filter_by(id = id).first()
     if data == None:
@@ -30,7 +30,7 @@ def user_show(id):
         data = data.serialize()
         return jsonify(data), 200
 
-@app.route('/api/v0.1/users', methods=['POST'])
+@app.route('/api/v1/users', methods=['POST'])
 def user_create():
     parser = reqparse.RequestParser()
     parser.add_argument("name")
@@ -59,7 +59,7 @@ def user_create():
     data = data.serialize()
     return jsonify(data), 201
 
-@app.route('/api/v0.1/users/<int:id>', methods=['PUT'])
+@app.route('/api/v1/users/<int:id>', methods=['PUT'])
 def user_change(id):
     parser = reqparse.RequestParser()
     parser.add_argument("name")
@@ -82,7 +82,7 @@ def user_change(id):
         save_to_database.flush()
         return {"message":"ID does not exist"}, 404
 
-@app.route('/api/v0.1/users/<int:id>', methods=['DELETE'])
+@app.route('/api/v1/users/<int:id>', methods=['DELETE'])
 def user_delete(id):
     parser = reqparse.RequestParser()
     parser.add_argument("name")
