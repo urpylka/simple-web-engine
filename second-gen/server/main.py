@@ -13,13 +13,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:example@localhost:5432/postgres'
 db = SQLAlchemy(app)
 
-# def resp(code, data):
-#     return flask.Response(
-#         status=code,
-#         mimetype="application/json",
-#         response=to_json(data)
-#     )
-
 @app.route('/api/v0.1/users', methods=['GET'])
 def user_showall():
     # https://medium.com/@erdoganyesil/typeerror-object-of-type-is-not-json-serializable-6230ccc74975
