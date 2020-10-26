@@ -13,22 +13,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:example@localhost:5432/postgres'
 db = SQLAlchemy(app)
 
-# ## Flask RESTful
-# https://flask-restful.readthedocs.io/en/latest/
-# https://habr.com/en/company/skillbox/blog/464705
-
-# ## Flask Security
-# https://pythonhosted.org/Flask-Security/
-# https://python-scripts.com/haslib-pbkdf2-check-password
-# https://github.com/hypknowsys/Python-PBKDF2-Flask-Password-Encoder
-
-# ## Token Authentication
-# https://www.youtube.com/watch?v=WxGBoY5iNXY
-
-# ## Flask httpauth
-# https://habr.com/en/post/246699/
-
-
 # def resp(code, data):
 #     return flask.Response(
 #         status=code,
