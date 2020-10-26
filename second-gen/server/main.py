@@ -25,7 +25,7 @@ def user_show(id):
     data = UsersModel.query.filter_by(id = id).first()
     if data == None:
         data = {"message":"No user found by the id"}
-        return data, 404
+        return jsonify(data), 404
     else:
         data = data.serialize()
         return jsonify(data), 200
@@ -48,11 +48,11 @@ def user_create():
     except Exception as ex:
         save_to_database.rollback()
         save_to_database.flush()
-        return {"message":"User with this ID already exist", "error": str(ex)}, 500
+        return jsonify({"message":"User with this ID already exist", "error": str(ex)}), 500
     except psycopg2.errors.NotNullViolation as ex:
         save_to_database.rollback()
         save_to_database.flush()
-        return {"message":"Error: Some value is null", "error": str(ex)}, 500
+        return jsonify({"message":"Error: Some value is null", "error": str(ex)}), 500
 
     id = users_model.id
     data = UsersModel.query.filter_by(id = id).first()
@@ -75,12 +75,12 @@ def user_change(id):
 
         data = UsersModel.query.filter_by(id = id).first()
         # return data, 200
-        return data, 200
+        return jsonify(data), 200
         # return {"id":data.id,"name":data.name,"email":data.email}, 200
     except:
         save_to_database.rollback()
         save_to_database.flush()
-        return {"message":"ID does not exist"}, 404
+        return jsonify({"message":"ID does not exist"}), 404
 
 @app.route('/api/v1/users/<int:id>', methods=['DELETE'])
 def user_delete(id):
