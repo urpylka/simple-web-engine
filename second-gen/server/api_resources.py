@@ -1,14 +1,26 @@
 from flask_restful import Api, Resource, reqparse
 
-# https://flask-restful.readthedocs.io/en/latest/
-# # https://habr.com/en/company/skillbox/blog/464705/
-
 from db_models import Serializer, RolesModel, TagsModel, SessionsModel, UsersModel, PostsModel
 
 api = Api()
 
 class Users(Resource):
+    '''
+    ## Flask RESTful
+    https://flask-restful.readthedocs.io/en/latest/
+    https://habr.com/en/company/skillbox/blog/464705
 
+    ## Flask Security
+    https://pythonhosted.org/Flask-Security/
+    https://python-scripts.com/haslib-pbkdf2-check-password
+    https://github.com/hypknowsys/Python-PBKDF2-Flask-Password-Encoder
+
+    ## Token Authentication
+    https://www.youtube.com/watch?v=WxGBoY5iNXY
+
+    ## Flask httpauth
+    https://habr.com/en/post/246699/
+    '''
     def get(self, id=None):
         if id == None:
             # https://medium.com/@erdoganyesil/typeerror-object-of-type-is-not-json-serializable-6230ccc74975

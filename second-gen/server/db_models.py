@@ -1,6 +1,9 @@
 from sqlalchemy.inspection import inspect
 from flask_sqlalchemy import SQLAlchemy
 
+# SQLAlchemy
+# https://github.com/sgangopadhyay/python-rest-api/blob/master/restapi.py
+
 db = SQLAlchemy()
 
 class Serializer(object):
