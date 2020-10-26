@@ -47,7 +47,7 @@ class SessionsModel(db.Model):
 
 class UsersModel(db.Model, Serializer):
     __tablename__ = 'users'
-    id = db.Column(db.Integer, primary_key = True, nullable=False)
+    id = db.Column(db.Integer, db.Sequence('users_id_seq', start=1, increment=1), primary_key = True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     role = db.Column(db.Integer(), db.ForeignKey('roles.id'), nullable=False)
