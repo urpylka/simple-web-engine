@@ -30,8 +30,57 @@ class Serializer(object):
         users = UserModel.query.all()
         return json.dumps(UserModel.serialize_list(users))
     '''
+
+    @staticmethod
+    def go_recursive(o, f):
+        """
+        Reursive handler for list & dicr
+        """
+        if isinstance(o, list):
+            for i in o:
+                if isinstance(i, list) or isinstance(i, dict):
+                    go_recursive(i, f)
+                else:
+                    f(i)
+
+        if isinstance(o, dict):
+            for i in o:
+                if isinstance(o[i], list) or isinstance(o[i], dict):
+                    go_recursive(o[i], f)
+                else:
+                    f(o[i])
+
+    @staticmethod
+    def fix_appenderbasequery(o):
+        """
+        Fixing AppenderBaseQuery
+        https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
+        """
+        if type(x).__name__ == "AppenderBaseQuery":
+            x = x.all()
+
+    @staticmethod
+    def fix_db_model(o):
+        """
+        Calling recursive serialize func
+        """
+        if issubclass(x, db.Model):
+            if issubclass(x, Serializer):
+                x = x.serialize()
+            else:
+                raise Exception("Error: class " + str(type(x)) + " isn't subclass of Serializer.")
+
     def serialize(self):
-        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+        s = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+
+        # # https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
+        # for a in s:
+        #     print(type(s[a]).__name__)
+        #     if type(s[a]).__name__ == "AppenderBaseQuery":
+        #         s[a] = s[a].all()
+
+        _recursive_fix(s)
+        return s
 
     @staticmethod
     def serialize_list(l):
@@ -42,13 +91,11 @@ perms_users = db.Table('perms_users',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )
 
-class Perm(db.Model):
+class Perm(db.Model, Serializer):
     __tablename__ = 'perm'
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(255))
-    # A comma separated list of strings
-    permissions = db.Column(db.UnicodeText, nullable=True)
     update_datetime = db.Column(
         db.DateTime,
         nullable=False,
@@ -84,24 +131,14 @@ class User(db.Model, Serializer):
     def __init__(self, name, email, perm, password):
         self.username = name
         self.email = email
-        self.perm = perm
+        self.perms = [Perm(id=1, name="admin"), Perm(id=2, name="redactor")]
         self.password_hash = password
         self.active = False
 
     def serialize(self):
         d = Serializer.serialize(self)
-
-        for attr in d:
-            # https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
-            # sessions - AppenderBaseQuery
-            if type(d[attr]).__name__ == "AppenderBaseQuery":
-                d[attr] = d[attr].all()
-
         del d['password_hash']
         return d
-
-    # def __repr__(self):
-    #     return self.serialize()
 
 class Session(db.Model):
     __tablename__ = 'session'
@@ -189,7 +226,7 @@ def user_create():
             request.args.get("name", ''), \
             request.args.get("email", ''), \
             # request.args.get("perm", ''), \
-            ["admin"], \
+            ["admin", "safg"], \
             request.args.get("password", ''))
     except Exception as ex:
         if str(ex).startswith("400 Bad Request"):
@@ -213,6 +250,9 @@ def user_create():
     # Printing the new user object from DB
     user = User.query.filter_by(id = 1).one()
     user = user.serialize()
+    print(str(user))
+    # print(type(user['perms'][0]).__name__)
+    # user['perms'] = Perm.serialize_list(user['perms'])
     return jsonify(user), 201
 
 @app.route('/api/v1/users/<int:id>', methods=['PUT'])
