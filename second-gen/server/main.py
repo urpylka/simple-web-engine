@@ -4,8 +4,10 @@ from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.inspection import inspect
+from flask_sqlalchemy.model import DefaultMeta
 # from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 import psycopg2, datetime
 from functools import wraps
 # from db_models import Serializer, Perm, Tag, Session, User, Post
@@ -13,8 +15,39 @@ from functools import wraps
 app = Flask(__name__)
 # https://pythonru.com/uroki/14-sozdanie-baz-dannyh-vo-flask
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:example@localhost:5432/postgres'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+
+# def go_recursive(o, f):
+#     """
+#     Reursive handler for list & dicr
+#     """
+#     if isinstance(o, list):
+#         for i in o:
+#             if isinstance(i, list) or isinstance(i, dict):
+#                 go_recursive(i, f)
+#             else:
+#                 f(i)
+
+#     if isinstance(o, dict):
+#         for i in o:
+#             if isinstance(o[i], list) or isinstance(o[i], dict):
+#                 go_recursive(o[i], f)
+#             else:
+#                 f(o[i])
+
+# def fixes(x):
+#     # Fixing AppenderBaseQuery
+#     # https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
+#     if type(x).__name__ == "AppenderBaseQuery":
+#         x = x.all()
+
+#     # Calling recursive serialize func
+#     if issubclass(type(x), db.Model):
+#         if issubclass(type(x), Serializer):
+#             x = x.serialize()
+#         else:
+#             raise Exception("Error: class " + str(type(x)) + " isn't subclass of Serializer.")
 
 class Serializer(object):
     '''
@@ -31,55 +64,9 @@ class Serializer(object):
         return json.dumps(UserModel.serialize_list(users))
     '''
 
-    @staticmethod
-    def go_recursive(o, f):
-        """
-        Reursive handler for list & dicr
-        """
-        if isinstance(o, list):
-            for i in o:
-                if isinstance(i, list) or isinstance(i, dict):
-                    go_recursive(i, f)
-                else:
-                    f(i)
-
-        if isinstance(o, dict):
-            for i in o:
-                if isinstance(o[i], list) or isinstance(o[i], dict):
-                    go_recursive(o[i], f)
-                else:
-                    f(o[i])
-
-    @staticmethod
-    def fix_appenderbasequery(o):
-        """
-        Fixing AppenderBaseQuery
-        https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
-        """
-        if type(x).__name__ == "AppenderBaseQuery":
-            x = x.all()
-
-    @staticmethod
-    def fix_db_model(o):
-        """
-        Calling recursive serialize func
-        """
-        if issubclass(x, db.Model):
-            if issubclass(x, Serializer):
-                x = x.serialize()
-            else:
-                raise Exception("Error: class " + str(type(x)) + " isn't subclass of Serializer.")
-
     def serialize(self):
         s = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
-
-        # # https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
-        # for a in s:
-        #     print(type(s[a]).__name__)
-        #     if type(s[a]).__name__ == "AppenderBaseQuery":
-        #         s[a] = s[a].all()
-
-        _recursive_fix(s)
+        # go_recursive(s, fixes)
         return s
 
     @staticmethod
@@ -102,6 +89,11 @@ class Perm(db.Model, Serializer):
         server_default=func.now(),
         onupdate=datetime.datetime.utcnow,
     )
+
+    def serialize(self):
+        d = Serializer.serialize(self)
+        del d['users']
+        return d
 
 class User(db.Model, Serializer):
     __tablename__ = 'user'
@@ -137,7 +129,17 @@ class User(db.Model, Serializer):
 
     def serialize(self):
         d = Serializer.serialize(self)
+
+        if type(d['sessions']).__name__ == "AppenderBaseQuery":
+            d['sessions'] = d['sessions'].all()
+
+        for i in range(len(d['perms'])):
+            d['perms'][i] = d['perms'][i].serialize()
+            print(d['perms'][i])
+
+        # d['perms'] = d['perms'].all()
         del d['password_hash']
+        # del d['perms']
         return d
 
 class Session(db.Model):
