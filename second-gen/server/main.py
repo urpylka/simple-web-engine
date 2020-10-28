@@ -2,12 +2,13 @@
 
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.ext.declarative import declared_attr
 from sqlalchemy.inspection import inspect
 # from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 import psycopg2, datetime
 from functools import wraps
-# from db_models import Serializer, Role, Tag, Session, User, Post
+# from db_models import Serializer, Perm, Tag, Session, User, Post
 
 app = Flask(__name__)
 # https://pythonru.com/uroki/14-sozdanie-baz-dannyh-vo-flask
@@ -36,13 +37,13 @@ class Serializer(object):
     def serialize_list(l):
         return [m.serialize() for m in l]
 
-roles_users = db.Table('roles_users',
-    db.Column('role_id', db.Integer, db.ForeignKey('role.id')),
+perms_users = db.Table('perms_users',
+    db.Column('perm_id', db.Integer, db.ForeignKey('perm.id')),
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )
 
-class Role(db.Model):
-    __tablename__ = 'role'
+class Perm(db.Model):
+    __tablename__ = 'perm'
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(255))
@@ -58,31 +59,49 @@ class Role(db.Model):
 class User(db.Model, Serializer):
     __tablename__ = 'user'
 
-    id = db.Column(db.Integer, db.Sequence('users_id_seq', start=1, increment=1), primary_key = True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
+    # id = db.Column(db.Integer, db.Sequence('user_id_seq', start=1, increment=1), primary_key = True, autoincrement=True)
     email = db.Column(db.String(128), unique=True, nullable=False)
     # Username is important since shouldn't expose email to other users in most cases.
     username = db.Column(db.String(64), nullable=False)
     password_hash = db.Column(db.String(64), unique=True, nullable=False)
-    active = db.Column(db.Boolean(), nullable=False)
+    active = db.Column(db.Boolean(), nullable=False, default=False)
 
-    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
+    @declared_attr
+    def perms(cls):
+        # The first arg is a class name, the backref is a column name
+        return db.relationship(
+            "Perm",
+            secondary=perms_users,
+            backref=db.backref("users", lazy="dynamic"),
+        )
+
+    perms = db.relationship('Perm', secondary=perms_users, backref=db.backref('users', lazy='dynamic'))
 
     # один ко многим
     sessions = db.relationship('Session', backref='user', lazy='dynamic')
 
+    def __init__(self, name, email, perm, password):
+        self.username = name
+        self.email = email
+        self.perm = perm
+        self.password_hash = password
+        self.active = False
+
     def serialize(self):
         d = Serializer.serialize(self)
+
+        for attr in d:
+            # https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
+            # sessions - AppenderBaseQuery
+            if type(d[attr]).__name__ == "AppenderBaseQuery":
+                d[attr] = d[attr].all()
+
         del d['password_hash']
         return d
 
     # def __repr__(self):
     #     return self.serialize()
-
-    def __init__(self, name, email, role, password):
-        self.username = name
-        self.email = email
-        self.role = role
-        self.password_hash = password
 
 class Session(db.Model):
     __tablename__ = 'session'
@@ -138,7 +157,7 @@ def token_auth(f):
 @app.route('/api/v1/account', methods=['GET'])
 @token_auth
 def temp():
-    return jsonify({"message": "This is temp callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, role-model (permisions), safety pass keeping"}), 500
+    return jsonify({"message": "This is temp callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping"}), 500
 
 @app.route('/api/v1/users', methods=['GET'])
 def user_showall():
@@ -163,11 +182,14 @@ def user_show(id):
 @app.route('/api/v1/users', methods=['POST'])
 def user_create():
     # https://stackoverflow.com/questions/10434599/get-the-data-received-in-a-flask-request
+
+    # Creating an user object
     try:
         new_user = User(\
             request.args.get("name", ''), \
             request.args.get("email", ''), \
-            request.args.get("role", ''), \
+            # request.args.get("perm", ''), \
+            ["admin"], \
             request.args.get("password", ''))
     except Exception as ex:
         if str(ex).startswith("400 Bad Request"):
@@ -175,6 +197,7 @@ def user_create():
         else:
             return jsonify({"message": str(ex)}), 500
 
+    # Saving the user object to DB
     try:
         db.session.add(new_user)
         db.session.commit()
@@ -187,20 +210,21 @@ def user_create():
             return jsonify({"message":"Error: Some value is null"}), 400
         return jsonify({"message":str(ex)}), 500
 
-    user = User.query.filter_by(id = new_user.id).first()
+    # Printing the new user object from DB
+    user = User.query.filter_by(id = 1).one()
     user = user.serialize()
-    return jsonify(data), 201
+    return jsonify(user), 201
 
 @app.route('/api/v1/users/<int:id>', methods=['PUT'])
 def user_update(id):
     try:
-        user = User.query.filter_by(id = id).first()
+        user = User.query.filter_by(id = id).one()
         user.name = request.args.get("name", '')
         user.email = request.args.get("email", '')
         db.session.add(user)
         db.session.commit()
 
-        data = User.query.filter_by(id = id).first()
+        data = User.query.filter_by(id = id).one()
         return jsonify(data), 200
     except:
         db.session.rollback()
