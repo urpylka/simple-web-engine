@@ -18,36 +18,38 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:example@localhost
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# def go_recursive(o, f):
-#     """
-#     Reursive handler for list & dicr
-#     """
-#     if isinstance(o, list):
-#         for i in o:
-#             if isinstance(i, list) or isinstance(i, dict):
-#                 go_recursive(i, f)
-#             else:
-#                 f(i)
+def go_recursive(o, f):
+    """
+    Reursive handler for list & dicr
+    """
+    if isinstance(o, list):
+        for i in range(len(o)):
+            o[i] = f(o[i])
+            if isinstance(o[i], list) or isinstance(o[i], dict):
+                o[i] = go_recursive(o[i], f)
 
-#     if isinstance(o, dict):
-#         for i in o:
-#             if isinstance(o[i], list) or isinstance(o[i], dict):
-#                 go_recursive(o[i], f)
-#             else:
-#                 f(o[i])
+    if isinstance(o, dict):
+        for i in o:
+            o[i] = f(o[i])
+            if isinstance(o[i], list) or isinstance(o[i], dict):
+                o[i] = go_recursive(o[i], f)
 
-# def fixes(x):
-#     # Fixing AppenderBaseQuery
-#     # https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
-#     if type(x).__name__ == "AppenderBaseQuery":
-#         x = x.all()
+    return o
 
-#     # Calling recursive serialize func
-#     if issubclass(type(x), db.Model):
-#         if issubclass(type(x), Serializer):
-#             x = x.serialize()
-#         else:
-#             raise Exception("Error: class " + str(type(x)) + " isn't subclass of Serializer.")
+def fixes(x):
+    # Fixing AppenderBaseQuery
+    # https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
+    if type(x).__name__ == "AppenderBaseQuery":
+        x = x.all()
+
+    # Calling recursive serialize func
+    if issubclass(type(x), db.Model):
+        if issubclass(type(x), Serializer):
+            x = x.id
+        else:
+            raise Exception("Error: Class " + str(type(x).__name__) + " isn't subclass of Serializer.")
+
+    return x
 
 class Serializer(object):
     '''
@@ -66,7 +68,7 @@ class Serializer(object):
 
     def serialize(self):
         s = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
-        # go_recursive(s, fixes)
+        s = go_recursive(s, fixes)
         return s
 
     @staticmethod
@@ -130,12 +132,12 @@ class User(db.Model, Serializer):
     def serialize(self):
         d = Serializer.serialize(self)
 
-        if type(d['sessions']).__name__ == "AppenderBaseQuery":
-            d['sessions'] = d['sessions'].all()
+        # if type(d['sessions']).__name__ == "AppenderBaseQuery":
+        #     d['sessions'] = d['sessions'].all()
 
-        for i in range(len(d['perms'])):
-            d['perms'][i] = d['perms'][i].serialize()
-            print(d['perms'][i])
+        # for i in range(len(d['perms'])):
+        #     d['perms'][i] = d['perms'][i].serialize()
+        #     print(d['perms'][i])
 
         # d['perms'] = d['perms'].all()
         del d['password_hash']
