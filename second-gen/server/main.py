@@ -18,38 +18,34 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:example@localhost
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-def go_recursive(o, f):
+def go_recursive(o):
     """
     Reursive handler for list & dicr
     """
     if isinstance(o, list):
+        # we can't change o[i] (error: _sa_instance_state)
+        L = []
         for i in range(len(o)):
-            o[i] = f(o[i])
-            if isinstance(o[i], list) or isinstance(o[i], dict):
-                o[i] = go_recursive(o[i], f)
+            if type(o[i]).__name__ == "AppenderBaseQuery":
+                L.append(all())
+            elif issubclass(type(o[i]), db.Model):
+                L.append(o[i].id)
+            # run out infinity recursion
+            elif isinstance(o[i], (list, dict)):
+                L.append(go_recursive(o[i]))
+            else:
+                L.append(o[i])
+        o = L
 
     if isinstance(o, dict):
         for i in o:
-            o[i] = f(o[i])
-            if isinstance(o[i], list) or isinstance(o[i], dict):
-                o[i] = go_recursive(o[i], f)
-
+            if type(o[i]).__name__ == "AppenderBaseQuery":
+                o[i] = o[i].all()
+            if issubclass(type(o[i]), db.Model):
+                o[i] = o[i].id
+            if isinstance(o[i], (list, dict)):
+                o[i] = go_recursive(o[i])
     return o
-
-def fixes(x):
-    # Fixing AppenderBaseQuery
-    # https://flask-sqlalchemy-russian.readthedocs.io/ru/latest/quickstart.html
-    if type(x).__name__ == "AppenderBaseQuery":
-        x = x.all()
-
-    # Calling recursive serialize func
-    if issubclass(type(x), db.Model):
-        if issubclass(type(x), Serializer):
-            x = x.id
-        else:
-            raise Exception("Error: Class " + str(type(x).__name__) + " isn't subclass of Serializer.")
-
-    return x
 
 class Serializer(object):
     '''
@@ -68,7 +64,9 @@ class Serializer(object):
 
     def serialize(self):
         s = {c: getattr(self, c) for c in inspect(self).attrs.keys()}
-        s = go_recursive(s, fixes)
+        # print(s)
+
+        s = go_recursive(s)
         return s
 
     @staticmethod
@@ -132,16 +130,27 @@ class User(db.Model, Serializer):
     def serialize(self):
         d = Serializer.serialize(self)
 
+        # try:
+        #     x = []
+        #     for i in range(len(d['perms'])):
+        #         x.append(d['perms'][i].id)
+        #     d['perms'] = x
+
+        #     # x = d['perms'][0].id
+        #     # y = d['perms'][1].id
+        #     # d['perms'] = [x, y]
+
+        #     # # Error: 'int' object has no attribute '_sa_instance_state'
+        #     # d['perms'][0] = d['perms'][0].id
+        #     # d['perms'][1] = d['perms'][1].id
+
+        # except Exception as ex:
+        #     print("Error: " + str(ex))
+
         # if type(d['sessions']).__name__ == "AppenderBaseQuery":
         #     d['sessions'] = d['sessions'].all()
 
-        # for i in range(len(d['perms'])):
-        #     d['perms'][i] = d['perms'][i].serialize()
-        #     print(d['perms'][i])
-
-        # d['perms'] = d['perms'].all()
         del d['password_hash']
-        # del d['perms']
         return d
 
 class Session(db.Model):
@@ -257,7 +266,10 @@ def user_create():
     print(str(user))
     # print(type(user['perms'][0]).__name__)
     # user['perms'] = Perm.serialize_list(user['perms'])
-    return jsonify(user), 201
+    try:
+        return jsonify(user), 201
+    except Exception as ex:
+        return jsonify({"message":str(ex)}), 500
 
 @app.route('/api/v1/users/<int:id>', methods=['PUT'])
 def user_update(id):
