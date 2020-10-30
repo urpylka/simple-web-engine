@@ -281,22 +281,24 @@ def user_update(id):
         db.session.commit()
 
         data = User.query.filter_by(id = id).one()
+        data = data.serialize()
         return jsonify(data), 200
-    except:
+    except Exception as ex:
         db.session.rollback()
         db.session.flush()
-        return jsonify({"message":"ID does not exist"}), 404
+        return jsonify({"message":"ID does not exist", "error": str(ex)}), 404
 
 @app.route('/api/v1/users/<int:id>', methods=['DELETE'])
 def user_delete(id):
     try:
-        User.query.filter_by(id = id).delete()
+        user = User.query.filter_by(id = id).one()
+        db.session.delete(user)
         db.session.commit()
         return jsonify({"message":"User was removed"}), 201
-    except:
+    except Exception as ex:
         db.session.rollback()
         db.session.flush()
-        return jsonify({"message":"ID does not exist"}), 404
+        return jsonify({"message":"ID does not exist", "error": str(ex)}), 404
 
 if __name__ == '__main__':
     db.drop_all()
