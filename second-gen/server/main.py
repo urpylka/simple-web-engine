@@ -197,7 +197,7 @@ class Session(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     token = db.Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4)
     issued_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
-    expires_at = db.Column(db.DateTime) # +3650 nullable=False
+    expires_at = db.Column(db.DateTime, nullable=False, server_default=func.now()) # +3650
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
 
 # class Tag(db.Model):
@@ -282,7 +282,7 @@ def token_auth(f):
             return jsonify({'message': 'Error with request data by token! ' + str(token), 'error': str(ex)}), 401
 
         # Check session
-        if session.expired_at > datetime.now():
+        if session.expires_at > datetime.datetime.utcnow():
             return jsonify({"message": "Token is expired!"}), 401
         else:
             current_user = session.user
