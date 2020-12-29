@@ -223,44 +223,6 @@ class Session(db.Model):
 #     created_at = db.Column(db.DateTime)
 #     author = db.Column(db.Integer(), db.ForeignKey('users.id'))
 
-# def check_credentials(username, password):
-#     user = User.query.filter_by(username=username).one()
-
-def session_create(user_id):
-    try:
-        new_session = Session(user_id)
-    except Exception as ex:
-        if str(ex).startswith("400 Bad Request"):
-            return jsonify({"message": "400 Bad Request"}), 400
-        else:
-            return jsonify({"message": str(ex)}), 500
-
-    # Saving the user object to DB
-    try:
-        db.session.add(new_session)
-        db.session.commit()
-    except Exception as ex:
-        db.session.rollback()
-        db.session.flush()
-        if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
-            return jsonify({"message":"Error: Some value is not unique"}), 400
-        if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
-            return jsonify({"message":"Error: Some value is null"}), 400
-        return jsonify({"message":str(ex)}), 500
-
-    # Printing the new user object from DB
-    sessions = Session.query.filter_by(user_id = user_id).all()
-    # session = session.serialize()
-    # print(str(user)) # DEBUG
-    # print(type(user['perms'][0]).__name__)
-    # user['perms'] = Perm.serialize_list(user['perms'])
-    try:
-        print(sessions)
-        return jsonify(sessions), 201
-    except Exception as ex:
-        return jsonify({"message":str(ex)}), 500
-
-
 def basic_auth(f):
     # https://github.com/jpvanhal/flask-basicauth/blob/master/flask_basicauth.py
     @wraps(f)
@@ -279,8 +241,33 @@ def basic_auth(f):
                     return jsonify({"message": "No user found by username!"}), 400
                 return jsonify({"message": "Some error has corrupted in the user request! " + str(ex)}), 400
             if user.check_password(auth.password):
-                session_create(user.id)
-                return f(user, *args, **kwargs)
+                try:
+                    new_session = Session(user.id)
+                except Exception as ex:
+                    if str(ex).startswith("400 Bad Request"):
+                        return jsonify({"message": "400 Bad Request"}), 400
+                    else:
+                        return jsonify({"message": str(ex)}), 500
+
+                # Saving the user object to DB
+                try:
+                    db.session.add(new_session)
+                    db.session.commit()
+                except Exception as ex:
+                    db.session.rollback()
+                    db.session.flush()
+                    if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
+                        return jsonify({"message":"Error: Some value is not unique"}), 400
+                    if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
+                        return jsonify({"message":"Error: Some value is null"}), 400
+                    return jsonify({"message":str(ex)}), 500
+
+                # return Response (
+                #     status=200,
+                #     headers={"x-access-token": str(new_session.token)}
+                # )
+                return jsonify({"x-access-token": str(new_session.token)}), 200
+                # return f(user, *args, **kwargs)
             else:
                 return jsonify({"message": "Password is incorrect!"}), 400
         else:
