@@ -200,6 +200,9 @@ class Session(db.Model):
     expires_at = db.Column(db.DateTime, nullable=False, server_default=func.now()) # +3650
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
 
+    def __init__(self, user_id):
+        self.user_id = user_id
+
 # class Tag(db.Model):
 #     __tablename__ = 'tags'
 #     id = db.Column(db.Integer, primary_key = True)
