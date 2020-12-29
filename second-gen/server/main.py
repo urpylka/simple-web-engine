@@ -112,8 +112,18 @@ class User(db.Model, Serializer):
     password_hash = db.Column(db.String(100), unique=True, nullable=False)
     activated = db.Column(db.Boolean(), nullable=False, default=False)
 
-    # AttributeError: module 'datetime' has no attribute 'utcnow'
-    # updated_on = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(
+        db.DateTime,
+        nullable=False,
+        server_default=func.now()
+    )
+
+    update_on = db.Column(
+        db.DateTime,
+        nullable=False,
+        server_default=func.now(),
+        onupdate=datetime.datetime.utcnow
+    )
 
     @declared_attr
     def perms(cls):
