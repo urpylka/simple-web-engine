@@ -152,6 +152,8 @@ class User(db.Model, Serializer):
         self.password_hash = generate_password_hash(password)
 
     def check_password(self,  password):
+        # https://pythonru.com/uroki/18-autentifikacija-vo-flask
+        # https://flask-httpauth.readthedocs.io/en/latest/
         return check_password_hash(self.password_hash, password)
 
     def serialize(self):
