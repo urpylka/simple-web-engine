@@ -204,14 +204,21 @@ def token_auth(f):
         try:
             # Taking session by token
             session = Session.query.filter_by(token=token).one()
-            if not session:
-                return jsonify({'message': 'Token is invalid 1!' + str(token)}), 401
+
         except Exception as ex:
-            return jsonify({'message': 'Token is invalid 2!' + str(token), 'error':str(ex)}), 401
+            if str(ex).startswith("(psycopg2.errors.InvalidTextRepresentation)"):
+                # it is needed to move above for checking token before request
+                # if not type(token) is type(uuid):
+                return jsonify({'message': 'Token has a bad format! Use UUID format. Your token now is: ' + str(token)}), 401
+
+            if str(ex).startswith("No row was found for one()"):
+                return jsonify({"message": "Token is invalid!"}), 400
+
+            return jsonify({'message': 'Error with request data by token! ' + str(token), 'error': str(ex)}), 401
 
             # Check session
             if session.expired_at > datetime.now():
-                return jsonify({"message":"Token expired!"}), 401
+            return jsonify({"message": "Token is expired!"}), 401
             else:
                 current_user = session.user
 
@@ -220,8 +227,8 @@ def token_auth(f):
 
 @app.route('/api/v1/account', methods=['GET'])
 @token_auth
-def temp():
-    return jsonify({"message": "This is temp callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping"}), 500
+def temp(current_user):
+    return jsonify({"message": "This is temp callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.username)}), 500
 
 @app.route('/api/v1/users', methods=['GET'])
 def user_showall():
