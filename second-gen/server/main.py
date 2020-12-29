@@ -135,7 +135,8 @@ class User(db.Model, Serializer):
         self.perms = [Perm(id=1, name="admin"), Perm(id=2, name="redactor")]
         # self.password_hash = password
         self.set_password(password)
-        self.activated = False
+        # self.activated = False
+        self.activate()
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -168,6 +169,12 @@ class User(db.Model, Serializer):
 
         del d['password_hash']
         return d
+
+    def activate(self):
+        self.activated = True
+
+    def is_activated(self):
+        return self.activated
 
 class Session(db.Model):
     __tablename__ = 'session'
