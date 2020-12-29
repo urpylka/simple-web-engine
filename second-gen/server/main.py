@@ -191,6 +191,39 @@ class Session(db.Model):
 #     created_at = db.Column(db.DateTime)
 #     author = db.Column(db.Integer(), db.ForeignKey('users.id'))
 
+# def check_credentials(username, password):
+#     user = User.query.filter_by(username=username).one()
+
+
+def basic_auth(f):
+    # https://github.com/jpvanhal/flask-basicauth/blob/master/flask_basicauth.py
+    @wraps(f)
+    def decorated(*args, **kwargs):
+
+        # Getting token from HTTP header
+        username = None
+        password = None
+
+        auth = request.authorization
+        if auth and auth.type == 'basic':
+            try:
+                user = User.query.filter_by(email=auth.username).one()
+            except Exception as ex:
+                if str(ex).startswith("No row was found for one()"):
+                    return jsonify({"message": "No user found by username!"}), 400
+                return jsonify({"message": "Some error has corrupted in the user request! " + str(ex)}), 400
+            if user.check_password(auth.password):
+                return f(user, *args, **kwargs)
+            else:
+                return jsonify({"message": "Password is incorrect!"}), 400
+        else:
+            realm = '' # BASIC_AUTH_REALM
+            return Response (
+                status=401,
+                headers={'WWW-Authenticate': 'Basic realm="%s"' % realm}
+            )
+
+    return decorated
 
 def token_auth(f):
     # https://docs.python.org/3/library/uuid.html
@@ -224,11 +257,11 @@ def token_auth(f):
 
             return jsonify({'message': 'Error with request data by token! ' + str(token), 'error': str(ex)}), 401
 
-            # Check session
-            if session.expired_at > datetime.now():
+        # Check session
+        if session.expired_at > datetime.now():
             return jsonify({"message": "Token is expired!"}), 401
-            else:
-                current_user = session.user
+        else:
+            current_user = session.user
 
         return f(current_user, *args, **kwargs)
     return decorated
@@ -237,6 +270,13 @@ def token_auth(f):
 @token_auth
 def temp(current_user):
     return jsonify({"message": "This is temp callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.username)}), 500
+
+@app.route('/api/v1/login', methods=['GET'])
+@basic_auth
+def temp2(current_user):
+    return jsonify({"message": "This is temp2 callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.username)}), 500
+
+
 
 @app.route('/api/v1/users', methods=['GET'])
 def user_showall():
