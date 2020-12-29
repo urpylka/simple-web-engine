@@ -197,11 +197,16 @@ class Session(db.Model):
     id = db.Column(db.Integer, primary_key = True, autoincrement=True)
     token = db.Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4)
     issued_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
-    expires_at = db.Column(db.DateTime, nullable=False, server_default=func.now()) # +3650
+    expires_at = db.Column(db.DateTime, nullable=False)
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
 
     def __init__(self, user_id):
         self.user_id = user_id
+        # https://stackoverflow.com/questions/2780897/python-summing-up-time
+        self.expires_at = datetime.datetime.utcnow() + datetime.timedelta(hours=24, minutes=0, seconds=0)
+
+    def is_exprired(self):
+        return self.expires_at > datetime.datetime.utcnow()
 
 # class Tag(db.Model):
 #     __tablename__ = 'tags'
@@ -320,7 +325,7 @@ def token_auth(f):
             return jsonify({'message': 'Error with request data by token! ' + str(token), 'error': str(ex)}), 401
 
         # Check session
-        if session.expires_at > datetime.datetime.utcnow():
+        if session.is_expired():
             return jsonify({"message": "Token is expired!"}), 401
         else:
             current_user = session.user
