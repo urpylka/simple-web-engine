@@ -194,7 +194,8 @@ class User(db.Model, Serializer):
 
 class Session(db.Model):
     __tablename__ = 'session'
-    token = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True)
+    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
+    token = db.Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4)
     issued_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
     expires_at = db.Column(db.DateTime) # +3650 nullable=False
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
