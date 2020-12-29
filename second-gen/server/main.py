@@ -284,10 +284,9 @@ def basic_auth(f):
             else:
                 return jsonify({"message": "Password is incorrect!"}), 400
         else:
-            realm = '' # BASIC_AUTH_REALM
             return Response (
                 status=401,
-                headers={'WWW-Authenticate': 'Basic realm="%s"' % realm}
+                headers={'WWW-Authenticate': 'Basic realm="Access to the user token provide by Basic auth", charset="UTF-8"'}
             )
 
     return decorated
