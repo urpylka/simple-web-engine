@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+# source venv/bin/activate
+
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declared_attr
@@ -107,7 +109,10 @@ class User(db.Model, Serializer):
     # Username is important since shouldn't expose email to other users in most cases.
     username = db.Column(db.String(64), nullable=False)
     password_hash = db.Column(db.String(64), unique=True, nullable=False)
-    active = db.Column(db.Boolean(), nullable=False, default=False)
+    activated = db.Column(db.Boolean(), nullable=False, default=False)
+
+    # AttributeError: module 'datetime' has no attribute 'utcnow'
+    # updated_on = db.Column(db.DateTime(), default=datetime.utcnow, onupdate=datetime.utcnow)
 
     @declared_attr
     def perms(cls):
@@ -272,7 +277,7 @@ def user_create():
     # Printing the new user object from DB
     user = User.query.filter_by(id = 1).one()
     user = user.serialize()
-    print(str(user))
+    # print(str(user)) # DEBUG
     # print(type(user['perms'][0]).__name__)
     # user['perms'] = Perm.serialize_list(user['perms'])
     try:
