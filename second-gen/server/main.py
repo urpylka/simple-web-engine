@@ -176,6 +176,10 @@ class User(db.Model, Serializer):
     def is_activated(self):
         return self.activated
 
+    def is_admin(self):
+        for role in self.perms:
+            return role.name == "admin"
+
 class Session(db.Model):
     __tablename__ = 'session'
     token = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True)
@@ -281,9 +285,7 @@ def temp(current_user):
 @app.route('/api/v1/login', methods=['GET'])
 @basic_auth
 def temp2(current_user):
-    return jsonify({"message": "This is temp2 callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.username)}), 500
-
-
+    return jsonify({"message": "This is temp2 callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.username), "admin": str(current_user.is_admin())}), 500
 
 @app.route('/api/v1/users', methods=['GET'])
 def user_showall():
