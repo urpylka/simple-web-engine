@@ -3,11 +3,14 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.inspection import inspect
 from flask_sqlalchemy.model import DefaultMeta
 # from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+import uuid
 
+# https://stackoverflow.com/questions/183042/how-can-i-use-uuids-in-sqlalchemy
 import psycopg2, datetime
 from functools import wraps
 # from db_models import Serializer, Perm, Tag, Session, User, Post
@@ -155,7 +158,7 @@ class User(db.Model, Serializer):
 
 class Session(db.Model):
     __tablename__ = 'session'
-    token = db.Column(db.Integer, primary_key = True)
+    token = db.Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4, unique=True)
     issued_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
     expires_at = db.Column(db.DateTime) # +3650 nullable=False
     user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
@@ -177,6 +180,12 @@ class Session(db.Model):
 
 
 def token_auth(f):
+    # https://docs.python.org/3/library/uuid.html
+    # https://docs-python.ru/standart-library/modul-uuid-python/
+    # https://bukkit.org/threads/best-way-to-check-if-a-string-is-a-uuid.258625/
+    # https://python.hotexamples.com/ru/examples/codalab.lib.spec_util/-/check_uuid/python-check_uuid-function-examples.html
+    # https://pynative.com/python-uuid-module-to-generate-universally-unique-identifiers/
+
     @wraps(f)
     def decorated(*args, **kwargs):
 
