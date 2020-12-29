@@ -205,8 +205,8 @@ class Session(db.Model):
         # https://stackoverflow.com/questions/2780897/python-summing-up-time
         self.expires_at = datetime.datetime.utcnow() + datetime.timedelta(hours=24, minutes=0, seconds=0)
 
-    def is_exprired(self):
-        return self.expires_at > datetime.datetime.utcnow()
+    def is_expired(self):
+        return self.expires_at < datetime.datetime.utcnow()
 
 # class Tag(db.Model):
 #     __tablename__ = 'tags'
