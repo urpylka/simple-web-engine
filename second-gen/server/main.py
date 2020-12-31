@@ -91,12 +91,11 @@ class Perm(db.Model, Serializer):
     description = db.Column(db.String(255))
     update_on = db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=datetime.datetime.utcnow)
 
-
 class User(db.Model, Serializer):
     __tablename__ = 'user'
 
-    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
-    # id = db.Column(db.Integer, db.Sequence('user_id_seq', start=1, increment=1), primary_key = True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    # id = db.Column(db.Integer, db.Sequence('user_id_seq', start=1, increment=1), primary_key=True, autoincrement=True)
     email = db.Column(db.String(128), unique=True, nullable=False)
     # Username is important since shouldn't expose email to other users in most cases.
     fullname = db.Column(db.String(64), nullable=False)
@@ -175,7 +174,7 @@ class User(db.Model, Serializer):
 
 class Session(db.Model):
     __tablename__ = 'session'
-    id = db.Column(db.Integer, primary_key = True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     token = db.Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4)
     issued_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
     expires_at = db.Column(db.DateTime, nullable=False)
