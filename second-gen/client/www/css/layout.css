@@ -63,3 +63,48 @@ footer {
 }
 
 @media screen and (max-width:990px) {body{margin:0;left:0;}}
+
+
+/* @media screen and (max-width: 990px) {
+	body { margin: 0; left: 0; width: 100%; }
+	h1 { width: 100%; }
+
+	.tape {
+		width: 100% !important;
+	}
+
+	footer {
+		margin-top: 10px;
+		width: 100%;
+	}
+
+	.block-footer {
+		height: 100% !important;
+		width: 100% !important;
+		display: flex;
+	}
+
+	.colft1 {
+		float: left !important;
+		clear: both !important;
+
+	}
+	.colft2 {
+		margin-top: 20px;
+		float: left !important;
+		clear: both !important;
+
+	}
+	.colftbig {
+		margin-top: 20px;
+		float: left !important;
+		clear: both !important;
+
+	}
+	.colft4 {
+		margin-top: 20px;
+		float: left !important;
+		clear: both !important;
+
+	}
+} */
