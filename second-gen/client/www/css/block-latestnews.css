@@ -1,0 +1,6 @@
+/*  Пиздюшный блок с картинками и новостями */
+section.lastnews {margin-top: 30px;}
+.lastnews {width: 100%;height: 260px;text-align: center}
+.lastnewsc img {width: 220px; height: 220px;margin-bottom: 7px}
+.lastnewsc {width: 220px;height: 100%;float: left; margin-left: 14px;}
+.lastnewsc span {color:#696969;padding-top: 5px;}

@@ -1,0 +1,101 @@
+body {
+    font-family: sans-serif;
+    font-size: .9em;
+}
+
+.toolbox {
+	margin-top:10px;
+	margin-bottom:-10px;
+}
+
+.marg30 {
+    margin-right: 30px;
+    margin-left: 30px;
+    width: 930px;
+}
+
+/* EDITOR */
+
+#editor_status {
+    font-size: 12px !important;
+    color: green;
+    float: left;
+    margin-left: 10px;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#edit_button {
+    width: 80px;
+    margin-right: 5px;
+}
+
+#save_button {
+    width: 40px;
+}
+
+#page_public_flag_field_td {
+    width: 60px;
+    font-size:10px;
+}
+
+#public_flag {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#page_prnt_field {
+    font-size:12px;
+    width: 40px;
+}
+
+#page_link_field {
+    width: 170px;
+}
+
+#editor_area {
+    /* visibility: hidden; */
+    /* display: none; */
+}
+
+#textarea1 {
+    position: relative;
+    display: block;
+    width: 930px;
+    height: 200px;
+    border: 0px solid #ddd;
+}
+
+#textarea1-mooeditable-container {
+    width: 990px !important;
+    border: 0;
+    /* border-width: 0px 0px 1px !important; */
+}
+
+.mooeditable-iframe {
+    margin-left: 30px !important;
+    margin-right: 30px !important; 
+    height: 300px !important;
+    width: 930px !important;
+    padding: 0 !important;
+}
+
+/* SECTION TEXT-CONTNET */
+section a {
+	color:#679f33;
+	text-decoration: underline;
+    -moz-text-decoration-line: underline;
+}
+
+section {
+
+}
+
+section #main_cont {
+	/* font-family: Marat-Sans-Regular; */
+}
+
+#page_title[contenteditable] {
+	background-color: orange;
+	color: black;
+}

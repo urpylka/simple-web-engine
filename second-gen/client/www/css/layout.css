@@ -1,0 +1,65 @@
+﻿/* Общий стиль */
+html {
+	height: 100%;
+	margin: 0 auto;
+	font-weight: 100;
+	background: url('../img/background-0.jpg') repeat;
+	font-family: sans-serif, Arial, Helvetica;
+}
+body {
+	width: 990px;
+	background-color: #FFFFFF;
+	/*margin: 0 auto;*/
+	-moz-box-shadow: 0 5px 21px #000;
+	-webkit-box-shadow: 0 5px 21px #000;
+	box-shadow: 0 5px 21px #000;
+	margin-top: 40px;
+	display: inline-block;
+	position: relative;
+	left: 50%;
+	margin-left: -495px;
+}
+a{color:#000;text-decoration:none;}
+a:hover{color:#47117d;}
+
+/* Контент */
+article {margin: 0px 30px 0px 30px;}
+h1 {font-size: 22px;font-weight: 400;padding: 14px 0px 2px 0px}
+h2 {font-size: 18px;font-weight: 400;padding: 14px 0px 2px 0px}
+h3 {font-size: 16px;font-weight: 400;padding: 14px 0px 2px 0px}
+/*article p {font-size: 14px;line-height: 19px;text-indent: 30px;}*/
+article p {font-size: 14px;line-height: 19px;text-indent: 0px;}
+article div {font-size: 14px;line-height: 19px;}
+article td{font-size:14px;line-height:19px;padding:4px;}
+article li{font-size:14px;line-height:19px;padding:0px;margin-left: 20px;}
+
+/* Невъебатый hr */
+.hr {text-align: center;font-weight: 400;
+display: block;
+width: 120px;
+background-color: #FFF;
+margin: 0 auto;
+font-size: 19px;
+margin-top: -29px;padding-bottom:13px}
+.hrs {text-align: center;font-weight: 400;
+display: block;
+width: 170px;
+background-color: #FFF;
+margin: 0 auto;
+font-size: 19px;
+margin-top: -29px;padding-bottom:13px}
+.hrb {text-align: center;font-weight: 400;
+display: block;
+width: 270px;
+background-color: #FFF;
+margin: 0 auto;
+font-size: 19px;
+margin-top: -29px;padding-bottom:13px}
+.hr, .hrs, .hrb {color:#707070;}
+
+footer {
+	margin-top:10px;
+	width: 930px;
+}
+
+@media screen and (max-width:990px) {body{margin:0;left:0;}}

@@ -1,0 +1,45 @@
+﻿/* page_as_item */
+
+.page_as_item {
+	width: 930px;
+	height: 218px;
+	display: table;
+}
+
+.page_preview {
+	margin-top:20px;
+}
+
+.page_preview img {
+	width: 300px;
+	max-height: 200px;
+	padding-right: 30px;
+	float: left;
+}
+
+.page_preview p {
+	width: 600px;
+	float: left;
+	height: 155px;
+	display: block;
+}
+
+.page_preview a {
+	position: relative;
+	display: table;
+	margin-top: 157px;
+	margin-left: 330px;
+	padding: 12px;
+
+	color: #555;
+	font-weight: 600;
+
+	border: 1px solid #555;
+	border-radius: 5px;
+	text-decoration: none;
+}
+
+.page_preview a:hover {
+	background-color: #555;
+	color: #fff;
+}

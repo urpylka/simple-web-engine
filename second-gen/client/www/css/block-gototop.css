@@ -1,0 +1,17 @@
+#scrollup
+{
+    position: fixed;
+    opacity: 0.8;
+    padding: 10px;
+    right: 10px;
+    bottom: 10px;
+    display: none;
+    cursor: pointer;
+    background-color: #0097D3;
+    color: #FFF;
+}
+#scrollup:hover
+{
+    background-color: #21ABDC;
+    color: #FFF;
+}
