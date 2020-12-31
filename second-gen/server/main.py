@@ -96,10 +96,6 @@ class Perm(db.Model, Serializer):
         onupdate=datetime.datetime.utcnow,
     )
 
-    def serialize(self):
-        d = Serializer.serialize(self)
-        del d['users']
-        return d
 
 class User(db.Model, Serializer):
     __tablename__ = 'user'
