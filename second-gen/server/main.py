@@ -188,20 +188,48 @@ class Session(db.Model):
     def is_expired(self):
         return self.expires_at < datetime.datetime.utcnow()
 
-# class Tag(db.Model):
-#     __tablename__ = 'tags'
-#     id = db.Column(db.Integer, primary_key = True)
-#     name = db.Column(db.String(50))
-#     # нужно реализовать один ко многим связь с PostsModel
+posts_tags = db.Table('posts_tags',
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
 
-# class Post(db.Model):
-#     __tablename__ = 'posts'
-#     id = db.Column(db.Integer, primary_key = True)
-#     title = db.Column(db.String(50))
-#     preview = db.Column(db.String(50))
-#     text = db.Column(db.String(50))
-#     created_at = db.Column(db.DateTime)
-#     author = db.Column(db.Integer(), db.ForeignKey('users.id'))
+class Tag(db.Model, Serializer):
+    __tablename__ = 'tag'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(64), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
+    posts = db.relationship('Post', secondary=posts_tags, backref=db.backref('tags', lazy='dynamic'))
+
+class Post(db.Model, Serializer):
+    __tablename__ = 'post'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    uuid = db.Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4)
+    author = db.Column(db.Integer(), db.ForeignKey('user.id'))  # Foreign key
+    tags = db.relationship('Tag', secondary=posts_tags, backref=db.backref('posts', lazy='dynamic'))
+    is_draft = db.Column(db.Boolean(), nullable=False, default=True)
+    title = db.Column(db.String(64), unique=True, nullable=False)
+    description = db.Column(db.String(255))
+    content = db.Column(db.Text(), nullable=False)
+    created_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
+    update_on = db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=datetime.datetime.utcnow)
+
+    def __init__(self, title, author, description, content, tags=[Tag(name="ru"), Perm(name="blog")], is_draft=True):
+        self.title = title
+        self.author = author
+        self.description = description
+        self.content = content
+        self.tags = tags
+        self.is_draft = is_draft
+
+    def update(self, title, author, description, content, tags, is_draft):
+        self.title = title
+        self.author = author
+        self.description = description
+        self.content = content
+        self.tags = tags
+        self.is_draft = is_draft
 
 def basic_auth(f):
     # https://github.com/jpvanhal/flask-basicauth/blob/master/flask_basicauth.py
@@ -397,6 +425,102 @@ def user_delete(id):
         db.session.delete(user)
         db.session.commit()
         return jsonify({"message":"User was removed"}), 201
+    except Exception as ex:
+        db.session.rollback()
+        db.session.flush()
+        return jsonify({"message":"ID does not exist", "error": str(ex)}), 404
+
+@app.route('/api/v1/posts', methods=['GET'])
+def post_showall():
+    try:
+        posts = Post.query.all()
+        posts = Post.serialize_list(posts)
+        return jsonify(posts), 200
+    except Exception as ex:
+        return jsonify({"message": str(ex)}), 500
+
+@app.route('/api/v1/posts/<int:id>', methods=['GET'])
+def post_show(id):
+    post = Post.query.filter_by(id = id).first()
+    if post == None:
+        post = {"message":"No post found by the id"}
+        return jsonify(post), 404
+    else:
+        post = post.serialize()
+        return jsonify(post), 200
+
+@app.route('/api/v1/posts', methods=['POST'])
+def post_create():
+    # Temporary
+    author = "current_user"
+    try:
+        new_post = Post(\
+            request.args.get("title", ''), \
+            author, \
+            request.args.get("description", ''), \
+            request.args.get("content", ''), \
+            ["ru", "baba"], \
+            request.args.get("is_draft", ''))
+    except Exception as ex:
+        if str(ex).startswith("400 Bad Request"):
+            return jsonify({"message": "400 Bad Request"}), 400
+        else:
+            return jsonify({"message": str(ex)}), 500
+
+    # Saving the post object to DB
+    try:
+        db.session.add(new_post)
+        db.session.commit()
+    except Exception as ex:
+        db.session.rollback()
+        db.session.flush()
+        if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
+            return jsonify({"message":"Error: Some value is not unique"}), 400
+        if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
+            return jsonify({"message":"Error: Some value is null"}), 400
+        return jsonify({"message":str(ex)}), 500
+
+    # Printing the new post object from DB
+    post = Post.query.filter_by(id = 1).one()
+    post = post.serialize()
+    # print(str(post)) # DEBUG
+    # print(type(post['perms'][0]).__name__)
+    # post['perms'] = Perm.serialize_list(post['perms'])
+    try:
+        return jsonify(post), 201
+    except Exception as ex:
+        return jsonify({"message":str(ex)}), 500
+
+@app.route('/api/v1/posts/<int:id>', methods=['PUT'])
+def post_update(id):
+    try:
+        post = Post.query.filter_by(id = id).one()
+
+        post.name = request.args.get("title", '')
+        post.author = "current_user"
+        post.description = request.args.get("description", '')
+        post.content = request.args.get("content", '')
+        post.tags = ["ru", "baba"]
+        post.is_draft = request.args.get("is_draft", True)
+
+        db.session.add(post)
+        db.session.commit()
+
+        data = Post.query.filter_by(id = id).one()
+        data = data.serialize()
+        return jsonify(data), 200
+    except Exception as ex:
+        db.session.rollback()
+        db.session.flush()
+        return jsonify({"message":"ID does not exist", "error": str(ex)}), 404
+
+@app.route('/api/v1/posts/<int:id>', methods=['DELETE'])
+def post_delete(id):
+    try:
+        post = Post.query.filter_by(id = id).one()
+        db.session.delete(post)
+        db.session.commit()
+        return jsonify({"message":"Post was removed"}), 201
     except Exception as ex:
         db.session.rollback()
         db.session.flush()
