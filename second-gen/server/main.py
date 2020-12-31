@@ -89,12 +89,7 @@ class Perm(db.Model, Serializer):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(255))
-    update_datetime = db.Column(
-        db.DateTime,
-        nullable=False,
-        server_default=func.now(),
-        onupdate=datetime.datetime.utcnow,
-    )
+    update_on = db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=datetime.datetime.utcnow)
 
 
 class User(db.Model, Serializer):
@@ -107,19 +102,8 @@ class User(db.Model, Serializer):
     fullname = db.Column(db.String(64), nullable=False)
     password_hash = db.Column(db.String(100), unique=True, nullable=False)
     activated = db.Column(db.Boolean(), nullable=False, default=False)
-
-    created_at = db.Column(
-        db.DateTime,
-        nullable=False,
-        server_default=func.now()
-    )
-
-    update_on = db.Column(
-        db.DateTime,
-        nullable=False,
-        server_default=func.now(),
-        onupdate=datetime.datetime.utcnow
-    )
+    created_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
+    update_on = db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=datetime.datetime.utcnow)
 
     @declared_attr
     def perms(cls):
