@@ -199,7 +199,7 @@ class Tag(db.Model, Serializer):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
     created_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
-    posts = db.relationship('Post', secondary=posts_tags, backref=db.backref('tags', lazy='dynamic'))
+    # posts = db.relationship('Post', secondary=posts_tags, backref=db.backref('tags', lazy='dynamic'))
 
 class Post(db.Model, Serializer):
     __tablename__ = 'post'
@@ -207,6 +207,16 @@ class Post(db.Model, Serializer):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uuid = db.Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4)
     author = db.Column(db.Integer(), db.ForeignKey('user.id'))  # Foreign key
+
+    @declared_attr
+    def tags(cls):
+        # The first arg is a class name, the backref is a column name
+        return db.relationship(
+            "Tag",
+            secondary=tags_posts,
+            backref=db.backref("posts", lazy="dynamic"),
+        )
+
     tags = db.relationship('Tag', secondary=posts_tags, backref=db.backref('posts', lazy='dynamic'))
     is_draft = db.Column(db.Boolean(), nullable=False, default=True)
     title = db.Column(db.String(64), unique=True, nullable=False)
@@ -215,7 +225,7 @@ class Post(db.Model, Serializer):
     created_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
     update_on = db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=datetime.datetime.utcnow)
 
-    def __init__(self, title, author, description, content, tags=[Tag(name="ru"), Perm(name="blog")], is_draft=True):
+    def __init__(self, title, author, description, content, tags, is_draft=True):
         self.title = title
         self.author = author
         self.description = description
@@ -456,11 +466,12 @@ def post_create():
     try:
         new_post = Post(\
             request.args.get("title", ''), \
-            author, \
+            1, \
             request.args.get("description", ''), \
-            request.args.get("content", ''), \
-            ["ru", "baba"], \
-            request.args.get("is_draft", ''))
+            request.args.get("content", ''),
+            [Tag(name="ru"), Tag(name="blog")],
+            bool(request.args.get("is_draft", ''))
+        )
     except Exception as ex:
         if str(ex).startswith("400 Bad Request"):
             return jsonify({"message": "400 Bad Request"}), 400
@@ -478,6 +489,8 @@ def post_create():
             return jsonify({"message":"Error: Some value is not unique"}), 400
         if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
             return jsonify({"message":"Error: Some value is null"}), 400
+        if str(ex).startswith("(psycopg2.errors.ForeignKeyViolation) insert or update on table \"post\" violates foreign key constraint \"post_author_fkey\"\n"):
+            return jsonify({"message": "Error: User doesn't exist!"}), 400
         return jsonify({"message":str(ex)}), 500
 
     # Printing the new post object from DB
