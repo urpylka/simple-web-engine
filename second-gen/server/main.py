@@ -108,7 +108,7 @@ class User(db.Model, Serializer):
     # id = db.Column(db.Integer, db.Sequence('user_id_seq', start=1, increment=1), primary_key = True, autoincrement=True)
     email = db.Column(db.String(128), unique=True, nullable=False)
     # Username is important since shouldn't expose email to other users in most cases.
-    username = db.Column(db.String(64), nullable=False)
+    fullname = db.Column(db.String(64), nullable=False)
     password_hash = db.Column(db.String(100), unique=True, nullable=False)
     activated = db.Column(db.Boolean(), nullable=False, default=False)
 
@@ -139,8 +139,8 @@ class User(db.Model, Serializer):
     # один ко многим
     sessions = db.relationship('Session', backref='user', lazy='dynamic')
 
-    def __init__(self, name, email, perm, password):
-        self.username = name
+    def __init__(self, fullname, email, perm, password):
+        self.fullname = fullname
         self.email = email
         self.perms = [Perm(id=1, name="admin"), Perm(id=2, name="redactor")]
         # self.password_hash = password
@@ -322,12 +322,12 @@ def token_auth(f):
 @app.route('/api/v1/account', methods=['GET'])
 @token_auth
 def temp(current_user):
-    return jsonify({"message": "This is temp callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.username)}), 500
+    return jsonify({"message": "This is temp callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.fullname)}), 500
 
 @app.route('/api/v1/login', methods=['GET'])
 @basic_auth
 def temp2(current_user):
-    return jsonify({"message": "This is temp2 callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.username), "admin": str(current_user.is_admin())}), 500
+    return jsonify({"message": "This is temp2 callback. It will consist: login (basic), auth (token / session cookie), logout, reset, register, verify, 2fa-sms, 2fa-app, oauth, remember_me, capcha, perm-model (permisions), safety pass keeping", "current_user": str(current_user.fullname), "admin": str(current_user.is_admin())}), 500
 
 @app.route('/api/v1/users', methods=['GET'])
 def user_showall():
@@ -356,7 +356,7 @@ def user_create():
     # Creating an user object
     try:
         new_user = User(\
-            request.args.get("name", ''), \
+            request.args.get("fullname", ''), \
             request.args.get("email", ''), \
             # request.args.get("perm", ''), \
             ["admin", "safg"], \
