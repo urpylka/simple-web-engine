@@ -146,6 +146,7 @@ class User(db.Model, Serializer):
         # self.password_hash = password
         self.set_password(password)
         # self.activated = False
+        # it need to check with an email
         self.activate()
 
     def set_password(self, password):
@@ -271,6 +272,8 @@ def basic_auth(f):
             else:
                 return jsonify({"message": "Password is incorrect!"}), 400
         else:
+            # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/WWW-Authenticate
+            # https://efim360.ru/rfc-2617-http-autentifikatsiya-bazovaya-i-daydzhest-autentifikatsiya/
             return Response (
                 status=401,
                 headers={'WWW-Authenticate': 'Basic realm="Access to the user token provide by Basic auth", charset="UTF-8"'}
