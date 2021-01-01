@@ -400,8 +400,10 @@ def user_create():
             return jsonify({"message":"Error: Some value is null"}), 400
         return jsonify({"message":str(ex)}), 500
 
+    id = new_user.id
+
     # Printing the new user object from DB
-    user = User.query.filter_by(id = 1).one()
+    user = User.query.filter_by(id = id).one()
     user = user.serialize()
     # print(str(user)) # DEBUG
     # print(type(user['perms'][0]).__name__)
@@ -461,12 +463,12 @@ def post_show(id):
 
 @app.route('/api/v1/posts', methods=['POST'])
 def post_create():
-    # Temporary
-    author = "current_user"
+    # author = "current_user" # Temporary
+    author = 1
     try:
         new_post = Post(\
             request.args.get("title", ''), \
-            1, \
+            author, \
             request.args.get("description", ''), \
             request.args.get("content", ''),
             [Tag(name="ru"), Tag(name="blog")],
@@ -493,8 +495,12 @@ def post_create():
             return jsonify({"message": "Error: User doesn't exist!"}), 400
         return jsonify({"message":str(ex)}), 500
 
+    id = new_post.id
+
     # Printing the new post object from DB
-    post = Post.query.filter_by(id = 1).one()
+    post = Post.query.get(id)
+    if post == None:
+        return jsonify({"message": "Element with that ID doesn't exist in DB."}), 500
     post = post.serialize()
     # print(str(post)) # DEBUG
     # print(type(post['perms'][0]).__name__)
