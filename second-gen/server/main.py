@@ -461,6 +461,19 @@ def post_show(id):
         post = post.serialize()
         return jsonify(post), 200
 
+def reset_counter_id(table_name):
+
+    sql = "DO $$ DECLARE maxid integer; BEGIN SELECT 1 + (SELECT COALESCE(MAX(id), 0) FROM " + table_name + " INTO maxid); EXECUTE 'ALTER SEQUENCE " + table_name + "_id_seq RESTART WITH ' || maxid; END; $$;"
+
+    # pip install psycopg2-binary
+    import psycopg2
+    conn = psycopg2.connect(dbname='postgres', user='postgres', password='example', host='localhost', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    cursor.close()
+    conn.commit()
+    conn.close()
+
 @app.route('/api/v1/posts', methods=['POST'])
 def post_create():
     # author = "current_user" # Temporary
@@ -486,7 +499,9 @@ def post_create():
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
-        db.session.flush()
+        reset_counter_id("post")
+        reset_counter_id("tag")
+
         if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
             return jsonify({"message":"Error: Some value is not unique"}), 400
         if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
