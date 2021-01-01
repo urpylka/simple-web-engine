@@ -241,6 +241,19 @@ class Post(db.Model, Serializer):
         self.tags = tags
         self.is_draft = is_draft
 
+def reset_counter_id(table_name):
+
+    sql = "DO $$ DECLARE maxid integer; BEGIN SELECT 1 + (SELECT COALESCE(MAX(id), 0) FROM " + table_name + " INTO maxid); EXECUTE 'ALTER SEQUENCE " + table_name + "_id_seq RESTART WITH ' || maxid; END; $$;"
+
+    # pip install psycopg2-binary
+    import psycopg2
+    conn = psycopg2.connect(dbname='postgres', user='postgres', password='example', host='localhost', port="5432")
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    cursor.close()
+    conn.commit()
+    conn.close()
+
 def basic_auth(f):
     # https://github.com/jpvanhal/flask-basicauth/blob/master/flask_basicauth.py
     @wraps(f)
@@ -460,19 +473,6 @@ def post_show(id):
     else:
         post = post.serialize()
         return jsonify(post), 200
-
-def reset_counter_id(table_name):
-
-    sql = "DO $$ DECLARE maxid integer; BEGIN SELECT 1 + (SELECT COALESCE(MAX(id), 0) FROM " + table_name + " INTO maxid); EXECUTE 'ALTER SEQUENCE " + table_name + "_id_seq RESTART WITH ' || maxid; END; $$;"
-
-    # pip install psycopg2-binary
-    import psycopg2
-    conn = psycopg2.connect(dbname='postgres', user='postgres', password='example', host='localhost', port="5432")
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    cursor.close()
-    conn.commit()
-    conn.close()
 
 @app.route('/api/v1/posts', methods=['POST'])
 def post_create():
