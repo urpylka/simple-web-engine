@@ -406,7 +406,9 @@ def user_create():
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
-        db.session.flush()
+        reset_counter_id(user)
+        reset_counter_id(perm)
+
         if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
             return jsonify({"message":"Error: Some value is not unique"}), 400
         if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
