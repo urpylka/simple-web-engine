@@ -11,7 +11,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/v1/users?name=Artem Smirnov&email=urpylka@gmail.com&role=admin&password=password",
+					"raw": "http://127.0.0.1:5000/api/v1/users?fullname=Artem Smirnov&email=urpylka@gmail.com&role=admin&password=password",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -27,7 +27,7 @@
 					],
 					"query": [
 						{
-							"key": "name",
+							"key": "fullname",
 							"value": "Artem Smirnov"
 						},
 						{
@@ -53,7 +53,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/v1/users/1",
+					"raw": "http://127.0.0.1:5000/api/v1/users/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -66,7 +66,7 @@
 						"api",
 						"v1",
 						"users",
-						"1"
+						"2"
 					]
 				}
 			},
@@ -164,7 +164,7 @@
 					"apikey": [
 						{
 							"key": "value",
-							"value": "4d834b52-e289-4a7d-92bb-71b47870a5b2",
+							"value": "56d31cc2-a889-4084-ad06-f7c63d6f8eca",
 							"type": "string"
 						},
 						{
@@ -233,7 +233,166 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Post: Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/posts?title=My first post&author=1&description=Open the post&content=Some content&is_draft=False",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"posts"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "My first post"
+						},
+						{
+							"key": "author",
+							"value": "1"
+						},
+						{
+							"key": "description",
+							"value": "Open the post"
+						},
+						{
+							"key": "content",
+							"value": "Some content"
+						},
+						{
+							"key": "tags",
+							"value": "[\"en\", \"papa\"]",
+							"disabled": true
+						},
+						{
+							"key": "is_draft",
+							"value": "False"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post: Get one",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/posts/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post: Get all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/posts",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post: Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/posts/1?name=smirart&email=urpylk2a@gmail.com",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"1"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "smirart"
+						},
+						{
+							"key": "email",
+							"value": "urpylk2a@gmail.com"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post: Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/api/v1/posts/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"v1",
+						"posts",
+						"2"
+					]
+				}
+			},
+			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
