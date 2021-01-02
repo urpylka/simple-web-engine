@@ -91,6 +91,15 @@ class Perm(db.Model, Serializer):
     description = db.Column(db.String(255))
     update_on = db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=datetime.datetime.utcnow)
 
+    def get(perm_name):
+        try:
+            perm = Perm.query.filter_by(name=perm_name).one()
+            return perm
+        except Exception as ex:
+            if str(ex).startswith("No row was found for one()"):
+                return Perm(name=perm_name)
+            raise Exception(str(ex))
+
 class User(db.Model, Serializer):
     __tablename__ = "swe_user"
 
@@ -118,15 +127,17 @@ class User(db.Model, Serializer):
     # один ко многим
     sessions = db.relationship('Session', backref='swe_user', lazy='dynamic')
 
-    def __init__(self, fullname, email, perm, password):
+    def __init__(self, fullname, email, perms, password):
         self.fullname = fullname
         self.email = email
-        self.perms = [Perm(id=1, name="admin"), Perm(id=2, name="redactor")]
         # self.password_hash = password
         self.set_password(password)
         # self.activated = False
         # it need to check with an email
         self.activate()
+
+        for perm in perms.split(','):
+            self.perms.append(Perm.get(perm))
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
