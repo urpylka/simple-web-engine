@@ -204,6 +204,24 @@ class Tag(db.Model, Serializer):
     def __init__(self, tag_name):
         self.name = str(tag_name)
 
+    def is_exist(tag_name):
+        try:
+            tag = Tag.query.filter_by(name=tag_name).one()
+            return True
+        except Exception as ex:
+            if str(ex).startswith("No row was found for one()"):
+                return False
+            raise Exception(str(ex))
+
+    def get(tag_name):
+        try:
+            tag = Tag.query.filter_by(name=tag_name).one()
+            return tag
+        except Exception as ex:
+            if str(ex).startswith("No row was found for one()"):
+                return Tag(tag_name)
+            raise Exception(str(ex))
+
 class Post(db.Model, Serializer):
     __tablename__ = "swe_post"
 
@@ -236,8 +254,7 @@ class Post(db.Model, Serializer):
         self.is_draft = is_draft
 
         for tag in tags.split(','):
-            print(tag)
-            self.tags.append(Tag(name=tag))
+            self.tags.append(Tag.get(tag))
 
     def update(self, title, author, description, content, tags, is_draft):
         self.title = title
@@ -247,8 +264,7 @@ class Post(db.Model, Serializer):
         self.is_draft = is_draft
 
         for tag in tags.split(','):
-            print(tag)
-            self.tags.append(Tag(name=tag))
+            self.tags.append(Tag.get(tag))
 
 def reset_counter_id(table_name):
 
