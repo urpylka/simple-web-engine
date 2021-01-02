@@ -396,7 +396,7 @@ def user_create():
             request.args.get("password", ''))
     except Exception as ex:
         if str(ex).startswith("400 Bad Request"):
-            return jsonify({"message": "400 Bad Request"}), 400
+            return jsonify({"message": "400 Bad Request", "more": str(ex)}), 400
         else:
             return jsonify({"message": str(ex)}), 500
 
@@ -410,9 +410,9 @@ def user_create():
         reset_counter_id("swe_perm")
 
         if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
-            return jsonify({"message":"Error: Some value is not unique"}), 400
+            return jsonify({"message": "Error: Some value is not unique.", "more": str(ex)}), 400
         if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
-            return jsonify({"message":"Error: Some value is null"}), 400
+            return jsonify({"message": "Error: Some value is null", "more": str(ex)}), 400
         return jsonify({"message":str(ex)}), 500
 
     id = new_user.id
@@ -491,7 +491,7 @@ def post_create():
         )
     except Exception as ex:
         if str(ex).startswith("400 Bad Request"):
-            return jsonify({"message": "400 Bad Request"}), 400
+            return jsonify({"message": "400 Bad Request", "more": str(ex)}), 400
         else:
             return jsonify({"message": str(ex)}), 500
 
@@ -505,12 +505,12 @@ def post_create():
         reset_counter_id("swe_tag")
 
         if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
-            return jsonify({"message":"Error: Some value is not unique"}), 400
+            return jsonify({"message":"Error: Some value is not unique", "more": str(ex)}), 400
         if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
-            return jsonify({"message":"Error: Some value is null"}), 400
-            return jsonify({"message": "Error: User doesn't exist!"}), 400
-        return jsonify({"message":str(ex)}), 500
+            return jsonify({"message":"Error: Some value is null", "more": str(ex)}), 400
         if str(ex).startswith("(psycopg2.errors.ForeignKeyViolation) insert or update on table \"swe_post\" violates foreign key constraint \"swe_post_author_fkey\"\n"):
+            return jsonify({"message": "Error: User doesn't exist!", "more": str(ex)}), 400
+        return jsonify({"message": str(ex)}), 500
 
     id = new_post.id
 
