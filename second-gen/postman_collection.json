@@ -11,7 +11,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/v1/users?fullname=Artem Smirnov&email=urpylka@gmail.com&role=admin&password=password",
+					"raw": "http://127.0.0.1:5000/api/v1/users?fullname=Artem Smirnov&email=urpylka@gmail.com&perms=admin,redactor&password=password",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -35,8 +35,8 @@
 							"value": "urpylka@gmail.com"
 						},
 						{
-							"key": "role",
-							"value": "admin"
+							"key": "perms",
+							"value": "admin,redactor"
 						},
 						{
 							"key": "password",
@@ -240,7 +240,7 @@
 				"method": "POST",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/api/v1/posts?title=My first post&author=1&description=Open the post&content=Some content&is_draft=False",
+					"raw": "http://127.0.0.1:5000/api/v1/posts?title=My first post&author=1&description=Open the post&content=Some content&tags=en,papa&is_draft=False",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -273,8 +273,7 @@
 						},
 						{
 							"key": "tags",
-							"value": "[\"en\", \"papa\"]",
-							"disabled": true
+							"value": "en,papa"
 						},
 						{
 							"key": "is_draft",
