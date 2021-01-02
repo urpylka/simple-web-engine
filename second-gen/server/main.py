@@ -79,20 +79,20 @@ class Serializer(object):
     def serialize_list(l):
         return [m.serialize() for m in l]
 
-perms_users = db.Table('perms_users',
-    db.Column('perm_id', db.Integer, db.ForeignKey('perm.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
+swe_perms_users = db.Table('swe_perms_users',
+    db.Column('perm_id', db.Integer, db.ForeignKey('swe_perm.id')),
+    db.Column('user_id', db.Integer, db.ForeignKey('swe_user.id'))
 )
 
 class Perm(db.Model, Serializer):
-    __tablename__ = 'perm'
+    __tablename__ = "swe_perm"
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(255))
     update_on = db.Column(db.DateTime, nullable=False, server_default=func.now(), onupdate=datetime.datetime.utcnow)
 
 class User(db.Model, Serializer):
-    __tablename__ = 'user'
+    __tablename__ = "swe_user"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     # id = db.Column(db.Integer, db.Sequence('user_id_seq', start=1, increment=1), primary_key=True, autoincrement=True)
@@ -109,14 +109,14 @@ class User(db.Model, Serializer):
         # The first arg is a class name, the backref is a column name
         return db.relationship(
             "Perm",
-            secondary=perms_users,
+            secondary=swe_perms_users,
             backref=db.backref("users", lazy="dynamic"),
         )
 
-    perms = db.relationship('Perm', secondary=perms_users, backref=db.backref('users', lazy='dynamic'))
+    perms = db.relationship('Perm', secondary=swe_perms_users, backref=db.backref('users', lazy='dynamic'))
 
     # один ко многим
-    sessions = db.relationship('Session', backref='user', lazy='dynamic')
+    sessions = db.relationship('Session', backref='swe_user', lazy='dynamic')
 
     def __init__(self, fullname, email, perm, password):
         self.fullname = fullname
@@ -173,12 +173,12 @@ class User(db.Model, Serializer):
             return role.name == "admin"
 
 class Session(db.Model):
-    __tablename__ = 'session'
+    __tablename__ = "swe_session"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     token = db.Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4)
     issued_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
     expires_at = db.Column(db.DateTime, nullable=False)
-    user_id = db.Column(db.Integer(), db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer(), db.ForeignKey("swe_user.id"))
 
     def __init__(self, user_id):
         self.user_id = user_id
@@ -188,13 +188,13 @@ class Session(db.Model):
     def is_expired(self):
         return self.expires_at < datetime.datetime.utcnow()
 
-posts_tags = db.Table('posts_tags',
-    db.Column('post_id', db.Integer, db.ForeignKey('post.id')),
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+swe_posts_tags = db.Table('swe_posts_tags',
+    db.Column('post_id', db.Integer, db.ForeignKey('swe_post.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('swe_tag.id'))
 )
 
 class Tag(db.Model, Serializer):
-    __tablename__ = 'tag'
+    __tablename__ = "swe_tag"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(64), unique=True, nullable=False)
@@ -202,22 +202,22 @@ class Tag(db.Model, Serializer):
     # posts = db.relationship('Post', secondary=posts_tags, backref=db.backref('tags', lazy='dynamic'))
 
 class Post(db.Model, Serializer):
-    __tablename__ = 'post'
+    __tablename__ = "swe_post"
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     uuid = db.Column(UUID(as_uuid=True), unique=True, default=uuid.uuid4)
-    author = db.Column(db.Integer(), db.ForeignKey('user.id'))  # Foreign key
+    author = db.Column(db.Integer(), db.ForeignKey('swe_user.id'))  # Foreign key
 
     @declared_attr
     def tags(cls):
         # The first arg is a class name, the backref is a column name
         return db.relationship(
             "Tag",
-            secondary=tags_posts,
+            secondary=swe_tags_posts,
             backref=db.backref("posts", lazy="dynamic"),
         )
 
-    tags = db.relationship('Tag', secondary=posts_tags, backref=db.backref('posts', lazy='dynamic'))
+    tags = db.relationship('Tag', secondary=swe_posts_tags, backref=db.backref('posts', lazy='dynamic'))
     is_draft = db.Column(db.Boolean(), nullable=False, default=True)
     title = db.Column(db.String(64), unique=True, nullable=False)
     description = db.Column(db.String(255))
@@ -406,8 +406,8 @@ def user_create():
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
-        reset_counter_id(user)
-        reset_counter_id(perm)
+        reset_counter_id("swe_user")
+        reset_counter_id("swe_perm")
 
         if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
             return jsonify({"message":"Error: Some value is not unique"}), 400
@@ -501,16 +501,16 @@ def post_create():
         db.session.commit()
     except Exception as ex:
         db.session.rollback()
-        reset_counter_id("post")
-        reset_counter_id("tag")
+        reset_counter_id("swe_post")
+        reset_counter_id("swe_tag")
 
         if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
             return jsonify({"message":"Error: Some value is not unique"}), 400
         if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
             return jsonify({"message":"Error: Some value is null"}), 400
-        if str(ex).startswith("(psycopg2.errors.ForeignKeyViolation) insert or update on table \"post\" violates foreign key constraint \"post_author_fkey\"\n"):
             return jsonify({"message": "Error: User doesn't exist!"}), 400
         return jsonify({"message":str(ex)}), 500
+        if str(ex).startswith("(psycopg2.errors.ForeignKeyViolation) insert or update on table \"swe_post\" violates foreign key constraint \"swe_post_author_fkey\"\n"):
 
     id = new_post.id
 
