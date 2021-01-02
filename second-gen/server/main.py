@@ -424,12 +424,14 @@ def user_create():
 
     # Creating an user object
     try:
-        new_user = User(\
-            request.args.get("fullname", ''), \
-            request.args.get("email", ''), \
-            # request.args.get("perm", ''), \
-            ["admin", "safg"], \
-            request.args.get("password", ''))
+        with db.session.no_autoflush:
+            # https://fixmypc.ru/post/udalenie-i-formatirovanie-probelov-v-strokakh-s-python/
+            # https://askdev.ru/q/kak-preobrazovat-stroku-v-nizhniy-registr-v-python-289/
+            new_user = User(
+                request.args.get("fullname", '').strip(),
+                request.args.get("email", '').strip().lower(),
+                request.args.get("perms", '').replace(' ', '').lower(),
+                request.args.get("password", ''))
     except Exception as ex:
         if str(ex).startswith("400 Bad Request"):
             return jsonify({"message": "400 Bad Request", "more": str(ex)}), 400
@@ -468,8 +470,9 @@ def user_create():
 def user_update(id):
     try:
         user = User.query.filter_by(id = id).one()
-        user.name = request.args.get("name", '')
-        user.email = request.args.get("email", '')
+        user.name = request.args.get("fullname", '').strip()
+        user.email = request.args.get("email", '').strip().lower()
+        user.email = request.args.get("perms", '').replace(' ', '').lower()
         db.session.add(user)
         db.session.commit()
 
@@ -519,11 +522,11 @@ def post_create():
     try:
         with db.session.no_autoflush:
             new_post = Post(
-                request.args.get("title", ''),
+                request.args.get("title", '').strip(),
                 author,
-                request.args.get("description", ''),
+                request.args.get("description", '').strip(),
                 request.args.get("content", ''),
-                request.args.get("tags", ''),
+                request.args.get("tags", '').replace(' ', '').lower(),
                 bool(request.args.get("is_draft", True))
             )
     except Exception as ex:
@@ -569,11 +572,11 @@ def post_update(id):
     try:
         post = Post.query.filter_by(id = id).one()
 
-        post.name = request.args.get("title", '')
+        post.name = request.args.get("title", '').strip()
         post.author = "current_user"
-        post.description = request.args.get("description", '')
+        post.description = request.args.get("description", '').strip()
         post.content = request.args.get("content", '')
-        post.tags = ["ru", "baba"]
+        post.tags = request.args.get("tags", '').replace(' ', '').lower()
         post.is_draft = request.args.get("is_draft", True)
 
         db.session.add(post)
