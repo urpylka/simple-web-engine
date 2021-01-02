@@ -506,14 +506,15 @@ def post_create():
     # author = "current_user" # Temporary
     author = 1
     try:
-        new_post = Post(\
-            request.args.get("title", ''), \
-            author, \
-            request.args.get("description", ''), \
-            request.args.get("content", ''),
-            request.args.get("tags", ''),
-            bool(request.args.get("is_draft", ''))
-        )
+        with db.session.no_autoflush:
+            new_post = Post(
+                request.args.get("title", ''),
+                author,
+                request.args.get("description", ''),
+                request.args.get("content", ''),
+                request.args.get("tags", ''),
+                bool(request.args.get("is_draft", True))
+            )
     except Exception as ex:
         if str(ex).startswith("400 Bad Request"):
             return jsonify({"message": "400 Bad Request", "more": str(ex)}), 400
