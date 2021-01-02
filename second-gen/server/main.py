@@ -530,9 +530,9 @@ def post_create():
         reset_counter_id("swe_tag")
 
         if str(ex).startswith("(psycopg2.errors.UniqueViolation)"):
-            return jsonify({"message":"Error: Some value is not unique", "more": str(ex)}), 400
+            return jsonify({"message": "Error: Some value is not unique", "more": str(ex)}), 400
         if str(ex).startswith("(psycopg2.errors.NotNullViolation)"):
-            return jsonify({"message":"Error: Some value is null", "more": str(ex)}), 400
+            return jsonify({"message": "Error: Some value is null", "more": str(ex)}), 400
         if str(ex).startswith("(psycopg2.errors.ForeignKeyViolation) insert or update on table \"swe_post\" violates foreign key constraint \"swe_post_author_fkey\"\n"):
             return jsonify({"message": "Error: User doesn't exist!", "more": str(ex)}), 400
         return jsonify({"message": str(ex)}), 500
