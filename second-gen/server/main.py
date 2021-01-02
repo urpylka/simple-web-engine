@@ -201,6 +201,9 @@ class Tag(db.Model, Serializer):
     created_at = db.Column(db.DateTime, nullable=False, server_default=func.now())
     # posts = db.relationship('Post', secondary=posts_tags, backref=db.backref('tags', lazy='dynamic'))
 
+    def __init__(self, tag_name):
+        self.name = str(tag_name)
+
 class Post(db.Model, Serializer):
     __tablename__ = "swe_post"
 
@@ -230,16 +233,22 @@ class Post(db.Model, Serializer):
         self.author = author
         self.description = description
         self.content = content
-        self.tags = tags
         self.is_draft = is_draft
+
+        for tag in tags.split(','):
+            print(tag)
+            self.tags.append(Tag(name=tag))
 
     def update(self, title, author, description, content, tags, is_draft):
         self.title = title
         self.author = author
         self.description = description
         self.content = content
-        self.tags = tags
         self.is_draft = is_draft
+
+        for tag in tags.split(','):
+            print(tag)
+            self.tags.append(Tag(name=tag))
 
 def reset_counter_id(table_name):
 
@@ -486,7 +495,7 @@ def post_create():
             author, \
             request.args.get("description", ''), \
             request.args.get("content", ''),
-            [Tag(name="ru"), Tag(name="blog")],
+            request.args.get("tags", ''),
             bool(request.args.get("is_draft", ''))
         )
     except Exception as ex:
