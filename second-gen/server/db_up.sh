@@ -8,9 +8,9 @@ mkdir -p $(pwd)/postgres-data 2>/dev/null
 
 # docker rm -f postgres
 
-docker run --rm \
+docker run -d --rm \
     --name postgres \
     -e POSTGRES_PASSWORD=example \
-    -d -p 5432:5432 \
+    -p 5432:5432 \
     -v $(pwd)/postgres-data:/var/lib/postgresql/data \
     postgres
